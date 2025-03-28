@@ -13,4 +13,6 @@ export interface SelectProps {
   value?: string;
   onChange?: (event: ChangeEvent<HTMLSelectElement>) => void;
   options: Option[];
+  width?: number;
+  height?: number;
 }

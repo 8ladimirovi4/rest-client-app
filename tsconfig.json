@@ -3,11 +3,7 @@
     "baseUrl": "src/",
     "target": "ES2020",
     "useDefineForClassFields": true,
-    "lib": [
-      "ES2020",
-      "DOM",
-      "DOM.Iterable"
-    ],
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -20,31 +16,15 @@
     "noEmit": true,
     "jsx": "preserve",
     "paths": {
-      "assets/*": [
-        "assets/*"
-      ],
-      "entities/*": [
-        "entities/*"
-      ],
-      "features/*": [
-        "features/*"
-      ],
-      "processes/*": [
-        "processes/*"
-      ],
-      "shared/*": [
-        "shared/*"
-      ],
-      "wigets/*": [
-        "wigets/*"
-      ],
-      "app/*": [
-        "app/*"
-      ]
+      "assets/*": ["assets/*"],
+      "entities/*": ["entities/*"],
+      "features/*": ["features/*"],
+      "processes/*": ["processes/*"],
+      "shared/*": ["shared/*"],
+      "wigets/*": ["wigets/*"],
+      "app/*": ["app/*"]
     },
-    "types": [
-      "vitest/globals"
-    ],
+    "types": ["vitest/globals"],
     "allowImportingTsExtensions": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
@@ -65,8 +45,6 @@
     "src",
     "./.next/types/**/*.ts"
   ],
-  "exclude": [
-    "./node_modules"
-  ],
+  "exclude": ["./node_modules"],
   "references": []
 }
