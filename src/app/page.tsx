@@ -1,7 +1,5 @@
-import Link from 'next/link';
-
-const PageMain = () => {
-  return <Link href="restfull">Go to Restfull client</Link>;
+const PageAuth = () => {
+  return <h1>Auth page</h1>;
 };
 
-export default PageMain;
+export default PageAuth;

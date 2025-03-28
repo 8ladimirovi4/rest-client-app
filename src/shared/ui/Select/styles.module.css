@@ -5,19 +5,13 @@
   width: 100%;
   height: fit-content;
 }
+
 .container_label {
   font-size: 16px;
   color: #6f6f6f;
 }
 .select-wrapper_select {
-  width: 100%;
-  height: 100%;
-  padding: 12px;
-  outline: none;
-  border: 2px solid rgb(85, 130, 253);
-  border-radius: 4px;
-  font-size: 16px;
-  background-color: 'white';
+  height: fit-content;
 }
 .select-wrapper_select::placeholder {
   color: '#6f6f6f';
