@@ -9,6 +9,7 @@ import { langActions } from 'shared/model/lang.slice';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { routesActions } from 'shared/model/routes.slice';
+import { Logout } from 'features/LogoutUser';
 
 export const Header = () => {
   const { routes, currentRoute } = useSelector(
@@ -80,19 +81,7 @@ export const Header = () => {
                 </Link>
               </>
             )}
-            {isUserLoggedIn && (
-              <Link
-                href={!isUserLoggedIn ? '/login' : '/home'}
-                onClick={() => {
-                  dispatch(
-                    setCurrentRoute(!isUserLoggedIn ? '/login' : '/home')
-                  );
-                }}
-                className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800  whitespace-nowrap"
-              >
-                Sign Out
-              </Link>
-            )}
+            {isUserLoggedIn && <Logout isUserLoggedIn={isUserLoggedIn} />}
             <button
               data-collapse-toggle="mobile-menu-2"
               type="button"
