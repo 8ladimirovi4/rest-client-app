@@ -3,6 +3,7 @@ import { ChangeEvent } from 'react';
 interface Option {
   id?: string;
   value?: string;
+  label?: string;
 }
 
 export interface SelectProps {

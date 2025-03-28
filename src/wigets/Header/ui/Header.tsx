@@ -1,37 +1,56 @@
-import React, { ChangeEvent } from 'react';
+'use client';
+import React, { ChangeEvent, useState } from 'react';
 import styles from './styles.module.css';
 import Link from 'next/link';
 import { Select } from 'shared/index';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'app/providers/StoreProvider/config/store.ts';
 import { langActions } from 'shared/model/lang.slice';
+import { useRouter } from 'next/navigation';
+import { pageRoutes } from 'features/navigation/constants/pageRoutes';
+import Image from 'next/image';
+//mock user
+const isUser = false;
+
+const createRoutes = pageRoutes.filter((route) => {
+  if (!isUser) return route.type === 'public';
+  return route.type === 'protected';
+});
 
 export const Header = () => {
+  const [selectedRoute, setSelectedRoute] = useState<string>(
+    createRoutes[0].value
+  );
   const { lang, langs } = useSelector((state: RootState) => state.lang);
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const { setLang } = langActions;
   const handleSetLanguage = (evt: ChangeEvent<HTMLSelectElement>) => {
     const { value } = evt.target;
     dispatch(setLang({ lang: value }));
   };
+  const handleNavigate = (evt: ChangeEvent<HTMLSelectElement>) => {
+    const route = evt.target.value;
+    setSelectedRoute(route);
+    router.push(route);
+  };
   return (
     <header className={styles['app-header']}>
       <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
-        <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
-          <Link href="/" className="flex items-center">
-            <img
-              src="/icon/rest.png"
-              className="mr-3 h-6 sm:h-9"
-              alt="Restful Logo"
+        <div className="flex  justify-between items-center mx-auto max-w-screen-xl">
+          <div>
+            <Select
+              id="1"
+              options={createRoutes}
+              value={selectedRoute}
+              onChange={handleNavigate}
+              width={150}
             />
-            <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
-              RESTful API
-            </span>
-          </Link>
+          </div>
           <div className="flex items-center lg:order-2">
             <Select
-              id={'1'}
+              id="2"
               options={langs}
               value={lang}
               onChange={handleSetLanguage}
@@ -82,7 +101,18 @@ export const Header = () => {
           <div
             className="hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1"
             id="mobile-menu-2"
-          ></div>
+          >
+            <Link href="/" className="flex items-center">
+              <Image
+                src="/icon/rest.png"
+                className="mr-3 h-6 sm:h-9"
+                alt="Restful Logo"
+              />
+              <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
+                RESTful API
+              </span>
+            </Link>
+          </div>
         </div>
       </nav>
     </header>

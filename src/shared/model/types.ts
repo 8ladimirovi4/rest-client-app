@@ -5,6 +5,7 @@ export interface AlertState {
 interface Lang {
   id: string;
   value: string;
+  label: string;
 }
 
 export interface LangState {

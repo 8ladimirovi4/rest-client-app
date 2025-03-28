@@ -15,7 +15,7 @@ export const GlobalLayout = ({ children }: { children: ReactNode }) => {
           <div className={styles['app-wrapper']}>
             <Header />
             <main className={styles['app-content']}>{children}</main>
-            <Footer/>
+            <Footer />
           </div>
         </ThemeContextProvider>
       </ErrorBoundary>

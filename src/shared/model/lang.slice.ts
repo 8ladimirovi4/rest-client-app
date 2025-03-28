@@ -5,8 +5,8 @@ import { LangState } from './types';
 const initialState: LangState = {
   lang: 'rus',
   langs: [
-    { id: '1', value: 'rus' },
-    { id: '2', value: 'eng' },
+    { id: '1', value: 'rus', label: 'rus' },
+    { id: '2', value: 'eng', label: 'eng' },
   ],
 };
 

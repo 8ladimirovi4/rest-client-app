@@ -1,8 +1,5 @@
-import styles from './styles.module.css';
 import { Label } from '../Label/Label';
 import { SelectProps } from './types';
-import classNames from 'classnames';
-import syles from './styles.module.css';
 
 export const Select = ({
   id,
@@ -30,7 +27,7 @@ export const Select = ({
         {options ? (
           options.map((option) => (
             <option key={option.id} value={option.value}>
-              {option.value}
+              {option.label}
             </option>
           ))
         ) : (
