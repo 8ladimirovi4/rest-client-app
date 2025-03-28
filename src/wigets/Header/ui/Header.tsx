@@ -23,7 +23,7 @@ export const Header = () => {
             <img
               src="/icon/rest.png"
               className="mr-3 h-6 sm:h-9"
-              alt="Flowbite Logo"
+              alt="Restful Logo"
             />
             <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
               RESTful API

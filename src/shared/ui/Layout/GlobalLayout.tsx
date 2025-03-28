@@ -5,7 +5,7 @@ import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
 import { Provider } from 'react-redux';
 import { store } from 'app/providers/StoreProvider/config/store';
 import styles from './styles.module.css';
-import { ErrorFallback, Header } from 'wigets/index';
+import { ErrorFallback, Footer, Header } from 'wigets/index';
 
 export const GlobalLayout = ({ children }: { children: ReactNode }) => {
   return (
@@ -15,7 +15,7 @@ export const GlobalLayout = ({ children }: { children: ReactNode }) => {
           <div className={styles['app-wrapper']}>
             <Header />
             <main className={styles['app-content']}>{children}</main>
-            <footer className={styles['app-footer']}>APP FOOTER</footer>
+            <Footer/>
           </div>
         </ThemeContextProvider>
       </ErrorBoundary>
