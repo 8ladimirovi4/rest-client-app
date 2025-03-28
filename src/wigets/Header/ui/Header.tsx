@@ -1,5 +1,5 @@
 'use client';
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useEffect } from 'react';
 import styles from './styles.module.css';
 import Link from 'next/link';
 import { Select } from 'shared/index';
@@ -7,25 +7,21 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'app/providers/StoreProvider/config/store.ts';
 import { langActions } from 'shared/model/lang.slice';
 import { useRouter } from 'next/navigation';
-import { pageRoutes } from 'features/navigation/constants/pageRoutes';
 import Image from 'next/image';
+import { routesActions } from 'shared/model/routes.slice';
 
 //mock user
-const isUser = false;
-
-const createRoutes = pageRoutes.filter((route) => {
-  if (!isUser) return route.type === 'public';
-  return route.type === 'protected';
-});
+const isUser = true;
 
 export const Header = () => {
-  const [selectedRoute, setSelectedRoute] = useState<string>(
-    createRoutes[0].value
+  const { routes, currentRoute } = useSelector(
+    (state: RootState) => state.routes
   );
   const { lang, langs } = useSelector((state: RootState) => state.lang);
   const dispatch = useDispatch();
   const router = useRouter();
 
+  const { setRoutes, setCurrentRoute } = routesActions;
   const { setLang } = langActions;
   const handleSetLanguage = (evt: ChangeEvent<HTMLSelectElement>) => {
     const { value } = evt.target;
@@ -33,9 +29,14 @@ export const Header = () => {
   };
   const handleNavigate = (evt: ChangeEvent<HTMLSelectElement>) => {
     const route = evt.target.value;
-    setSelectedRoute(route);
+    dispatch(setCurrentRoute(route));
     router.push(route);
   };
+
+  useEffect(() => {
+    dispatch(setRoutes({ isUser }));
+  }, [isUser]);
+
   return (
     <header className={styles['app-header']}>
       <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
@@ -43,8 +44,8 @@ export const Header = () => {
           <div>
             <Select
               id="1"
-              options={createRoutes}
-              value={selectedRoute}
+              options={routes}
+              value={currentRoute}
               onChange={handleNavigate}
               width={150}
             />
@@ -103,7 +104,13 @@ export const Header = () => {
             className="hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1"
             id="mobile-menu-2"
           >
-            <Link href={!isUser ? '/' : '/home'} className="flex items-center">
+            <Link
+              href={!isUser ? '/' : '/home'}
+              onClick={() => {
+                dispatch(setCurrentRoute(!isUser ? '/' : '/home'));
+              }}
+              className="flex items-center"
+            >
               <Image
                 src="/icon/rest.png"
                 className="mr-3 h-6 sm:h-9"
