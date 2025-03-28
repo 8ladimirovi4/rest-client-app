@@ -71,7 +71,7 @@ export default [
     },
   },
   {
-    files: ['src/shared/model*.slice.ts'],
+    files: ['src/shared/model*.slice.ts'], //add all slices
     rules: {
       '@typescript-eslint/no-dynamic-delete': 'off',
     },

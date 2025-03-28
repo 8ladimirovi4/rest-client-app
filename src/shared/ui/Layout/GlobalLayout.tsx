@@ -4,8 +4,8 @@ import ThemeContextProvider from 'shared/context/themeContext/ThemeContextProvid
 import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
 import { Provider } from 'react-redux';
 import { store } from 'app/providers/StoreProvider/config/store';
-import { ErrorFallback } from 'wigets/PageError';
 import styles from './styles.module.css';
+import { ErrorFallback, Footer, Header } from 'wigets/index';
 
 export const GlobalLayout = ({ children }: { children: ReactNode }) => {
   return (
@@ -13,9 +13,9 @@ export const GlobalLayout = ({ children }: { children: ReactNode }) => {
       <ErrorBoundary errorComponent={ErrorFallback}>
         <ThemeContextProvider>
           <div className={styles['app-wrapper']}>
-            <header className={styles['app-header']}>APP HEADER</header>
+            <Header />
             <main className={styles['app-content']}>{children}</main>
-            <footer className={styles['app-footer']}>APP FOOTER</footer>
+            <Footer />
           </div>
         </ThemeContextProvider>
       </ErrorBoundary>
