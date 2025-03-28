@@ -9,6 +9,7 @@ import { langActions } from 'shared/model/lang.slice';
 import { useRouter } from 'next/navigation';
 import { pageRoutes } from 'features/navigation/constants/pageRoutes';
 import Image from 'next/image';
+
 //mock user
 const isUser = false;
 
@@ -38,7 +39,7 @@ export const Header = () => {
   return (
     <header className={styles['app-header']}>
       <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
-        <div className="flex  justify-between items-center mx-auto max-w-screen-xl">
+        <div className="flex justify-between items-center mx-auto max-w-screen-xl">
           <div>
             <Select
               id="1"
@@ -102,11 +103,13 @@ export const Header = () => {
             className="hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1"
             id="mobile-menu-2"
           >
-            <Link href="/" className="flex items-center">
+            <Link href={!isUser ? '/' : '/home'} className="flex items-center">
               <Image
                 src="/icon/rest.png"
                 className="mr-3 h-6 sm:h-9"
                 alt="Restful Logo"
+                width={30}
+                height={30}
               />
               <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
                 RESTful API

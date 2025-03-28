@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   distDir: '.next',
-  output: 'export',
+  // output: 'export', needs to deploy on Netlify
   trailingSlash: true,
 };
 
