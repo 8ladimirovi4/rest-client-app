@@ -10,9 +10,6 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { routesActions } from 'shared/model/routes.slice';
 
-//mock user
-const isUser = true;
-
 export const Header = () => {
   const { routes, currentRoute } = useSelector(
     (state: RootState) => state.routes
@@ -23,6 +20,8 @@ export const Header = () => {
 
   const { setRoutes, setCurrentRoute } = routesActions;
   const { setLang } = langActions;
+  const { isUserLoggedIn } = useSelector((state: RootState) => state.user);
+
   const handleSetLanguage = (evt: ChangeEvent<HTMLSelectElement>) => {
     const { value } = evt.target;
     dispatch(setLang({ lang: value }));
@@ -34,8 +33,8 @@ export const Header = () => {
   };
 
   useEffect(() => {
-    dispatch(setRoutes({ isUser }));
-  }, [isUser]);
+    dispatch(setRoutes({ isUserLoggedIn }));
+  }, [isUserLoggedIn]);
 
   return (
     <header className={styles['app-header']}>
@@ -57,21 +56,23 @@ export const Header = () => {
               value={lang}
               onChange={handleSetLanguage}
             />
-            {!isUser && (
+            {!isUserLoggedIn && (
               <>
                 <Link
-                  href={!isUser ? '/' : '/home'}
+                  href={!isUserLoggedIn ? '/' : '/home'}
                   onClick={() => {
-                    dispatch(setCurrentRoute(!isUser ? '/' : '/home'));
+                    dispatch(setCurrentRoute(!isUserLoggedIn ? '/' : '/home'));
                   }}
                   className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800  whitespace-nowrap"
                 >
                   Sign In
                 </Link>
                 <Link
-                  href={!isUser ? '/register' : '/home'}
+                  href={!isUserLoggedIn ? '/register' : '/home'}
                   onClick={() => {
-                    dispatch(setCurrentRoute(!isUser ? '/register' : '/home'));
+                    dispatch(
+                      setCurrentRoute(!isUserLoggedIn ? '/register' : '/home')
+                    );
                   }}
                   className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800  whitespace-nowrap"
                 >
@@ -79,11 +80,13 @@ export const Header = () => {
                 </Link>
               </>
             )}
-            {isUser && (
+            {isUserLoggedIn && (
               <Link
-                href={!isUser ? '/login' : '/home'}
+                href={!isUserLoggedIn ? '/login' : '/home'}
                 onClick={() => {
-                  dispatch(setCurrentRoute(!isUser ? '/login' : '/home'));
+                  dispatch(
+                    setCurrentRoute(!isUserLoggedIn ? '/login' : '/home')
+                  );
                 }}
                 className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800  whitespace-nowrap"
               >
@@ -129,9 +132,9 @@ export const Header = () => {
             id="mobile-menu-2"
           >
             <Link
-              href={!isUser ? '/' : '/home'}
+              href={!isUserLoggedIn ? '/' : '/home'}
               onClick={() => {
-                dispatch(setCurrentRoute(!isUser ? '/' : '/home'));
+                dispatch(setCurrentRoute(!isUserLoggedIn ? '/' : '/home'));
               }}
               className="flex items-center"
             >

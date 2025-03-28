@@ -10,6 +10,7 @@ interface UserState {
   user: User;
   loading: boolean;
   error: string | null;
+  isUserLoggedIn: boolean;
 }
 
 const initialState: UserState = {
@@ -20,6 +21,7 @@ const initialState: UserState = {
   },
   loading: false,
   error: null,
+  isUserLoggedIn: false,
 };
 
 const userSlice = createSlice({
@@ -30,6 +32,7 @@ const userSlice = createSlice({
       state.user = action.payload;
       state.loading = false;
       state.error = null;
+      state.isUserLoggedIn = true;
     },
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.loading = action.payload;
@@ -46,6 +49,7 @@ const userSlice = createSlice({
       };
       state.loading = false;
       state.error = null;
+      state.isUserLoggedIn = false;
     },
   },
 });

@@ -16,11 +16,11 @@ const langSlice = createSlice({
   reducers: {
     setRoutes: (
       state: RoutesState,
-      action: PayloadAction<{ isUser: boolean }>
+      action: PayloadAction<{ isUserLoggedIn: boolean }>
     ) => {
-      const { isUser } = action.payload;
+      const { isUserLoggedIn } = action.payload;
       state.routes = routes.filter((route) => {
-        if (!isUser) return route.type === 'public';
+        if (!isUserLoggedIn) return route.type === 'public';
         return route.type === 'protected';
       });
     },
