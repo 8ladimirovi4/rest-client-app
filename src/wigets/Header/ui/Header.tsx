@@ -57,15 +57,39 @@ export const Header = () => {
               value={lang}
               onChange={handleSetLanguage}
             />
-            <div className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800  whitespace-nowrap">
-              Sign In
-            </div>
-            <div className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800  whitespace-nowrap">
-              Sign Up
-            </div>
-            <div className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800  whitespace-nowrap">
-              Sign Out
-            </div>
+            {!isUser && (
+              <>
+                <Link
+                  href={!isUser ? '/' : '/home'}
+                  onClick={() => {
+                    dispatch(setCurrentRoute(!isUser ? '/' : '/home'));
+                  }}
+                  className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800  whitespace-nowrap"
+                >
+                  Sign In
+                </Link>
+                <Link
+                  href={!isUser ? '/register' : '/home'}
+                  onClick={() => {
+                    dispatch(setCurrentRoute(!isUser ? '/register' : '/home'));
+                  }}
+                  className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800  whitespace-nowrap"
+                >
+                  Sign Up
+                </Link>
+              </>
+            )}
+            {isUser && (
+              <Link
+                href={!isUser ? '/login' : '/home'}
+                onClick={() => {
+                  dispatch(setCurrentRoute(!isUser ? '/login' : '/home'));
+                }}
+                className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800  whitespace-nowrap"
+              >
+                Sign Out
+              </Link>
+            )}
             <button
               data-collapse-toggle="mobile-menu-2"
               type="button"
