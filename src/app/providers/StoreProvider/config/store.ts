@@ -3,11 +3,13 @@ import { setupListeners } from '@reduxjs/toolkit/query';
 import { alertSliceReducer } from 'shared/model/alert.slice';
 import { langSliceReducer } from 'shared/model/lang.slice';
 import { routesSliceReducer } from 'shared/model/routes.slice';
+import { userReducer } from 'shared/model/user.slice.ts';
 
 const rootReducer = combineSlices({
   alert: alertSliceReducer,
   lang: langSliceReducer,
   routes: routesSliceReducer,
+  user: userReducer,
 });
 export type RootState = ReturnType<typeof rootReducer>;
 
@@ -23,3 +25,4 @@ export const makeStore = (preloadedState?: Partial<RootState>) => {
 export const store = makeStore();
 
 export type AppStore = typeof store;
+export type AppDispatch = ReturnType<typeof makeStore>['dispatch'];

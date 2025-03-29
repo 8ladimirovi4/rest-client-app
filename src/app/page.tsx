@@ -1,5 +1,7 @@
+import { LoginUser } from 'features/LoginUser';
+
 const PageAuth = () => {
-  return <h1>Auth page</h1>;
+  return <LoginUser />;
 };
 
 export default PageAuth;
