@@ -6,17 +6,20 @@ import { Provider } from 'react-redux';
 import { store } from 'app/providers/StoreProvider/config/store';
 import styles from './styles.module.css';
 import { ErrorFallback, Footer, Header } from 'wigets/index';
+import { AuthProvider } from 'app/providers/AuthProvider';
 
 export const GlobalLayout = ({ children }: { children: ReactNode }) => {
   return (
     <Provider store={store}>
       <ErrorBoundary errorComponent={ErrorFallback}>
         <ThemeContextProvider>
-          <div className={styles['app-wrapper']}>
-            <Header />
-            <main className={styles['app-content']}>{children}</main>
-            <Footer />
-          </div>
+          <AuthProvider>
+            <div className={styles['app-wrapper']}>
+              <Header />
+              <main className={styles['app-content']}>{children}</main>
+              <Footer />
+            </div>
+          </AuthProvider>
         </ThemeContextProvider>
       </ErrorBoundary>
     </Provider>
