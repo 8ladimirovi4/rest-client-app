@@ -6,66 +6,81 @@ import { Select } from 'shared/index';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'app/providers/StoreProvider/config/store.ts';
 import { langActions } from 'shared/model/lang.slice';
-import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { routesActions } from 'shared/model/routes.slice';
-
-//mock user
-const isUser = true;
+import { Logout } from 'features/LogoutUser';
 
 export const Header = () => {
-  const { routes, currentRoute } = useSelector(
-    (state: RootState) => state.routes
-  );
   const { lang, langs } = useSelector((state: RootState) => state.lang);
   const dispatch = useDispatch();
-  const router = useRouter();
 
   const { setRoutes, setCurrentRoute } = routesActions;
   const { setLang } = langActions;
+  const { isUserLoggedIn } = useSelector((state: RootState) => state.user);
+
   const handleSetLanguage = (evt: ChangeEvent<HTMLSelectElement>) => {
     const { value } = evt.target;
     dispatch(setLang({ lang: value }));
   };
-  const handleNavigate = (evt: ChangeEvent<HTMLSelectElement>) => {
-    const route = evt.target.value;
-    dispatch(setCurrentRoute(route));
-    router.push(route);
-  };
 
   useEffect(() => {
-    dispatch(setRoutes({ isUser }));
-  }, [isUser]);
+    dispatch(setRoutes({ isUserLoggedIn }));
+  }, [isUserLoggedIn]);
 
   return (
     <header className={styles['app-header']}>
       <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
         <div className="flex justify-between items-center mx-auto max-w-screen-xl">
-          <div>
-            <Select
-              id="1"
-              options={routes}
-              value={currentRoute}
-              onChange={handleNavigate}
-              width={150}
+          <Link
+            href={!isUserLoggedIn ? '/' : '/home'}
+            onClick={() => {
+              dispatch(setCurrentRoute(!isUserLoggedIn ? '/' : '/home'));
+            }}
+            className="flex items-center"
+          >
+            <Image
+              src="/icon/rest.png"
+              className="mr-3  "
+              alt="Restful Logo"
+              width={30}
+              height={30}
             />
-          </div>
+            <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
+              RESTful API
+            </span>
+          </Link>
           <div className="flex items-center lg:order-2">
             <Select
-              id="2"
+              id="1"
               options={langs}
               value={lang}
               onChange={handleSetLanguage}
             />
-            <div className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800  whitespace-nowrap">
-              Sign In
-            </div>
-            <div className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800  whitespace-nowrap">
-              Sign Up
-            </div>
-            <div className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800  whitespace-nowrap">
-              Sign Out
-            </div>
+            {!isUserLoggedIn && (
+              <>
+                <Link
+                  href={!isUserLoggedIn ? '/' : '/home'}
+                  onClick={() => {
+                    dispatch(setCurrentRoute(!isUserLoggedIn ? '/' : '/home'));
+                  }}
+                  className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800  whitespace-nowrap"
+                >
+                  Sign In
+                </Link>
+                <Link
+                  href={!isUserLoggedIn ? '/register' : '/home'}
+                  onClick={() => {
+                    dispatch(
+                      setCurrentRoute(!isUserLoggedIn ? '/register' : '/home')
+                    );
+                  }}
+                  className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800  whitespace-nowrap"
+                >
+                  Sign Up
+                </Link>
+              </>
+            )}
+            {isUserLoggedIn && <Logout isUserLoggedIn={isUserLoggedIn} />}
             <button
               data-collapse-toggle="mobile-menu-2"
               type="button"
@@ -103,26 +118,7 @@ export const Header = () => {
           <div
             className="hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1"
             id="mobile-menu-2"
-          >
-            <Link
-              href={!isUser ? '/' : '/home'}
-              onClick={() => {
-                dispatch(setCurrentRoute(!isUser ? '/' : '/home'));
-              }}
-              className="flex items-center"
-            >
-              <Image
-                src="/icon/rest.png"
-                className="mr-3 h-6 sm:h-9"
-                alt="Restful Logo"
-                width={30}
-                height={30}
-              />
-              <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
-                RESTful API
-              </span>
-            </Link>
-          </div>
+          ></div>
         </div>
       </nav>
     </header>

@@ -2,6 +2,11 @@ import { InputProps } from './types';
 import styles from './styles.module.css';
 import { Label } from '../Label/Label';
 
+interface Props extends InputProps {
+  type: string;
+  error?: string;
+}
+
 export const Input = ({
   id,
   disabled = false,
@@ -10,7 +15,9 @@ export const Input = ({
   label,
   value,
   onChange,
-}: InputProps) => {
+  type,
+  error,
+}: Props) => {
   return (
     <div className={styles['input-wrappet']}>
       {label && <Label label={label} id={id} />}
@@ -23,10 +30,11 @@ export const Input = ({
         id={id}
         disabled={disabled}
         placeholder={placeholder}
-        type="text"
-        value={value}
+        type={type}
+        value={value ?? ''}
         onChange={onChange}
       />
+      {error && <p className={styles['error-message']}>{error}</p>}
     </div>
   );
 };
