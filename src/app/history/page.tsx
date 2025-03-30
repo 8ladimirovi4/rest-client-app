@@ -4,9 +4,9 @@ const PageHistory = () => {
   return (
     <>
       <h1>History Page</h1>
-      <History/>
+      <History />
     </>
-  )
-}
+  );
+};
 
-export default PageHistory
+export default PageHistory;

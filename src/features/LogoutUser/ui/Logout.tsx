@@ -32,4 +32,4 @@ export const Logout = ({ isUserLoggedIn }: Props) => {
   );
 };
 
-Logout.displayName = 'Logout'
+Logout.displayName = 'Logout';

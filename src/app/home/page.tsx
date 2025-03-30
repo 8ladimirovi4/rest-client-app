@@ -2,12 +2,12 @@ import { Home } from 'entities/Home/ui/Home';
 import React from 'react';
 
 const PageHome = () => {
-  return(
+  return (
     <div>
-    <h1>HomePage</h1>
-    <Home/>
+      <h1>HomePage</h1>
+      <Home />
     </div>
-  ) 
+  );
 };
 
 export default PageHome;

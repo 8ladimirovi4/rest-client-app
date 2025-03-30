@@ -161,4 +161,4 @@ export function CreateUser() {
   );
 }
 
-CreateUser.displayName = "CreateUser"
+CreateUser.displayName = 'CreateUser';

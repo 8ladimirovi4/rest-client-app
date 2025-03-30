@@ -1,8 +1,8 @@
-'use client'
-import React from 'react'
+'use client';
+import React from 'react';
 
 export const History = () => {
-  return null
-}
+  return null;
+};
 
-History.displayName = 'History'
+History.displayName = 'History';

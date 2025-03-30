@@ -31,24 +31,24 @@ export const Header = () => {
     <header className={styles['app-header']}>
       <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
         <div className="flex justify-between items-center mx-auto max-w-screen-xl">
-        <Link
-              href={!isUserLoggedIn ? '/' : '/home'}
-              onClick={() => {
-                dispatch(setCurrentRoute(!isUserLoggedIn ? '/' : '/home'));
-              }}
-              className="flex items-center"
-            >
-              <Image
-                src="/icon/rest.png"
-                className="mr-3  "
-                alt="Restful Logo"
-                width={30}
-                height={30}
-              />
-              <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
-                RESTful API
-              </span>
-            </Link>
+          <Link
+            href={!isUserLoggedIn ? '/' : '/home'}
+            onClick={() => {
+              dispatch(setCurrentRoute(!isUserLoggedIn ? '/' : '/home'));
+            }}
+            className="flex items-center"
+          >
+            <Image
+              src="/icon/rest.png"
+              className="mr-3  "
+              alt="Restful Logo"
+              width={30}
+              height={30}
+            />
+            <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
+              RESTful API
+            </span>
+          </Link>
           <div className="flex items-center lg:order-2">
             <Select
               id="1"
@@ -118,9 +118,7 @@ export const Header = () => {
           <div
             className="hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1"
             id="mobile-menu-2"
-          >
-        
-          </div>
+          ></div>
         </div>
       </nav>
     </header>

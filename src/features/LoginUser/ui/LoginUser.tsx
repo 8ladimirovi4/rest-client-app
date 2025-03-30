@@ -135,4 +135,4 @@ export function LoginUser() {
   );
 }
 
-LoginUser.displayName = 'LoginUser'
+LoginUser.displayName = 'LoginUser';
