@@ -6,18 +6,13 @@ import { Select } from 'shared/index';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'app/providers/StoreProvider/config/store.ts';
 import { langActions } from 'shared/model/lang.slice';
-import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { routesActions } from 'shared/model/routes.slice';
 import { Logout } from 'features/LogoutUser';
 
 export const Header = () => {
-  const { routes, currentRoute } = useSelector(
-    (state: RootState) => state.routes
-  );
   const { lang, langs } = useSelector((state: RootState) => state.lang);
   const dispatch = useDispatch();
-  const router = useRouter();
 
   const { setRoutes, setCurrentRoute } = routesActions;
   const { setLang } = langActions;
@@ -26,11 +21,6 @@ export const Header = () => {
   const handleSetLanguage = (evt: ChangeEvent<HTMLSelectElement>) => {
     const { value } = evt.target;
     dispatch(setLang({ lang: value }));
-  };
-  const handleNavigate = (evt: ChangeEvent<HTMLSelectElement>) => {
-    const route = evt.target.value;
-    dispatch(setCurrentRoute(route));
-    router.push(route);
   };
 
   useEffect(() => {
@@ -41,18 +31,27 @@ export const Header = () => {
     <header className={styles['app-header']}>
       <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
         <div className="flex justify-between items-center mx-auto max-w-screen-xl">
-          <div>
-            <Select
-              id="1"
-              options={routes}
-              value={currentRoute}
-              onChange={handleNavigate}
-              width={150}
-            />
-          </div>
+        <Link
+              href={!isUserLoggedIn ? '/' : '/home'}
+              onClick={() => {
+                dispatch(setCurrentRoute(!isUserLoggedIn ? '/' : '/home'));
+              }}
+              className="flex items-center"
+            >
+              <Image
+                src="/icon/rest.png"
+                className="mr-3  "
+                alt="Restful Logo"
+                width={30}
+                height={30}
+              />
+              <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
+                RESTful API
+              </span>
+            </Link>
           <div className="flex items-center lg:order-2">
             <Select
-              id="2"
+              id="1"
               options={langs}
               value={lang}
               onChange={handleSetLanguage}
@@ -120,24 +119,7 @@ export const Header = () => {
             className="hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1"
             id="mobile-menu-2"
           >
-            <Link
-              href={!isUserLoggedIn ? '/' : '/home'}
-              onClick={() => {
-                dispatch(setCurrentRoute(!isUserLoggedIn ? '/' : '/home'));
-              }}
-              className="flex items-center"
-            >
-              <Image
-                src="/icon/rest.png"
-                className="mr-3 h-6 sm:h-9"
-                alt="Restful Logo"
-                width={30}
-                height={30}
-              />
-              <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
-                RESTful API
-              </span>
-            </Link>
+        
           </div>
         </div>
       </nav>

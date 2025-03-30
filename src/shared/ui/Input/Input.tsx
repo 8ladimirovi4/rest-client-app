@@ -31,7 +31,7 @@ export const Input = ({
         disabled={disabled}
         placeholder={placeholder}
         type={type}
-        value={value}
+        value={value ?? ''}
         onChange={onChange}
       />
       {error && <p className={styles['error-message']}>{error}</p>}

@@ -31,3 +31,5 @@ export const Logout = ({ isUserLoggedIn }: Props) => {
     </Link>
   );
 };
+
+Logout.displayName = 'Logout'

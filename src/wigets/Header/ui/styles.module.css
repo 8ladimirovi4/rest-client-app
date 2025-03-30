@@ -3,4 +3,5 @@
   position: sticky;
   top: 0px;
   background-color: white;
+  min-width: 500px;
 }
