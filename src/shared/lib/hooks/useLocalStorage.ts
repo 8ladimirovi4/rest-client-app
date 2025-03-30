@@ -12,14 +12,19 @@ export function useLocalStorage<T>({
   defaultValue,
 }: UseLocalStorageArgs<T>): [T, React.Dispatch<T>] {
   const [value, setValue] = useState<T>(() => {
-    if (typeof window === 'undefined') return defaultValue;
-
+    if (typeof window === 'undefined') return defaultValue; // Безопасность для SSR
     try {
-      const value = window.localStorage.getItem(key);
-      return value ? JSON.parse(value) : defaultValue;
+      const rawValue = window.localStorage.getItem(key);
+      if (rawValue) {
+        // Проверка, является ли строка JSON
+        return rawValue.startsWith("{") || rawValue.startsWith("[") || rawValue.startsWith('"')
+          ? JSON.parse(rawValue)
+          : rawValue ?? defaultValue;
+      }
+      return defaultValue; // Если записи нет, вернуть значение по умолчанию
     } catch (e) {
       console.log('Error while getting value from localStorage', e);
-      return defaultValue;
+      return defaultValue; // В случае ошибки вернуть значение по умолчанию
     }
   });
 
