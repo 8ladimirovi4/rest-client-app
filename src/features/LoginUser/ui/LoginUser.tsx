@@ -22,6 +22,7 @@ import { loginSchema } from 'shared/lib/validation/loginSchema.ts';
 import { getPasswordStrength } from 'shared/lib/password/getPasswordStrength.ts';
 import { routesActions } from 'shared/model/routes.slice';
 import { signInWithEmailAndPassword } from 'firebase/auth';
+import { AuthGuards } from 'shared/lib/AuthGuard/AuthGuards.tsx';
 
 interface User {
   email: string;
@@ -44,8 +45,9 @@ export function LoginUser() {
     strength = getPasswordStrength(password);
   }
   const dispatch = useDispatch<AppDispatch>();
-  const { loading, error } = useSelector((state: RootState) => state.user);
-
+  const { loading, error, isAuthChecked } = useSelector(
+    (state: RootState) => state.user
+  );
   const router = useRouter();
 
   const handleSubmitForm = async (data: User) => {
@@ -71,8 +73,8 @@ export function LoginUser() {
             uid: user.uid,
           })
         );
-        router.push('/home');
-        dispatch(routesActions.setCurrentRoute('/home'));
+        router.push('/');
+        dispatch(routesActions.setCurrentRoute('/'));
         return userData;
       } else {
         return null;
@@ -86,52 +88,59 @@ export function LoginUser() {
     }
   };
 
+  if (!isAuthChecked) return null;
+
   return (
-    <div className={styles.container}>
-      <h3 className={styles.title}>Sign In</h3>
-      {loading ? (
-        <Spinner />
-      ) : (
-        <form className={styles.form} onSubmit={handleSubmit(handleSubmitForm)}>
-          <Controller
-            name="email"
-            control={control}
-            render={({ field }) => (
-              <Input
-                {...field}
-                error={errors.email?.message}
-                placeholder={'Email'}
-                label={'Email'}
-                type={'text'}
-                id={'email'}
-              />
-            )}
-          />
-          <Controller
-            name="password"
-            control={control}
-            render={({ field }) => (
-              <Input
-                {...field}
-                error={errors.password?.message}
-                placeholder={'Password'}
-                label={'Password'}
-                type={'password'}
-                id={'password'}
-              />
-            )}
-          />
-          <div className={styles['progress-bar']}>
-            <div
-              className={`${styles['progress-fill']} ${styles[`strength-${strength}`]}`}
-              style={{ width: `${(strength / 5) * 100}%` }}
+    <AuthGuards requireAuth={false}>
+      <div className={styles.container}>
+        <h3 className={styles.title}>Sign In</h3>
+        {loading ? (
+          <Spinner />
+        ) : (
+          <form
+            className={styles.form}
+            onSubmit={handleSubmit(handleSubmitForm)}
+          >
+            <Controller
+              name="email"
+              control={control}
+              render={({ field }) => (
+                <Input
+                  {...field}
+                  error={errors.email?.message}
+                  placeholder={'Email'}
+                  label={'Email'}
+                  type={'text'}
+                  id={'email'}
+                />
+              )}
             />
-          </div>
-          <Button title="Login" type="submit" disabled={!isValid}></Button>
-        </form>
-      )}
-      {error && <p className={styles['error-message']}>{error}</p>}
-    </div>
+            <Controller
+              name="password"
+              control={control}
+              render={({ field }) => (
+                <Input
+                  {...field}
+                  error={errors.password?.message}
+                  placeholder={'Password'}
+                  label={'Password'}
+                  type={'password'}
+                  id={'password'}
+                />
+              )}
+            />
+            <div className={styles['progress-bar']}>
+              <div
+                className={`${styles['progress-fill']} ${styles[`strength-${strength}`]}`}
+                style={{ width: `${(strength / 5) * 100}%` }}
+              />
+            </div>
+            <Button title="Login" type="submit" disabled={!isValid}></Button>
+          </form>
+        )}
+        {error && <p className={styles['error-message']}>{error}</p>}
+      </div>
+    </AuthGuards>
   );
 }
 
