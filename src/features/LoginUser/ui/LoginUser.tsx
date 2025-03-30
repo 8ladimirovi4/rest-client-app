@@ -134,3 +134,5 @@ export function LoginUser() {
     </div>
   );
 }
+
+LoginUser.displayName = 'LoginUser';

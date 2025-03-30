@@ -160,3 +160,5 @@ export function CreateUser() {
     </div>
   );
 }
+
+CreateUser.displayName = 'CreateUser';
