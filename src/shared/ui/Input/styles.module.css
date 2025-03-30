@@ -9,3 +9,8 @@
   font-size: 16px;
   color: #6f6f6f;
 }
+
+.error-message {
+  color: #ff8b00;
+  margin-top: 15px;
+}
