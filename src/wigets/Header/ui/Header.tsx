@@ -14,17 +14,17 @@ import { langActions } from 'shared/model/lang.slice';
 export const Header = () => {
   const dispatch = useDispatch();
   const [_, setLocalStoragelang] = useLocalStorage({
-      key: 'lang',
-      defaultValue: 'en',
-    });
-  const {lang} = useSelector((state:RootState) => state.lang)
+    key: 'lang',
+    defaultValue: 'en',
+  });
+  const { lang } = useSelector((state: RootState) => state.lang);
   const { isUserLoggedIn } = useSelector((state: RootState) => state.user);
 
-  const {setLang} = langActions
+  const { setLang } = langActions;
   const handleSetLanguage = (evt: ChangeEvent<HTMLSelectElement>) => {
     const { value } = evt.target;
     setLocalStoragelang(value);
-    dispatch(setLang({value}))
+    dispatch(setLang({ value }));
   };
 
   return (
@@ -33,8 +33,7 @@ export const Header = () => {
         <div className="flex justify-between items-center mx-auto max-w-screen-xl">
           <Link
             href={!isUserLoggedIn ? '/' : '/home'}
-            onClick={() => {
-            }}
+            onClick={() => {}}
             className="flex items-center"
           >
             <Image
@@ -59,16 +58,14 @@ export const Header = () => {
               <>
                 <Link
                   href={!isUserLoggedIn ? '/' : '/home'}
-                  onClick={() => {
-                  }}
+                  onClick={() => {}}
                   className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800  whitespace-nowrap"
                 >
                   Sign In
                 </Link>
                 <Link
                   href={!isUserLoggedIn ? '/register' : '/home'}
-                  onClick={() => {
-                  }}
+                  onClick={() => {}}
                   className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800  whitespace-nowrap"
                 >
                   Sign Up

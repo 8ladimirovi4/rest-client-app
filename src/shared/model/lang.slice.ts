@@ -5,7 +5,7 @@ import { LANGS } from 'shared/constants/langs';
 
 const initialState: LangState = {
   lang: 'en',
-  langs: LANGS
+  langs: LANGS,
 };
 
 const langSlice = createSlice({

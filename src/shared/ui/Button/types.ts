@@ -5,7 +5,7 @@ export interface ButtonProps {
   color?: string;
   disabled?: boolean;
   type?: 'button' | 'submit' | 'reset';
-  width?: number,
-  height?: number,
+  width?: number;
+  height?: number;
 }
 export type Color = 'blue' | 'red' | 'gray';
