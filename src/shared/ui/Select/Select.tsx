@@ -1,3 +1,5 @@
+'use client'
+import { useEffect } from 'react';
 import { Label } from '../Label/Label';
 import { SelectProps } from './types';
 
@@ -12,6 +14,7 @@ export const Select = ({
   width = 100,
   height = 40,
 }: SelectProps) => {
+ 
   return (
     <div className='className="flex items-center justify-center w-full'>
       {label && <Label label={label} id={id} />}

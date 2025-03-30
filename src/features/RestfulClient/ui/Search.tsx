@@ -1,18 +1,61 @@
-import React from 'react'
+import React, { ChangeEvent, useEffect, useLayoutEffect } from 'react'
 import styles from './styles.module.css'
 import { Select, Input, Button} from 'shared/index'
+import { METHODS } from 'shared/constants/http-methods'
+import { useRouter } from 'next/navigation'
+import { useLocalStorage } from 'shared/lib/hooks/useLocalStorage'
 
 const Search = () => {
+  const router = useRouter();
+  const[method, setMethod] = useLocalStorage({
+        key: 'method',
+        defaultValue: 'GET'
+      })
+      const[link, setLink] = useLocalStorage({
+        key: 'link',
+        defaultValue: ''
+      })
+
+      const handleMethodSelect = (evt: ChangeEvent<HTMLSelectElement>) => {
+        const {value} = evt.target
+        setMethod(value)
+        router.push(`/${value}?link=${encodeURIComponent(link)}`);
+      }
+
+      const handleSetLink = (evt:ChangeEvent<HTMLInputElement>) => {
+        setLink(evt.target.value)
+      }
+
+      const handleSubmit = () => {
+        router.push(`/${method}?link=${encodeURIComponent(link)}`);
+      };
+
   return (
     <div className={styles["restful-wrapper_search-container"]}>
         <div className={styles["restful-wrapper_search-container_select"]}>
-    <Select height={50}/>
+    <Select 
+    id='1' 
+    options={METHODS} 
+    height={50} 
+    width={130}
+    value={method}
+    onChange={handleMethodSelect}
+    />
       </div>
       <div className={styles["restful-wrapper_search-container_input"]}>
-    <Input/>
+    <Input 
+    id='1' 
+    type='text'
+    value={link}
+    onChange={handleSetLink}
+    />
     </div>
     <div className={styles["restful-wrapper_search-container_button"]}>
-    <Button title={'SEND'} height={50}/>
+    <Button 
+    title={'SEND'} 
+    height={50}
+    onClick={handleSubmit}
+    />
     </div>
     </div>
   )
