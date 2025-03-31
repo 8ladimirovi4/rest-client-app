@@ -29,6 +29,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           return null;
         }
       }
+      dispatch(userActions.setIsAuthChecked(true));
     });
 
     return () => {

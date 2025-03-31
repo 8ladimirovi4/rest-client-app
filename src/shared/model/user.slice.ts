@@ -11,6 +11,7 @@ interface UserState {
   loading: boolean;
   error: string | null;
   isUserLoggedIn: boolean;
+  isAuthChecked: boolean;
 }
 
 const initialState: UserState = {
@@ -22,6 +23,7 @@ const initialState: UserState = {
   loading: false,
   error: null,
   isUserLoggedIn: false,
+  isAuthChecked: false,
 };
 
 const userSlice = createSlice({
@@ -40,6 +42,9 @@ const userSlice = createSlice({
     setError: (state, action: PayloadAction<string | null>) => {
       state.error = action.payload;
       state.loading = false;
+    },
+    setIsAuthChecked: (state, action: PayloadAction<boolean>) => {
+      state.isAuthChecked = action.payload;
     },
     clearUser: (state) => {
       state.user = {

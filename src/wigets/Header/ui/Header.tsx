@@ -16,7 +16,9 @@ export const Header = () => {
 
   const { setRoutes, setCurrentRoute } = routesActions;
   const { setLang } = langActions;
-  const { isUserLoggedIn } = useSelector((state: RootState) => state.user);
+  const { isUserLoggedIn, isAuthChecked } = useSelector(
+    (state: RootState) => state.user
+  );
 
   const handleSetLanguage = (evt: ChangeEvent<HTMLSelectElement>) => {
     const { value } = evt.target;
@@ -25,14 +27,14 @@ export const Header = () => {
 
   useEffect(() => {
     dispatch(setRoutes({ isUserLoggedIn }));
-  }, [isUserLoggedIn]);
+  }, [isUserLoggedIn, setRoutes, dispatch]);
 
   return (
     <header className={styles['app-header']}>
       <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
         <div className="flex justify-between items-center mx-auto max-w-screen-xl">
           <Link
-            href={!isUserLoggedIn ? '/' : '/home'}
+            href={!isUserLoggedIn ? '/login' : '/'}
             onClick={() => {
               dispatch(setCurrentRoute(!isUserLoggedIn ? '/' : '/home'));
             }}
@@ -56,22 +58,22 @@ export const Header = () => {
               value={lang}
               onChange={handleSetLanguage}
             />
-            {!isUserLoggedIn && (
+            {!isUserLoggedIn && isAuthChecked && (
               <>
                 <Link
-                  href={!isUserLoggedIn ? '/' : '/home'}
+                  href={!isUserLoggedIn ? '/login' : '/'}
                   onClick={() => {
-                    dispatch(setCurrentRoute(!isUserLoggedIn ? '/' : '/home'));
+                    dispatch(setCurrentRoute(!isUserLoggedIn ? '/login' : '/'));
                   }}
                   className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800  whitespace-nowrap"
                 >
                   Sign In
                 </Link>
                 <Link
-                  href={!isUserLoggedIn ? '/register' : '/home'}
+                  href={!isUserLoggedIn ? '/register' : '/'}
                   onClick={() => {
                     dispatch(
-                      setCurrentRoute(!isUserLoggedIn ? '/register' : '/home')
+                      setCurrentRoute(!isUserLoggedIn ? '/register' : '/')
                     );
                   }}
                   className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800  whitespace-nowrap"
@@ -80,7 +82,9 @@ export const Header = () => {
                 </Link>
               </>
             )}
-            {isUserLoggedIn && <Logout isUserLoggedIn={isUserLoggedIn} />}
+            {isUserLoggedIn && isAuthChecked && (
+              <Logout isUserLoggedIn={isUserLoggedIn} />
+            )}
             <button
               data-collapse-toggle="mobile-menu-2"
               type="button"
