@@ -1,10 +1,19 @@
 'use client';
 import { Button, Input } from 'shared/index';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './styles.module.css';
-import { QueryTabProps } from '../types';
+import { useDispatch } from 'react-redux';
+import { apiRequestActions } from 'shared/model/apiRequest.slice';
 
-export const QueryTab = ({ setQueryParams, queryParams }: QueryTabProps) => {
+export const QueryTab = () => {
+  const [queryParams, setQueryParams] = useState([{ key: '', value: '' }]);
+  const dispatch = useDispatch()
+  // const [query, setQuery] = useLocalStorage({
+  //   key: 'query',
+  //   defaultValue: '[{ key: "", value: ""}]',
+  // });
+
+  const {setQuery} = apiRequestActions
   const addQueryParam = () => {
     setQueryParams([...queryParams, { key: '', value: '' }]);
   };
@@ -18,13 +27,15 @@ export const QueryTab = ({ setQueryParams, queryParams }: QueryTabProps) => {
     const newParams = [...queryParams];
     newParams[idx] = { key, value };
     setQueryParams(newParams);
+    dispatch(setQuery({query:newParams}))
   };
+
   return (
     <div>
       {queryParams.map((param, idx) => (
         <div
           key={idx}
-          className={styles['restful-wrapper_tabview-container_query']}
+          className={ styles['restful-wrapper_tabview-container_query']}
         >
           <Input
             id={idx.toString()}

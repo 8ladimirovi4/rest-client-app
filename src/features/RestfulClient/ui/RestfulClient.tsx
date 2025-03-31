@@ -1,3 +1,4 @@
+//@ts-nocheck
 'use client';
 import React, { useState } from 'react';
 import { TabView } from './TabView';
@@ -5,58 +6,51 @@ import styles from './styles.module.css';
 import Search from './Search';
 import { QueryTab } from './QueryTab';
 import { useLocalStorage } from 'shared/lib/hooks/useLocalStorage';
+import { apiRequest } from 'shared/api/apiRequest';
+import { useSelector } from 'react-redux';
+import { RootState } from 'app/providers/StoreProvider/config/store';
 
 export const RestfulClient = () => {
-  const [queryParams, setQueryParams] = useState([{ key: '', value: '' }]);
   const [response, setResponse] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [apiUrl] = useLocalStorage({
-    key: 'link',
-    defaultValue: '',
-  });
-
-  const buildUrl = () => {
-    const params = queryParams
-      .filter(({ key }) => key.trim() !== '')
-      .map(
-        ({ key, value }) =>
-          `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
-      )
-      .join('&');
-
-    return params ? `${apiUrl}?${params}` : apiUrl;
-  };
-
-  const finalUrl = `/api/proxy?url=${encodeURIComponent(buildUrl())}`;
+  const {browserUrl, method, query} = useSelector((state: RootState) => state.apiRequest)
 
   const fetchData = async () => {
-    setLoading(true);
-    setError('');
-    setResponse(null);
+    const data = await apiRequest({
+      browserUrl:`/api/proxy?url=${browserUrl}`,
+      method,
+      query
+    })
+    setResponse(data)
+  }
+  // const fetchData = async () => {
+  //   setLoading(true);
+  //   setError('');
+  //   setResponse(null);
 
-    if (!apiUrl.trim()) {
-      setError('Set API URL');
-      setLoading(false);
-      return;
-    }
+  //   if (!apiUrl.trim()) {
+  //     setError('Set API URL');
+  //     setLoading(false);
+  //     return;
+  //   }
 
-    try {
-      const res = await fetch(finalUrl);
-      const data = await res.json();
+  //   try {
+  //     const res = await fetch(finalUrl);
+  //     const data = await res.json();
 
-      if (!res.ok) {
-        throw new Error(data.error || 'Ошибка запроса');
-      }
+  //     if (!res.ok) {
+  //       throw new Error(data.error || 'Ошибка запроса');
+  //     }
 
-      setResponse(data);
-    } catch (error) {
-      const err = error as Error;
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+  //     setResponse(data);
+  //   } catch (error) {
+  //     const err = error as Error;
+  //     setError(err.message);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   return (
     <div className={styles['restful-wrapper']}>
@@ -68,8 +62,6 @@ export const RestfulClient = () => {
               label: 'QUERY',
               content: (
                 <QueryTab
-                  setQueryParams={setQueryParams}
-                  queryParams={queryParams}
                 />
               ),
             },

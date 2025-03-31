@@ -6,31 +6,41 @@ import { Select, Input, Button } from 'shared/index';
 import { METHODS } from 'shared/constants/http-methods';
 import { useRouter } from 'next/navigation';
 import { useLocalStorage } from 'shared/lib/hooks/useLocalStorage';
+import { useDispatch, useSelector } from 'react-redux';
+import { apiRequestActions } from 'shared/model/apiRequest.slice';
+import { RootState } from 'app/providers/StoreProvider/config/store';
 
 const Search = ({ fetchData }) => {
+  const dispatch = useDispatch()
   const router = useRouter();
-  const [method, setMethod] = useLocalStorage({
-    key: 'method',
-    defaultValue: 'GET',
-  });
-  const [link, setLink] = useLocalStorage({
-    key: 'link',
-    defaultValue: '',
-  });
+  const {browserUrl, method} = useSelector((state:RootState) => state.apiRequest)
+  // const [method, setMethod] = useLocalStorage({
+  //   key: 'method',
+  //   defaultValue: 'GET',
+  // });
+  // const [link, setLink] = useLocalStorage({
+  //   key: 'link',
+  //   defaultValue: '',
+  // });
 
+  const {setBrowserUrl, setMethod} = apiRequestActions
   const handleMethodSelect = (evt: ChangeEvent<HTMLSelectElement>) => {
     const { value } = evt.target;
-    setMethod(value);
-    router.push(`/${value}?link=${encodeURIComponent(link)}`);
+    dispatch(setMethod({method:value}))
+    router.push(`/${value}?link=${encodeURIComponent(browserUrl)}`);
   };
 
   const handleSetLink = (evt: ChangeEvent<HTMLInputElement>) => {
-    setLink(evt.target.value);
+    const {value} = evt.target
+    dispatch(setBrowserUrl({browserUrl:value}))
   };
 
   const handleSendRequest = () => {
-    router.push(`/${method}?link=${encodeURIComponent(link)}`);
+    const defaultMethod = method || 'GET'
+    if(browserUrl != ''){
+    router.push(`/${defaultMethod}?link=${encodeURIComponent(browserUrl)}`);
     fetchData();
+  }
   };
 
   return (
@@ -46,7 +56,7 @@ const Search = ({ fetchData }) => {
         />
       </div>
       <div className={styles['restful-wrapper_search-container_input']}>
-        <Input id="1" type="text" value={link} onChange={handleSetLink} />
+        <Input id="1" type="text" value={browserUrl} onChange={handleSetLink} />
       </div>
       <div className={styles['restful-wrapper_search-container_button']}>
         <Button title={'SEND'} height={50} onClick={handleSendRequest} />
