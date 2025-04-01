@@ -14,6 +14,7 @@ const initialState: ApiRequestState = {
     status: null,
     id: '',
     browserUrl: '',
+    triggerFetch: false
 };
 
 const apiRequestSlice = createSlice({
@@ -41,6 +42,10 @@ const apiRequestSlice = createSlice({
       const {query} = payload
       state.query = query
     },
+    setTriggerFetch: (
+      state: ApiRequestState) => { 
+      state.triggerFetch = !state.triggerFetch
+    }
   },
 });
 

@@ -8,11 +8,7 @@ import { apiRequestActions } from 'shared/model/apiRequest.slice';
 export const QueryTab = () => {
   const [queryParams, setQueryParams] = useState([{ key: '', value: '' }]);
   const dispatch = useDispatch()
-  // const [query, setQuery] = useLocalStorage({
-  //   key: 'query',
-  //   defaultValue: '[{ key: "", value: ""}]',
-  // });
-
+  
   const {setQuery} = apiRequestActions
   const addQueryParam = () => {
     setQueryParams([...queryParams, { key: '', value: '' }]);

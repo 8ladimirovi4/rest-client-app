@@ -49,4 +49,5 @@ export interface ApiRequestState {
   status: number | null;
   id: string;
   browserUrl: string;
+  triggerFetch: boolean;
 }

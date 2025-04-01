@@ -14,16 +14,8 @@ const Search = ({ fetchData }) => {
   const dispatch = useDispatch()
   const router = useRouter();
   const {browserUrl, method} = useSelector((state:RootState) => state.apiRequest)
-  // const [method, setMethod] = useLocalStorage({
-  //   key: 'method',
-  //   defaultValue: 'GET',
-  // });
-  // const [link, setLink] = useLocalStorage({
-  //   key: 'link',
-  //   defaultValue: '',
-  // });
 
-  const {setBrowserUrl, setMethod} = apiRequestActions
+  const {setBrowserUrl, setMethod,setTriggerFetch} = apiRequestActions
   const handleMethodSelect = (evt: ChangeEvent<HTMLSelectElement>) => {
     const { value } = evt.target;
     dispatch(setMethod({method:value}))
@@ -39,7 +31,7 @@ const Search = ({ fetchData }) => {
     const defaultMethod = method || 'GET'
     if(browserUrl != ''){
     router.push(`/${defaultMethod}?link=${encodeURIComponent(browserUrl)}`);
-    fetchData();
+    dispatch(setTriggerFetch())
   }
   };
 

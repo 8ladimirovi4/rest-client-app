@@ -7,13 +7,15 @@ import Search from './Search';
 import { QueryTab } from './QueryTab';
 import { useLocalStorage } from 'shared/lib/hooks/useLocalStorage';
 import { apiRequest } from 'shared/api/apiRequest';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'app/providers/StoreProvider/config/store';
 import { ApiRequestState } from 'shared/model/types';
 import { Spinner } from 'shared/index';
+import { apiRequestActions } from 'shared/model/apiRequest.slice';
 
 export const RestfulClient = () => {
-  const [response, setResponse] = useState(null);
+  const [servResponse, setServResponse] = useState(null);
+  const [servData, setServData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const apiData = useSelector((state: RootState) => state.apiRequest)
@@ -21,18 +23,22 @@ export const RestfulClient = () => {
       key: 'restful-client',
       defaultValue: []
     });
-  const {browserUrl, method, query} = apiData
-  const catchCallback = (error) => {
-    const err = error as Error;
-    setError(err.message);
+
+  const {browserUrl, method, query, triggerFetch} = apiData
+   const {setHistoryReq} = apiRequestActions
+  const resCallback = (res) => {
+    setServResponse(res)
+  }
+  const catchCallback = (error: Error) => {
+    setError(error.message);
   }
   const finnalyCallback = () => {
     setLoading(false);
   }
-  const fetchData = async () => {
+   const fetchData = async () => {
       setLoading(true);
       setError('');
-      setResponse(null);
+      setServData(null);
 
     if (!browserUrl.trim()) {
       setError('Set API URL');
@@ -41,21 +47,24 @@ export const RestfulClient = () => {
     }
 
     const data = await apiRequest({
+      resCallback,
       catchCallback,
       finnalyCallback,
       browserUrl:`/api/proxy?url=${browserUrl}`,
       method,
       query,
-    })
-    
-    
+    }) 
     setApiStoragedData([...storagedData, apiData])
-    setResponse(data)
+    setServData(data)
   }
   
 useEffect(() => {
 if(!storagedData) setApiStoragedData([])
 },[])
+
+useEffect(() => {
+  fetchData()
+},[triggerFetch])
 
   return (
     <div className={styles['restful-wrapper']}>
@@ -87,9 +96,10 @@ if(!storagedData) setApiStoragedData([])
       </div>
       {error && <p style={{ color: 'red', marginTop: 10 }}>{error}</p>}
       {loading && <Spinner/>}
-      {response && (
+      <h1>Response status {servResponse && servResponse.status}</h1>
+      {servData && (
         <pre className={styles['restful-wrapper_respose-text']}>
-          {JSON.stringify(response, null, 2)}
+          {JSON.stringify(servData, null, 2)}
         </pre>
       )}
     </div>

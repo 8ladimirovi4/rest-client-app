@@ -1,5 +1,5 @@
 //@ts-nocheck
-export const apiRequest = async ({catchCallback, finnalyCallback, browserUrl, method = 'GET', query = [], body = null, headers = []}) => {
+export const apiRequest = async ({resCallback, catchCallback, finnalyCallback, browserUrl, method = 'GET', query = [], body = null, headers = []}) => {
   console.log('===>query', query)
     try {
         const queryString = query.length
@@ -31,7 +31,7 @@ export const apiRequest = async ({catchCallback, finnalyCallback, browserUrl, me
       }
   
       const response = await fetch(fullUrl, options);
-  
+      resCallback(response)
       if (!response.ok) {
         throw new Error(`Ошибка: ${response.status} ${response.statusText}`);
       }
