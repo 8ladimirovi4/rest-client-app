@@ -1,5 +1,5 @@
 //@ts-nocheck
-export const apiRequest = async ({ browserUrl, method = 'GET', query = [], body = null, headers = []}) => {
+export const apiRequest = async ({catchCallback, finnalyCallback, browserUrl, method = 'GET', query = [], body = null, headers = []}) => {
   console.log('===>query', query)
     try {
         const queryString = query.length
@@ -40,7 +40,8 @@ export const apiRequest = async ({ browserUrl, method = 'GET', query = [], body 
       return data;
   
     } catch (error) {
-      console.error('Fetch error:', error);
-      throw error; 
-    }
+      catchCallback(error)
+    } finally {
+         finnalyCallback();
+        };
   };

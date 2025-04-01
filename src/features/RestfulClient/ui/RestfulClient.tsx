@@ -10,6 +10,7 @@ import { apiRequest } from 'shared/api/apiRequest';
 import { useSelector } from 'react-redux';
 import { RootState } from 'app/providers/StoreProvider/config/store';
 import { ApiRequestState } from 'shared/model/types';
+import { Spinner } from 'shared/index';
 
 export const RestfulClient = () => {
   const [response, setResponse] = useState(null);
@@ -21,42 +22,37 @@ export const RestfulClient = () => {
       defaultValue: []
     });
   const {browserUrl, method, query} = apiData
+  const catchCallback = (error) => {
+    const err = error as Error;
+    setError(err.message);
+  }
+  const finnalyCallback = () => {
+    setLoading(false);
+  }
   const fetchData = async () => {
+      setLoading(true);
+      setError('');
+      setResponse(null);
+
+    if (!browserUrl.trim()) {
+      setError('Set API URL');
+      setLoading(false);
+      return;
+    }
+
     const data = await apiRequest({
+      catchCallback,
+      finnalyCallback,
       browserUrl:`/api/proxy?url=${browserUrl}`,
       method,
-      query
+      query,
     })
+    
+    
     setApiStoragedData([...storagedData, apiData])
     setResponse(data)
   }
-  // const fetchData = async () => {
-  //   setLoading(true);
-  //   setError('');
-  //   setResponse(null);
-
-  //   if (!apiUrl.trim()) {
-  //     setError('Set API URL');
-  //     setLoading(false);
-  //     return;
-  //   }
-
-  //   try {
-  //     const res = await fetch(finalUrl);
-  //     const data = await res.json();
-
-  //     if (!res.ok) {
-  //       throw new Error(data.error || 'Ошибка запроса');
-  //     }
-
-  //     setResponse(data);
-  //   } catch (error) {
-  //     const err = error as Error;
-  //     setError(err.message);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
+  
 useEffect(() => {
 if(!storagedData) setApiStoragedData([])
 },[])
@@ -90,7 +86,7 @@ if(!storagedData) setApiStoragedData([])
         />
       </div>
       {error && <p style={{ color: 'red', marginTop: 10 }}>{error}</p>}
-
+      {loading && <Spinner/>}
       {response && (
         <pre className={styles['restful-wrapper_respose-text']}>
           {JSON.stringify(response, null, 2)}
