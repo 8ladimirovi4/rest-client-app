@@ -1,5 +1,5 @@
 'use client';
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, useEffect } from 'react';
 import styles from './styles.module.css';
 import Link from 'next/link';
 import { Select } from 'shared/index';
@@ -13,20 +13,24 @@ import { langActions } from 'shared/model/lang.slice';
 
 export const Header = () => {
   const dispatch = useDispatch();
-  const [_, setLocalStoragelang] = useLocalStorage({
+  const [storageLang, setStoragelang] = useLocalStorage<string>({
     key: 'lang',
     defaultValue: 'en',
   });
+
   const { lang } = useSelector((state: RootState) => state.lang);
   const { isUserLoggedIn } = useSelector((state: RootState) => state.user);
 
   const { setLang } = langActions;
   const handleSetLanguage = (evt: ChangeEvent<HTMLSelectElement>) => {
     const { value } = evt.target;
-    setLocalStoragelang(value);
+    setStoragelang(value);
     dispatch(setLang({ value }));
   };
 
+  useEffect(() => {
+    if(!storageLang) setStoragelang('en')
+  },[])
   return (
     <header className={styles['app-header']}>
       <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
