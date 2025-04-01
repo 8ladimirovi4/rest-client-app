@@ -10,6 +10,7 @@ import { Logout } from 'features/LogoutUser';
 import { useLocalStorage } from 'shared/lib/hooks/useLocalStorage';
 import { LANGS } from 'shared/constants/langs';
 import { langActions } from 'shared/model/lang.slice';
+import { routesActions } from 'shared/model/routes.slice';
 
 export const Header = () => {
   const dispatch = useDispatch();
@@ -17,9 +18,8 @@ export const Header = () => {
     key: 'lang',
     defaultValue: 'en',
   });
-
+  const { lang } = useSelector((state: RootState) => state.lang);
   const { setRoutes, setCurrentRoute } = routesActions;
-  const { setLang } = langActions;
   const { isUserLoggedIn, isAuthChecked } = useSelector(
     (state: RootState) => state.user
   );
@@ -32,6 +32,7 @@ export const Header = () => {
   };
 
   useEffect(() => {
+    if (!storageLang) setStoragelang('en');
     dispatch(setRoutes({ isUserLoggedIn }));
   }, [isUserLoggedIn, setRoutes, dispatch]);
 

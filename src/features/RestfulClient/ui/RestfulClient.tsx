@@ -12,8 +12,10 @@ import { RootState } from 'app/providers/StoreProvider/config/store';
 import { ApiRequestState } from 'shared/model/types';
 import { Spinner } from 'shared/index';
 import { apiRequestActions } from 'shared/model/apiRequest.slice';
+import { AuthGuards } from 'shared/lib/AuthGuard/AuthGuards.tsx';
 
 export const RestfulClient = () => {
+  const { isAuthChecked } = useSelector((store: RootState) => store.user);
   const [servResponse, setServResponse] = useState(null);
   const [servData, setServData] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -68,7 +70,10 @@ export const RestfulClient = () => {
     fetchData();
   }, [triggerFetch]);
 
+  if (!isAuthChecked) return null;
+
   return (
+    <AuthGuards requireAuth={true}>
     <div className={styles['restful-wrapper']}>
       <Search/>
       <div className={styles['restful-wrapper_tabview-container']}>
@@ -102,6 +107,7 @@ export const RestfulClient = () => {
         </pre>
       )}
     </div>
+    </AuthGuards>
   );
 };
 
