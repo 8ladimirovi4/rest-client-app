@@ -5,27 +5,34 @@ import Link from 'next/link';
 import { Select } from 'shared/index';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'app/providers/StoreProvider/config/store.ts';
-import { langActions } from 'shared/model/lang.slice';
 import Image from 'next/image';
-import { routesActions } from 'shared/model/routes.slice';
 import { Logout } from 'features/LogoutUser';
+import { useLocalStorage } from 'shared/lib/hooks/useLocalStorage';
+import { LANGS } from 'shared/constants/langs';
+import { langActions } from 'shared/model/lang.slice';
+import { routesActions } from 'shared/model/routes.slice';
 
 export const Header = () => {
-  const { lang, langs } = useSelector((state: RootState) => state.lang);
   const dispatch = useDispatch();
-
+  const [storageLang, setStoragelang] = useLocalStorage<string>({
+    key: 'lang',
+    defaultValue: 'en',
+  });
+  const { lang } = useSelector((state: RootState) => state.lang);
   const { setRoutes, setCurrentRoute } = routesActions;
-  const { setLang } = langActions;
   const { isUserLoggedIn, isAuthChecked } = useSelector(
     (state: RootState) => state.user
   );
 
+  const { setLang } = langActions;
   const handleSetLanguage = (evt: ChangeEvent<HTMLSelectElement>) => {
     const { value } = evt.target;
-    dispatch(setLang({ lang: value }));
+    setStoragelang(value);
+    dispatch(setLang({ value }));
   };
 
   useEffect(() => {
+    if (!storageLang) setStoragelang('en');
     dispatch(setRoutes({ isUserLoggedIn }));
   }, [isUserLoggedIn, setRoutes, dispatch]);
 
@@ -54,7 +61,7 @@ export const Header = () => {
           <div className="flex items-center lg:order-2">
             <Select
               id="1"
-              options={langs}
+              options={LANGS}
               value={lang}
               onChange={handleSetLanguage}
             />

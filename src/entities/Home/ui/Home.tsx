@@ -9,12 +9,13 @@ export const Home = () => {
   const { isUserLoggedIn, loading } = useSelector(
     (state: RootState) => state.user
   );
+  const { method } = useSelector((state: RootState) => state.apiRequest);
   if (loading) return <Spinner />;
   if (!isUserLoggedIn) return null;
 
   return (
     <div>
-      <Link href="/restful">
+      <Link href={`/${method ?? 'GET'}`}>
         <h1>Restful</h1>
       </Link>
       <Link href="/history">

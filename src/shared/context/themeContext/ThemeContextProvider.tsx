@@ -21,10 +21,12 @@ const ThemeContextProvider = ({ children }: PropsWithChildren) => {
   );
 
   useEffect(() => {
+    // if(!userTheme) setUserTheme(THEME.LIGHT)
     setUserTheme(themeValue);
     document.body.className = themeValue;
   }, [setUserTheme, themeValue]);
 
+  if (!userTheme) setUserTheme(THEME.LIGHT);
   return (
     <ThemeContext.Provider value={[themeValue, setThemeValue]}>
       {children}

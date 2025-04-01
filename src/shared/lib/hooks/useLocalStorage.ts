@@ -13,13 +13,11 @@ export function useLocalStorage<T>({
 }: UseLocalStorageArgs<T>): [T, React.Dispatch<T>] {
   const [value, setValue] = useState<T>(() => {
     if (typeof window === 'undefined') return defaultValue;
-
     try {
-      const value = window.localStorage.getItem(key);
-      return value ? JSON.parse(value) : defaultValue;
+      const rawValue = window.localStorage.getItem(key);
+      if (rawValue) return JSON.parse(rawValue);
     } catch (e) {
       console.log('Error while getting value from localStorage', e);
-      return defaultValue;
     }
   });
 
