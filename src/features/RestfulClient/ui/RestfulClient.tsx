@@ -18,27 +18,29 @@ export const RestfulClient = () => {
   const [servData, setServData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const apiData = useSelector((state: RootState) => state.apiRequest)
-  const [storagedData, setApiStoragedData] = useLocalStorage<ApiRequestState[]>({
+  const apiData = useSelector((state: RootState) => state.apiRequest);
+  const [storagedData, setApiStoragedData] = useLocalStorage<ApiRequestState[]>(
+    {
       key: 'restful-client',
-      defaultValue: []
-    });
+      defaultValue: [],
+    }
+  );
 
-  const {browserUrl, method, query, triggerFetch} = apiData
-   const {setHistoryReq} = apiRequestActions
+  const { browserUrl, method, query, triggerFetch } = apiData;
+  const { setHistoryReq } = apiRequestActions;
   const resCallback = (res) => {
-    setServResponse(res)
-  }
+    setServResponse(res);
+  };
   const catchCallback = (error: Error) => {
     setError(error.message);
-  }
+  };
   const finnalyCallback = () => {
     setLoading(false);
-  }
-   const fetchData = async () => {
-      setLoading(true);
-      setError('');
-      setServData(null);
+  };
+  const fetchData = async () => {
+    setLoading(true);
+    setError('');
+    setServData(null);
 
     if (!browserUrl.trim()) {
       setError('Set API URL');
@@ -50,34 +52,31 @@ export const RestfulClient = () => {
       resCallback,
       catchCallback,
       finnalyCallback,
-      browserUrl:`/api/proxy?url=${browserUrl}`,
+      browserUrl: `/api/proxy?url=${browserUrl}`,
       method,
       query,
-    }) 
-    setApiStoragedData([...storagedData, apiData])
-    setServData(data)
-  }
-  
-useEffect(() => {
-if(!storagedData) setApiStoragedData([])
-},[])
+    });
+    setApiStoragedData([...storagedData, apiData]);
+    setServData(data);
+  };
 
-useEffect(() => {
-  fetchData()
-},[triggerFetch])
+  useEffect(() => {
+    if (!storagedData) setApiStoragedData([]);
+  }, []);
+
+  useEffect(() => {
+    fetchData();
+  }, [triggerFetch]);
 
   return (
     <div className={styles['restful-wrapper']}>
-      <Search fetchData={fetchData} />
+      <Search/>
       <div className={styles['restful-wrapper_tabview-container']}>
         <TabView
           tabs={[
             {
               label: 'QUERY',
-              content: (
-                <QueryTab
-                />
-              ),
+              content: <QueryTab />,
             },
             {
               label: 'BODY',
@@ -95,7 +94,7 @@ useEffect(() => {
         />
       </div>
       {error && <p style={{ color: 'red', marginTop: 10 }}>{error}</p>}
-      {loading && <Spinner/>}
+      {loading && <Spinner />}
       <h1>Response status {servResponse && servResponse.status}</h1>
       {servData && (
         <pre className={styles['restful-wrapper_respose-text']}>

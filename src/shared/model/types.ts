@@ -28,15 +28,15 @@ export interface RoutesState {
 type Query = {
   key: string;
   value: string;
-}
+};
 
 type Headers = {
-  ['key']: string
-}
+  ['key']: string;
+};
 
 type Variables = {
-  ['key']: string
-}
+  ['key']: string;
+};
 export interface ApiRequestState {
   url: string;
   query: Query[];
@@ -45,7 +45,7 @@ export interface ApiRequestState {
   headers: Headers[];
   variables: Variables[];
   textMode: boolean;
-  type: "rest" | string;
+  type: 'rest' | string;
   status: number | null;
   id: string;
   browserUrl: string;

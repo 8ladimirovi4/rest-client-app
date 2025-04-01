@@ -9,7 +9,7 @@ export const Home = () => {
   const { isUserLoggedIn, loading } = useSelector(
     (state: RootState) => state.user
   );
-  const {method} = useSelector((state:RootState) => state.apiRequest)
+  const { method } = useSelector((state: RootState) => state.apiRequest);
   if (loading) return <Spinner />;
   if (!isUserLoggedIn) return null;
 

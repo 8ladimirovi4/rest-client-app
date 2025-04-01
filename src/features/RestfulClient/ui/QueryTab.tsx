@@ -7,9 +7,9 @@ import { apiRequestActions } from 'shared/model/apiRequest.slice';
 
 export const QueryTab = () => {
   const [queryParams, setQueryParams] = useState([{ key: '', value: '' }]);
-  const dispatch = useDispatch()
-  
-  const {setQuery} = apiRequestActions
+  const dispatch = useDispatch();
+
+  const { setQuery } = apiRequestActions;
   const addQueryParam = () => {
     setQueryParams([...queryParams, { key: '', value: '' }]);
   };
@@ -23,7 +23,7 @@ export const QueryTab = () => {
     const newParams = [...queryParams];
     newParams[idx] = { key, value };
     setQueryParams(newParams);
-    dispatch(setQuery({query:newParams}))
+    dispatch(setQuery({ query: newParams }));
   };
 
   return (
@@ -31,7 +31,7 @@ export const QueryTab = () => {
       {queryParams.map((param, idx) => (
         <div
           key={idx}
-          className={ styles['restful-wrapper_tabview-container_query']}
+          className={styles['restful-wrapper_tabview-container_query']}
         >
           <Input
             id={idx.toString()}

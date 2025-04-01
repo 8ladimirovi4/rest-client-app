@@ -3,18 +3,18 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import { ApiRequestState } from './types';
 
 const initialState: ApiRequestState = {
-    url: '',
-    query: [],
-    body: '',
-    method:'GET',
-    headers: [],
-    variables: [],
-    textMode: false,
-    type: '',
-    status: null,
-    id: '',
-    browserUrl: '',
-    triggerFetch: false
+  url: '',
+  query: [],
+  body: '',
+  method: 'GET',
+  headers: [],
+  variables: [],
+  textMode: false,
+  type: '',
+  status: null,
+  id: '',
+  browserUrl: '',
+  triggerFetch: false,
 };
 
 const apiRequestSlice = createSlice({
@@ -23,29 +23,28 @@ const apiRequestSlice = createSlice({
   reducers: {
     setBrowserUrl: (
       state: ApiRequestState,
-      {payload}: PayloadAction<{browserUrl:string}>
+      { payload }: PayloadAction<{ browserUrl: string }>
     ) => {
-      const {browserUrl} = payload
-      state.browserUrl = browserUrl
+      const { browserUrl } = payload;
+      state.browserUrl = browserUrl;
     },
     setMethod: (
       state: ApiRequestState,
-      {payload}: PayloadAction<{method:string}>
+      { payload }: PayloadAction<{ method: string }>
     ) => {
-      const {method} = payload
-      state.method = method 
+      const { method } = payload;
+      state.method = method;
     },
     setQuery: (
       state: ApiRequestState,
-      {payload}: PayloadAction<{query:{key:string, value:string}[]}>
+      { payload }: PayloadAction<{ query: { key: string; value: string }[] }>
     ) => {
-      const {query} = payload
-      state.query = query
+      const { query } = payload;
+      state.query = query;
     },
-    setTriggerFetch: (
-      state: ApiRequestState) => { 
-      state.triggerFetch = !state.triggerFetch
-    }
+    setTriggerFetch: (state: ApiRequestState) => {
+      state.triggerFetch = !state.triggerFetch;
+    },
   },
 });
 
