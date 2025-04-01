@@ -15,15 +15,9 @@ export function useLocalStorage<T>({
     if (typeof window === 'undefined') return defaultValue;
     try {
       const rawValue = window.localStorage.getItem(key);
-      if (rawValue)
-        return (rawValue && rawValue.startsWith('{')) ||
-          rawValue.startsWith('[') ||
-          rawValue.startsWith('"')
-          ? JSON.parse(rawValue)
-          : (rawValue ?? defaultValue);
+      if (rawValue) return JSON.parse(rawValue);
     } catch (e) {
       console.log('Error while getting value from localStorage', e);
-      return defaultValue;
     }
   });
 

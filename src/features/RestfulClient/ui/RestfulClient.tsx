@@ -1,6 +1,6 @@
 //@ts-nocheck
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TabView } from './TabView';
 import styles from './styles.module.css';
 import Search from './Search';
@@ -9,19 +9,25 @@ import { useLocalStorage } from 'shared/lib/hooks/useLocalStorage';
 import { apiRequest } from 'shared/api/apiRequest';
 import { useSelector } from 'react-redux';
 import { RootState } from 'app/providers/StoreProvider/config/store';
+import { ApiRequestState } from 'shared/model/types';
 
 export const RestfulClient = () => {
   const [response, setResponse] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const {browserUrl, method, query} = useSelector((state: RootState) => state.apiRequest)
-
+  const apiData = useSelector((state: RootState) => state.apiRequest)
+  const [storagedData, setApiStoragedData] = useLocalStorage<ApiRequestState[]>({
+      key: 'restful-client',
+      defaultValue: []
+    });
+  const {browserUrl, method, query} = apiData
   const fetchData = async () => {
     const data = await apiRequest({
       browserUrl:`/api/proxy?url=${browserUrl}`,
       method,
       query
     })
+    setApiStoragedData([...storagedData, apiData])
     setResponse(data)
   }
   // const fetchData = async () => {
@@ -51,6 +57,9 @@ export const RestfulClient = () => {
   //     setLoading(false);
   //   }
   // };
+useEffect(() => {
+if(!storagedData) setApiStoragedData([])
+},[])
 
   return (
     <div className={styles['restful-wrapper']}>
