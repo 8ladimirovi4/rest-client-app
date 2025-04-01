@@ -1,9 +1,19 @@
 'use client';
-import React from 'react';
-import { Button } from 'shared/index';
+
+import { useSelector } from 'react-redux';
+import { RootState } from 'app/providers/StoreProvider/config/store.ts';
+import { AuthGuards } from 'shared/lib/AuthGuard/AuthGuards.tsx';
 
 export const History = () => {
-  return <Button title={'click'} />;
+  const { isAuthChecked } = useSelector((store: RootState) => store.user);
+
+  if (!isAuthChecked) return null;
+
+  return (
+    <AuthGuards requireAuth={true}>
+      <h1>Content</h1>
+    </AuthGuards>
+  );
 };
 
 History.displayName = 'History';

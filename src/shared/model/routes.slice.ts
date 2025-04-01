@@ -7,7 +7,7 @@ import { routes } from 'features/navigation/constants/routes';
 
 const initialState: RoutesState = {
   routes,
-  currentRoute: AppRoutes.LOGIN,
+  currentRoute: AppRoutes.HOME,
 };
 
 const langSlice = createSlice({
