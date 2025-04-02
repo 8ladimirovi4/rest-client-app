@@ -9,6 +9,7 @@ import { langActions } from 'shared/model/lang.slice';
 import Image from 'next/image';
 import { routesActions } from 'shared/model/routes.slice';
 import { Logout } from 'features/LogoutUser';
+import { AuthLinks } from 'shared/ui/AuthLinks/AuthLinks.tsx';
 
 export const Header = () => {
   const { lang, langs } = useSelector((state: RootState) => state.lang);
@@ -34,15 +35,15 @@ export const Header = () => {
       <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
         <div className="flex justify-between items-center mx-auto max-w-screen-xl">
           <Link
-            href={!isUserLoggedIn ? '/login' : '/'}
+            href={'/'}
             onClick={() => {
-              dispatch(setCurrentRoute(!isUserLoggedIn ? '/' : '/home'));
+              dispatch(setCurrentRoute('/'));
             }}
             className="flex items-center"
           >
             <Image
               src="/icon/rest.png"
-              className="mr-3  "
+              className="mr-3"
               alt="Restful Logo"
               width={30}
               height={30}
@@ -58,32 +59,21 @@ export const Header = () => {
               value={lang}
               onChange={handleSetLanguage}
             />
-            {!isUserLoggedIn && isAuthChecked && (
+            {isAuthChecked && isUserLoggedIn ? (
               <>
                 <Link
-                  href={!isUserLoggedIn ? '/login' : '/'}
+                  href={'/'}
                   onClick={() => {
-                    dispatch(setCurrentRoute(!isUserLoggedIn ? '/login' : '/'));
+                    dispatch(setCurrentRoute('/'));
                   }}
                   className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800  whitespace-nowrap"
                 >
-                  Sign In
+                  Main Page
                 </Link>
-                <Link
-                  href={!isUserLoggedIn ? '/register' : '/'}
-                  onClick={() => {
-                    dispatch(
-                      setCurrentRoute(!isUserLoggedIn ? '/register' : '/')
-                    );
-                  }}
-                  className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800  whitespace-nowrap"
-                >
-                  Sign Up
-                </Link>
+                <Logout isUserLoggedIn={isUserLoggedIn} />
               </>
-            )}
-            {isUserLoggedIn && isAuthChecked && (
-              <Logout isUserLoggedIn={isUserLoggedIn} />
+            ) : (
+              <AuthLinks />
             )}
             <button
               data-collapse-toggle="mobile-menu-2"
