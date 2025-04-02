@@ -13,6 +13,7 @@ import { ApiRequestState } from 'shared/model/types';
 import { Spinner } from 'shared/index';
 import { apiRequestActions } from 'shared/model/apiRequest.slice';
 import { AuthGuards } from 'shared/lib/AuthGuard/AuthGuards.tsx';
+import { BodyTab } from './BodyTab';
 
 export const RestfulClient = () => {
   const { isAuthChecked } = useSelector((store: RootState) => store.user);
@@ -28,15 +29,14 @@ export const RestfulClient = () => {
     }
   );
 
-  const { browserUrl, method, query, triggerFetch } = apiData;
-  const { setHistoryReq } = apiRequestActions;
-  const resCallback = (res) => {
+  const { browserUrl, method, query, triggerFetch, body } = apiData;
+  const resComplite = (res) => {
     setServResponse(res);
   };
-  const catchCallback = (error: Error) => {
+  const catchComplite = (error: Error) => {
     setError(error.message);
   };
-  const finnalyCallback = () => {
+  const finnalyComplite = () => {
     setLoading(false);
   };
   const fetchData = async () => {
@@ -51,12 +51,13 @@ export const RestfulClient = () => {
     }
 
     const data = await apiRequest({
-      resCallback,
-      catchCallback,
-      finnalyCallback,
+      resComplite,
+      catchComplite,
+      finnalyComplite,
       browserUrl: `/api/proxy?url=${browserUrl}`,
       method,
       query,
+      body,
     });
     setApiStoragedData([...storagedData, apiData]);
     setServData(data);
@@ -67,46 +68,47 @@ export const RestfulClient = () => {
   }, []);
 
   useEffect(() => {
+    console.log('===>triggerFetch', triggerFetch);
     fetchData();
   }, [triggerFetch]);
 
   if (!isAuthChecked) return null;
-
+  console.log('===>response', servResponse);
   return (
     <AuthGuards requireAuth={true}>
-    <div className={styles['restful-wrapper']}>
-      <Search/>
-      <div className={styles['restful-wrapper_tabview-container']}>
-        <TabView
-          tabs={[
-            {
-              label: 'QUERY',
-              content: <QueryTab />,
-            },
-            {
-              label: 'BODY',
-              content: <p>This is the Dashboard tab content.</p>,
-            },
-            {
-              label: 'HEADERS',
-              content: <p>This is the Settings tab content.</p>,
-            },
-            {
-              label: 'VARIABLES',
-              content: <p>This is the Contacts tab content.</p>,
-            },
-          ]}
-        />
+      <div className={styles['restful-wrapper']}>
+        <Search />
+        <div className={styles['restful-wrapper_tabview-container']}>
+          <TabView
+            tabs={[
+              {
+                label: 'QUERY',
+                content: <QueryTab />,
+              },
+              {
+                label: 'BODY',
+                content: <BodyTab />,
+              },
+              {
+                label: 'HEADERS',
+                content: <p>This is the Settings tab content.</p>,
+              },
+              {
+                label: 'VARIABLES',
+                content: <p>This is the Contacts tab content.</p>,
+              },
+            ]}
+          />
+        </div>
+        {error && <p style={{ color: 'red', marginTop: 10 }}>{error}</p>}
+        {loading && <Spinner />}
+        <h1>Response status {servResponse && servResponse.status}</h1>
+        {servData && (
+          <pre className={styles['restful-wrapper_respose-text']}>
+            {JSON.stringify(servData, null, 2)}
+          </pre>
+        )}
       </div>
-      {error && <p style={{ color: 'red', marginTop: 10 }}>{error}</p>}
-      {loading && <Spinner />}
-      <h1>Response status {servResponse && servResponse.status}</h1>
-      {servData && (
-        <pre className={styles['restful-wrapper_respose-text']}>
-          {JSON.stringify(servData, null, 2)}
-        </pre>
-      )}
-    </div>
     </AuthGuards>
   );
 };
