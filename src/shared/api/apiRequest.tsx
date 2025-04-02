@@ -35,7 +35,8 @@ export const apiRequest = async ({
     };
 
     if (body && (method === 'POST' || method === 'PUT' || method === 'PATCH')) {
-      options.body = JSON.stringify(body);
+      //options.body = JSON.stringify(body);
+      options.body = body;
     }
 
     const response = await fetch(fullUrl, options);
