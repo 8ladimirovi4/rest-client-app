@@ -1,15 +1,14 @@
 //@ts-nocheck
 export const apiRequest = async ({
-  resCallback,
-  catchCallback,
-  finnalyCallback,
+  resComplite,
+  catchComplite,
+  finnalyComplite,
   browserUrl,
   method = 'GET',
   query = [],
   body = null,
   headers = [],
 }) => {
-  console.log('===>query', query);
   try {
     const queryString = query.length
       ? `?${query
@@ -40,7 +39,7 @@ export const apiRequest = async ({
     }
 
     const response = await fetch(fullUrl, options);
-    resCallback(response);
+    resComplite(response);
     if (!response.ok) {
       throw new Error(`Ошибка: ${response.status} ${response.statusText}`);
     }
@@ -48,8 +47,8 @@ export const apiRequest = async ({
     const data = await response.json();
     return data;
   } catch (error) {
-    catchCallback(error);
+    catchComplite(error);
   } finally {
-    finnalyCallback();
+    finnalyComplite();
   }
 };

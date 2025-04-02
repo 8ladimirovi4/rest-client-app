@@ -30,13 +30,13 @@ export const RestfulClient = () => {
 
   const { browserUrl, method, query, triggerFetch } = apiData;
   const { setHistoryReq } = apiRequestActions;
-  const resCallback = (res) => {
+  const resComplite = (res) => {
     setServResponse(res);
   };
-  const catchCallback = (error: Error) => {
+  const catchComplite = (error: Error) => {
     setError(error.message);
   };
-  const finnalyCallback = () => {
+  const finnalyComplite = () => {
     setLoading(false);
   };
   const fetchData = async () => {
@@ -51,12 +51,13 @@ export const RestfulClient = () => {
     }
 
     const data = await apiRequest({
-      resCallback,
-      catchCallback,
-      finnalyCallback,
+      resComplite,
+      catchComplite,
+      finnalyComplite,
       browserUrl: `/api/proxy?url=${browserUrl}`,
       method,
       query,
+
     });
     setApiStoragedData([...storagedData, apiData]);
     setServData(data);
@@ -71,7 +72,7 @@ export const RestfulClient = () => {
   }, [triggerFetch]);
 
   if (!isAuthChecked) return null;
-
+console.log('===>response', servResponse)
   return (
     <AuthGuards requireAuth={true}>
     <div className={styles['restful-wrapper']}>
