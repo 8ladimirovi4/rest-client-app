@@ -18,13 +18,20 @@ export const apiRequest = async ({
           })
           .join('&')}`
       : '';
-    const fullUrl = `${browserUrl}${queryString}`;
 
-    const headersObject = headers.reduce((acc, header) => {
-      const [key, value] = Object.entries(header)[0];
-      acc[key] = value;
-      return acc;
-    }, {});
+      // const headersObject = headers.reduce((acc, header) => {
+      //   const { key, value } = header;
+      //   acc[`userheaderkey${key}`] = `${value}`;
+      //   return acc
+      // }, {});
+
+       const headersObject = headers.reduce((acc, header) => {
+        const { key, value } = header;
+        acc[`${key}`] = `${value}`;
+        return acc
+      }, {});
+
+    const fullUrl = `${browserUrl}${queryString}`;
 
     const options = {
       method: method || 'GET',
@@ -34,9 +41,8 @@ export const apiRequest = async ({
       },
     };
 
-    if (body && (method === 'POST' || method === 'PUT' || method === 'PATCH')) {
-      //options.body = JSON.stringify(body);
-      options.body = body;
+    if ((method === 'POST' || method === 'PUT' || method === 'PATCH')) {
+      options.body = body || '{}';
     }
 
     const response = await fetch(fullUrl, options);

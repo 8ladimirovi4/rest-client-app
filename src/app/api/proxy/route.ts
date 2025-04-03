@@ -14,15 +14,29 @@ async function proxyRequest(
 
   try {
     let body = null;
+    // const clientHeaders = Object.fromEntries(request.headers.entries());
+    // const cleanedHeaders: Record<string, string> = {};
+
+//  Object.keys(clientHeaders).forEach(header => {
+
+//    if (header.startsWith('userheaderkey')) {
+//      const cleanKey = header.replace(/^userheaderkey/, ''); 
+//      const cleanValue = clientHeaders[header];
+//      cleanedHeaders[cleanKey] = cleanValue;
+//    }
+//  });
+
     if (!['GET', 'DELETE', 'OPTIONS', 'HEAD'].includes(method)) {
       body = JSON.stringify(await request.json());
     }
 
     const response = await fetch(apiUrl, {
       method,
-      headers: {
+      headers:
+      {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${process.env.API_TOKEN}`,
+        // ...cleanedHeaders
       },
       body,
     });

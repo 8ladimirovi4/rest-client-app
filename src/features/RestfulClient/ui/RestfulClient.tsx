@@ -14,6 +14,7 @@ import { Spinner } from 'shared/index';
 import { apiRequestActions } from 'shared/model/apiRequest.slice';
 import { AuthGuards } from 'shared/lib/AuthGuard/AuthGuards.tsx';
 import { BodyTab } from './BodyTab';
+import { HeadersTab } from './HeadersTab';
 
 export const RestfulClient = () => {
   const { isAuthChecked } = useSelector((store: RootState) => store.user);
@@ -29,7 +30,7 @@ export const RestfulClient = () => {
     }
   );
 
-  const { browserUrl, method, query, triggerFetch, body } = apiData;
+  const { browserUrl, method, query, triggerFetch, body, headers } = apiData;
   const resComplite = (res) => {
     setServResponse(res);
   };
@@ -58,6 +59,7 @@ export const RestfulClient = () => {
       method,
       query,
       body,
+      headers
     });
     setApiStoragedData([...storagedData, apiData]);
     setServData(data);
@@ -90,7 +92,7 @@ export const RestfulClient = () => {
               },
               {
                 label: 'HEADERS',
-                content: <p>This is the Settings tab content.</p>,
+                content: <HeadersTab/>
               },
               {
                 label: 'VARIABLES',

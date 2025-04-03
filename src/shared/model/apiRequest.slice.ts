@@ -5,7 +5,7 @@ import { ApiRequestState } from './types';
 const initialState: ApiRequestState = {
   url: '',
   query: [],
-  body: '{}',
+  body: '',
   method: 'GET',
   headers: [],
   variables: [],
@@ -48,6 +48,13 @@ const apiRequestSlice = createSlice({
     ) => {
       const { body } = payload;
       state.body = body;
+    },
+    setHeaders: (
+      state: ApiRequestState,
+      { payload }: PayloadAction<{ headers: { key: string; value: string }[] }>
+    ) => {
+      const { headers } = payload;
+      state.headers = headers;
     },
     setTriggerFetch: (state: ApiRequestState) => {
       state.triggerFetch = !state.triggerFetch;
