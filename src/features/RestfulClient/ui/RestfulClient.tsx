@@ -68,12 +68,11 @@ export const RestfulClient = () => {
   }, []);
 
   useEffect(() => {
-    console.log('===>triggerFetch', triggerFetch);
     fetchData();
   }, [triggerFetch]);
 
   if (!isAuthChecked) return null;
-  console.log('===>response', servResponse);
+
   return (
     <AuthGuards requireAuth={true}>
       <div className={styles['restful-wrapper']}>
