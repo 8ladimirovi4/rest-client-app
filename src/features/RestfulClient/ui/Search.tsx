@@ -17,10 +17,17 @@ const Search = () => {
   );
 
   const { setBrowserUrl, setMethod, setTriggerFetch } = apiRequestActions;
+
   const handleMethodSelect = (evt: ChangeEvent<HTMLSelectElement>) => {
     const { value } = evt.target;
     dispatch(setMethod({ method: value }));
-    router.push(`/${value}?link=${encodeURIComponent(browserUrl)}`);
+    
+  const currentUrl = new URL(window.location.href);
+  currentUrl.pathname = `/${value}`;  // Устанавливаем новый метод в path
+  currentUrl.searchParams.set('link', browserUrl); // Обновляем параметр 'link'
+
+  // Обновляем строку URL в браузере без перезагрузки страницы
+  window.history.pushState({}, '', currentUrl.toString());
   };
 
   const handleSetLink = (evt: ChangeEvent<HTMLInputElement>) => {
