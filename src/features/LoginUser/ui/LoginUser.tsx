@@ -20,7 +20,6 @@ import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useLoginSchema } from 'shared/lib/validation/loginSchema.ts';
 import { getPasswordStrength } from 'shared/lib/password/getPasswordStrength.ts';
-import { routesActions } from 'shared/model/routes.slice';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { AuthGuards } from 'shared/lib/AuthGuard/AuthGuards.tsx';
 import { useTranslation } from 'react-i18next';
@@ -76,7 +75,6 @@ export function LoginUser() {
           })
         );
         router.push('/');
-        dispatch(routesActions.setCurrentRoute('/'));
         return userData;
       } else {
         return null;

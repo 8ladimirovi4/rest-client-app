@@ -21,7 +21,6 @@ import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRegisterSchema } from 'shared/lib/validation/registerSchema.ts';
 import { getPasswordStrength } from 'shared/lib/password/getPasswordStrength.ts';
-import { routesActions } from 'shared/model/routes.slice';
 import { AuthGuards } from 'shared/lib/AuthGuard/AuthGuards.tsx';
 import { useTranslation } from 'react-i18next';
 
@@ -79,7 +78,6 @@ export function CreateUser() {
         })
       );
       router.push('/');
-      dispatch(routesActions.setCurrentRoute('/'));
     } catch (err) {
       const error = err as FirebaseError;
       dispatch(userActions.setError(error.code));
