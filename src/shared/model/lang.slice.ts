@@ -3,10 +3,10 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import { LangState } from './types';
 
 const initialState: LangState = {
-  lang: 'rus',
+  lang: 'ru',
   langs: [
-    { id: '1', value: 'rus', label: 'rus' },
-    { id: '2', value: 'eng', label: 'eng' },
+    { id: '1', value: 'ru', label: 'ru' },
+    { id: '2', value: 'en', label: 'en' },
   ],
 };
 

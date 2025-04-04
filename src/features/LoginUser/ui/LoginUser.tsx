@@ -18,11 +18,12 @@ import firebase from 'firebase/app';
 import FirebaseError = firebase.FirebaseError;
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { loginSchema } from 'shared/lib/validation/loginSchema.ts';
+import { useLoginSchema } from 'shared/lib/validation/loginSchema.ts';
 import { getPasswordStrength } from 'shared/lib/password/getPasswordStrength.ts';
 import { routesActions } from 'shared/model/routes.slice';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { AuthGuards } from 'shared/lib/AuthGuard/AuthGuards.tsx';
+import { useTranslation } from 'react-i18next';
 
 interface User {
   email: string;
@@ -36,7 +37,7 @@ export function LoginUser() {
     watch,
     formState: { errors, isValid },
   } = useForm<User>({
-    resolver: yupResolver(loginSchema),
+    resolver: yupResolver(useLoginSchema()),
     mode: 'onChange',
   });
   const password = watch('password');
@@ -49,6 +50,7 @@ export function LoginUser() {
     (state: RootState) => state.user
   );
   const router = useRouter();
+  const { t } = useTranslation();
 
   const handleSubmitForm = async (data: User) => {
     try {
@@ -93,7 +95,7 @@ export function LoginUser() {
   return (
     <AuthGuards requireAuth={false}>
       <div className={styles.container}>
-        <h3 className={styles.title}>Sign In</h3>
+        <h3 className={styles.title}>{t('Sign in')}</h3>
         {loading ? (
           <Spinner />
         ) : (
@@ -108,8 +110,8 @@ export function LoginUser() {
                 <Input
                   {...field}
                   error={errors.email?.message}
-                  placeholder={'Email'}
-                  label={'Email'}
+                  placeholder={t('Email')}
+                  label={t('Email')}
                   type={'text'}
                   id={'email'}
                 />
@@ -122,8 +124,8 @@ export function LoginUser() {
                 <Input
                   {...field}
                   error={errors.password?.message}
-                  placeholder={'Password'}
-                  label={'Password'}
+                  placeholder={t('Password')}
+                  label={t('Password')}
                   type={'password'}
                   id={'password'}
                 />
@@ -135,7 +137,11 @@ export function LoginUser() {
                 style={{ width: `${(strength / 5) * 100}%` }}
               />
             </div>
-            <Button title="Login" type="submit" disabled={!isValid}></Button>
+            <Button
+              title={t('Sign in')}
+              type="submit"
+              disabled={!isValid}
+            ></Button>
           </form>
         )}
         {error && <p className={styles['error-message']}>{error}</p>}
