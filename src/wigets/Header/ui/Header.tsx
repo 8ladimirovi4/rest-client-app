@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './styles.module.css';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
@@ -15,10 +15,29 @@ export const Header = () => {
   const { isUserLoggedIn, isAuthChecked } = useSelector(
     (state: RootState) => state.user
   );
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 30) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   return (
-    <header className={styles['app-header']}>
-      <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
+    <header
+      className={`${styles['app-header']} ${isScrolled ? styles['scrolled'] : ''}`}
+    >
+      <nav className=" border-gray-200 px-4 lg:px-6 py-2.5">
         <div className="flex justify-between items-center mx-auto max-w-screen-xl">
           <Link href={'/'} className="flex items-center">
             <Image
