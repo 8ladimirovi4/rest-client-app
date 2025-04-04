@@ -14,7 +14,7 @@ import {
 } from 'app/providers/StoreProvider/config/store.ts';
 import { userActions } from 'shared/model/user.slice.ts';
 import { Spinner } from 'shared/ui/Spinner/Spinner.tsx';
-import styles from './styles.module.css';
+import styles from '../../../shared/styles/form.module.css';
 import firebase from 'firebase/app';
 import FirebaseError = firebase.FirebaseError;
 import { Controller, useForm } from 'react-hook-form';
