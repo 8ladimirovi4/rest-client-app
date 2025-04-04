@@ -1,6 +1,6 @@
 'use client';
 import { Button, Input } from 'shared/index';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styles from './styles.module.css';
 import { useDispatch } from 'react-redux';
 import { apiRequestActions } from 'shared/model/apiRequest.slice';

@@ -18,13 +18,21 @@ export const apiRequest = async ({
           })
           .join('&')}`
       : '';
-    const fullUrl = `${browserUrl}${queryString}`;
 
     const headersObject = headers.reduce((acc, header) => {
-      const [key, value] = Object.entries(header)[0];
+      const { key, value } = header;
       acc[key] = value;
       return acc;
     }, {});
+
+    const normalizedHeaders = Object.keys(headersObject).map((key) =>
+      key.toLowerCase()
+    );
+    const contentType = normalizedHeaders.includes('content-type')
+      ? {}
+      : { 'Content-Type': 'application/json' };
+
+    const fullUrl = `${browserUrl}${queryString}`;
 
     const options = {
       method: method || 'GET',
@@ -34,9 +42,8 @@ export const apiRequest = async ({
       },
     };
 
-    if (body && (method === 'POST' || method === 'PUT' || method === 'PATCH')) {
-      //options.body = JSON.stringify(body);
-      options.body = body;
+    if (method === 'POST' || method === 'PUT' || method === 'PATCH') {
+      options.body = body || '{}';
     }
 
     const response = await fetch(fullUrl, options);

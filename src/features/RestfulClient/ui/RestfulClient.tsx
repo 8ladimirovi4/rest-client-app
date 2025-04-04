@@ -14,6 +14,7 @@ import { Spinner } from 'shared/index';
 import { apiRequestActions } from 'shared/model/apiRequest.slice';
 import { AuthGuards } from 'shared/lib/AuthGuard/AuthGuards.tsx';
 import { BodyTab } from './BodyTab';
+import { HeadersTab } from './HeadersTab';
 
 export const RestfulClient = () => {
   const { isAuthChecked } = useSelector((store: RootState) => store.user);
@@ -29,7 +30,7 @@ export const RestfulClient = () => {
     }
   );
 
-  const { browserUrl, method, query, triggerFetch, body } = apiData;
+  const { browserUrl, method, query, triggerFetch, body, headers } = apiData;
   const resComplite = (res) => {
     setServResponse(res);
   };
@@ -45,7 +46,6 @@ export const RestfulClient = () => {
     setServData(null);
 
     if (!browserUrl.trim()) {
-      setError('Set API URL');
       setLoading(false);
       return;
     }
@@ -58,6 +58,7 @@ export const RestfulClient = () => {
       method,
       query,
       body,
+      headers,
     });
     setApiStoragedData([...storagedData, apiData]);
     setServData(data);
@@ -68,12 +69,11 @@ export const RestfulClient = () => {
   }, []);
 
   useEffect(() => {
-    console.log('===>triggerFetch', triggerFetch);
     fetchData();
   }, [triggerFetch]);
 
   if (!isAuthChecked) return null;
-  console.log('===>response', servResponse);
+
   return (
     <AuthGuards requireAuth={true}>
       <div className={styles['restful-wrapper']}>
@@ -91,7 +91,7 @@ export const RestfulClient = () => {
               },
               {
                 label: 'HEADERS',
-                content: <p>This is the Settings tab content.</p>,
+                content: <HeadersTab />,
               },
               {
                 label: 'VARIABLES',
@@ -102,12 +102,13 @@ export const RestfulClient = () => {
         </div>
         {error && <p style={{ color: 'red', marginTop: 10 }}>{error}</p>}
         {loading && <Spinner />}
-        <h1>Response status {servResponse && servResponse.status}</h1>
         {servData && (
-          <pre className={styles['restful-wrapper_respose-text']}>
-            {JSON.stringify(servData, null, 2)}
-          </pre>
+          <h1>Response status {servResponse && servResponse.status}</h1>
         )}
+
+        <pre className={styles['restful-wrapper_respose-text']}>
+          {servData && JSON.stringify(servData, null, 2)}
+        </pre>
       </div>
     </AuthGuards>
   );
