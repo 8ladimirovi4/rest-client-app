@@ -7,6 +7,7 @@ import { store } from 'app/providers/StoreProvider/config/store';
 import styles from './styles.module.css';
 import { ErrorFallback, Footer, Header } from 'wigets/index';
 import { AuthProvider } from 'app/providers/AuthProvider';
+import '../../config/i18n/i18n';
 
 export const GlobalLayout = ({ children }: { children: ReactNode }) => {
   return (
