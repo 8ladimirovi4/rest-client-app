@@ -21,13 +21,13 @@ const Search = () => {
   const handleMethodSelect = (evt: ChangeEvent<HTMLSelectElement>) => {
     const { value } = evt.target;
     dispatch(setMethod({ method: value }));
-    
-  const currentUrl = new URL(window.location.href);
-  currentUrl.pathname = `/${value}`;  // Устанавливаем новый метод в path
-  currentUrl.searchParams.set('link', browserUrl); // Обновляем параметр 'link'
 
-  // Обновляем строку URL в браузере без перезагрузки страницы
-  window.history.pushState({}, '', currentUrl.toString());
+    const currentUrl = new URL(window.location.href);
+    currentUrl.pathname = `/${value}`; // Устанавливаем новый метод в path
+    currentUrl.searchParams.set('link', browserUrl); // Обновляем параметр 'link'
+
+    // Обновляем строку URL в браузере без перезагрузки страницы
+    window.history.pushState({}, '', currentUrl.toString());
   };
 
   const handleSetLink = (evt: ChangeEvent<HTMLInputElement>) => {

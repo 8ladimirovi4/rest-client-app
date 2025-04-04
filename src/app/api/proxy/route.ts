@@ -1,43 +1,32 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 async function proxyRequest(
-  request: NextRequest, 
+  request: NextRequest,
   method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH' | 'OPTIONS' | 'HEAD'
 ) {
-
   const searchParams = request.nextUrl.searchParams;
   const apiUrl = searchParams.get('url');
 
   if (!apiUrl) {
-    return NextResponse.json({ error: 'Missing "url" parameter' }, { status: 400 });
+    return NextResponse.json(
+      { error: 'Missing "url" parameter' },
+      { status: 400 }
+    );
   }
 
   try {
     let body = null;
-    // const clientHeaders = Object.fromEntries(request.headers.entries());
-    // const cleanedHeaders: Record<string, string> = {};
-
-//  Object.keys(clientHeaders).forEach(header => {
-
-//    if (header.startsWith('userheaderkey')) {
-//      const cleanKey = header.replace(/^userheaderkey/, ''); 
-//      const cleanValue = clientHeaders[header];
-//      cleanedHeaders[cleanKey] = cleanValue;
-//    }
-//  });
-
     if (!['GET', 'DELETE', 'OPTIONS', 'HEAD'].includes(method)) {
-      body = JSON.stringify(await request.json());
+      if (request.headers.get('Content-Type')?.includes('application/json')) {
+        body = JSON.stringify(await request.json());
+      } else {
+        body = await request.text();
+      }
     }
 
     const response = await fetch(apiUrl, {
       method,
-      headers:
-      {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${process.env.API_TOKEN}`,
-        // ...cleanedHeaders
-      },
+      headers: request.headers,
       body,
     });
 
@@ -52,18 +41,28 @@ async function proxyRequest(
       return new NextResponse(null, {
         status: 204,
         headers: {
-          'Allow': 'GET, POST, PUT, DELETE, PATCH, OPTIONS, HEAD',
+          Allow: 'GET, POST, PUT, DELETE, PATCH, OPTIONS, HEAD',
           'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS, HEAD',
+          'Access-Control-Allow-Methods':
+            'GET, POST, PUT, DELETE, PATCH, OPTIONS, HEAD',
           'Access-Control-Allow-Headers': 'Content-Type, Authorization',
         },
       });
     }
-    const data = await response.json();
+    let data = null;
+    try {
+      data = await response.json();
+    } catch (error) {
+      return NextResponse.json(
+        { error: 'Invalid JSON response', details: `${error}` },
+        { status: response.status }
+      );
+    }
+
     return NextResponse.json(data, { status: response.status });
   } catch (error) {
     return NextResponse.json(
-      { error: 'Failed to fetch data', details: error },
+      { error: 'Failed to fetch data', details: `${error}` },
       { status: 500 }
     );
   }

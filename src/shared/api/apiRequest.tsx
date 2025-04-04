@@ -19,17 +19,18 @@ export const apiRequest = async ({
           .join('&')}`
       : '';
 
-      // const headersObject = headers.reduce((acc, header) => {
-      //   const { key, value } = header;
-      //   acc[`userheaderkey${key}`] = `${value}`;
-      //   return acc
-      // }, {});
+    const headersObject = headers.reduce((acc, header) => {
+      const { key, value } = header;
+      acc[key] = value;
+      return acc;
+    }, {});
 
-       const headersObject = headers.reduce((acc, header) => {
-        const { key, value } = header;
-        acc[`${key}`] = `${value}`;
-        return acc
-      }, {});
+    const normalizedHeaders = Object.keys(headersObject).map((key) =>
+      key.toLowerCase()
+    );
+    const contentType = normalizedHeaders.includes('content-type')
+      ? {}
+      : { 'Content-Type': 'application/json' };
 
     const fullUrl = `${browserUrl}${queryString}`;
 
@@ -41,7 +42,7 @@ export const apiRequest = async ({
       },
     };
 
-    if ((method === 'POST' || method === 'PUT' || method === 'PATCH')) {
+    if (method === 'POST' || method === 'PUT' || method === 'PATCH') {
       options.body = body || '{}';
     }
 

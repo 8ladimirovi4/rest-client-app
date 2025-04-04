@@ -46,7 +46,6 @@ export const RestfulClient = () => {
     setServData(null);
 
     if (!browserUrl.trim()) {
-      setError('Set API URL');
       setLoading(false);
       return;
     }
@@ -59,7 +58,7 @@ export const RestfulClient = () => {
       method,
       query,
       body,
-      headers
+      headers,
     });
     setApiStoragedData([...storagedData, apiData]);
     setServData(data);
@@ -92,7 +91,7 @@ export const RestfulClient = () => {
               },
               {
                 label: 'HEADERS',
-                content: <HeadersTab/>
+                content: <HeadersTab />,
               },
               {
                 label: 'VARIABLES',
@@ -103,12 +102,13 @@ export const RestfulClient = () => {
         </div>
         {error && <p style={{ color: 'red', marginTop: 10 }}>{error}</p>}
         {loading && <Spinner />}
-        <h1>Response status {servResponse && servResponse.status}</h1>
         {servData && (
-          <pre className={styles['restful-wrapper_respose-text']}>
-            {JSON.stringify(servData, null, 2)}
-          </pre>
+          <h1>Response status {servResponse && servResponse.status}</h1>
         )}
+
+        <pre className={styles['restful-wrapper_respose-text']}>
+          {servData && JSON.stringify(servData, null, 2)}
+        </pre>
       </div>
     </AuthGuards>
   );

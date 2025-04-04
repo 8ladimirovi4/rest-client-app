@@ -3,6 +3,7 @@
   flex-direction: column;
   flex: 1;
   align-items: center;
+  padding: 50px;
 }
 .restful-wrapper_search-container {
   display: flex;
@@ -20,7 +21,6 @@
 .restful-wrapper_tabview-container {
   display: flex;
   flex-direction: column;
-  flex: 1;
   align-items: center;
 }
 .restful-wrapper_tabview-container_query {
@@ -36,4 +36,7 @@
   margin-top: 10px;
   border-radius: 10px;
   overflow-x: auto;
+  width: 100%;
+  height: 100%;
+  max-width: 100vw;
 }

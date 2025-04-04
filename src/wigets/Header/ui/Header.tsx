@@ -49,7 +49,7 @@ export const Header = () => {
           >
             <Image
               src="/icon/rest.png"
-              className={styles["app-header_rs-logo"]}
+              className={styles['app-header_rs-logo']}
               alt="Restful Logo"
               width={30}
               height={30}
