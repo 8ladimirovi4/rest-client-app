@@ -14,13 +14,12 @@ import {
 } from 'app/providers/StoreProvider/config/store.ts';
 import { userActions } from 'shared/model/user.slice.ts';
 import { Spinner } from 'shared/ui/Spinner/Spinner.tsx';
-import styles from './styles.module.css';
+import styles from '../../../shared/styles/form.module.css';
 import firebase from 'firebase/app';
 import FirebaseError = firebase.FirebaseError;
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRegisterSchema } from 'shared/lib/validation/registerSchema.ts';
-import { getPasswordStrength } from 'shared/lib/password/getPasswordStrength.ts';
 import { AuthGuards } from 'shared/lib/AuthGuard/AuthGuards.tsx';
 import { useTranslation } from 'react-i18next';
 
@@ -35,17 +34,11 @@ export function CreateUser() {
   const {
     control,
     handleSubmit,
-    watch,
     formState: { errors, isValid },
   } = useForm<User>({
     resolver: yupResolver(useRegisterSchema()),
     mode: 'onChange',
   });
-  const password = watch('password');
-  let strength = 0;
-  if (password) {
-    strength = getPasswordStrength(password);
-  }
   const dispatch = useDispatch<AppDispatch>();
   const { loading, error, isAuthChecked } = useSelector(
     (state: RootState) => state.user
@@ -142,12 +135,6 @@ export function CreateUser() {
                 />
               )}
             />
-            <div className={styles['progress-bar']}>
-              <div
-                className={`${styles['progress-fill']} ${styles[`strength-${strength}`]}`}
-                style={{ width: `${(strength / 5) * 100}%` }}
-              />
-            </div>
             <Controller
               name="confirmPassword"
               control={control}
