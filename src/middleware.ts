@@ -4,7 +4,6 @@ import type { NextRequest } from 'next/server';
 export function middleware(request: NextRequest) {
   const headers = new Headers(request.headers);
 
-  // Удаляем ненужные заголовки
   headers.delete('x-my-header');
   headers.delete('Host');
   headers.delete('referer');
@@ -16,6 +15,13 @@ export function middleware(request: NextRequest) {
   headers.delete('sec-ch-ua-mobile');
   headers.delete('sec-ch-ua-platform');
   headers.delete('Mycustomheader');
+  headers.delete('x-my-header');
+  headers.delete('accept-encoding');
+  headers.delete('Cookie');
+  headers.delete('Sec-Ch-Prefers-Color-Scheme');
+  headers.delete('User-Agent');
+  headers.delete('X-Forwarded-Host');
+  headers.delete('Pragma');
 
   return NextResponse.next({
     request: {
@@ -25,5 +31,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-    matcher: ['/api/proxy/:path*'],
-  };
+  matcher: ['/api/proxy/:path*'],
+};
