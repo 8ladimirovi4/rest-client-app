@@ -19,7 +19,6 @@ import FirebaseError = firebase.FirebaseError;
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useLoginSchema } from 'shared/lib/validation/loginSchema.ts';
-import { getPasswordStrength } from 'shared/lib/password/getPasswordStrength.ts';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { AuthGuards } from 'shared/lib/AuthGuard/AuthGuards.tsx';
 import { useTranslation } from 'react-i18next';
@@ -33,17 +32,11 @@ export function LoginUser() {
   const {
     control,
     handleSubmit,
-    watch,
     formState: { errors, isValid },
   } = useForm<User>({
     resolver: yupResolver(useLoginSchema()),
     mode: 'onChange',
   });
-  const password = watch('password');
-  let strength = 0;
-  if (password) {
-    strength = getPasswordStrength(password);
-  }
   const dispatch = useDispatch<AppDispatch>();
   const { loading, error, isAuthChecked } = useSelector(
     (state: RootState) => state.user
@@ -129,12 +122,6 @@ export function LoginUser() {
                 />
               )}
             />
-            <div className={styles['progress-bar']}>
-              <div
-                className={`${styles['progress-fill']} ${styles[`strength-${strength}`]}`}
-                style={{ width: `${(strength / 5) * 100}%` }}
-              />
-            </div>
             <Button
               title={t('Sign in')}
               type="submit"
