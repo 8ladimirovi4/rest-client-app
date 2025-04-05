@@ -15,6 +15,7 @@ import { apiRequestActions } from 'shared/model/apiRequest.slice';
 import { AuthGuards } from 'shared/lib/AuthGuard/AuthGuards.tsx';
 import { BodyTab } from './BodyTab';
 import { HeadersTab } from './HeadersTab';
+import { VariablesTab } from './VariablesTab';
 
 export const RestfulClient = () => {
   const { isAuthChecked } = useSelector((store: RootState) => store.user);
@@ -96,7 +97,7 @@ export const RestfulClient = () => {
               },
               {
                 label: 'VARIABLES',
-                content: <p>This is the Contacts tab content.</p>,
+                content: <VariablesTab/>,
               },
             ]}
           />

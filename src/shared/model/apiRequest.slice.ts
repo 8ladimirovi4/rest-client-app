@@ -56,6 +56,13 @@ const apiRequestSlice = createSlice({
       const { headers } = payload;
       state.headers = headers;
     },
+    setVariables:(
+      state: ApiRequestState,
+      { payload }: PayloadAction<{ variables: { key: string; value: string }[] }>
+    ) => {
+      const { variables } = payload;
+      state.variables = variables;
+    },
     setTriggerFetch: (state: ApiRequestState) => {
       state.triggerFetch = !state.triggerFetch;
     },
