@@ -14,15 +14,14 @@ import {
 } from 'app/providers/StoreProvider/config/store.ts';
 import { userActions } from 'shared/model/user.slice.ts';
 import { Spinner } from 'shared/ui/Spinner/Spinner.tsx';
-import styles from './styles.module.css';
+import styles from '../../../shared/styles/form.module.css';
 import firebase from 'firebase/app';
 import FirebaseError = firebase.FirebaseError;
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { registerSchema } from 'shared/lib/validation/registerSchema.ts';
-import { getPasswordStrength } from 'shared/lib/password/getPasswordStrength.ts';
-import { routesActions } from 'shared/model/routes.slice';
+import { useRegisterSchema } from 'shared/lib/validation/registerSchema.ts';
 import { AuthGuards } from 'shared/lib/AuthGuard/AuthGuards.tsx';
+import { useTranslation } from 'react-i18next';
 
 interface User {
   name: string;
@@ -35,23 +34,18 @@ export function CreateUser() {
   const {
     control,
     handleSubmit,
-    watch,
     formState: { errors, isValid },
   } = useForm<User>({
-    resolver: yupResolver(registerSchema),
+    resolver: yupResolver(useRegisterSchema()),
     mode: 'onChange',
   });
-  const password = watch('password');
-  let strength = 0;
-  if (password) {
-    strength = getPasswordStrength(password);
-  }
   const dispatch = useDispatch<AppDispatch>();
   const { loading, error, isAuthChecked } = useSelector(
     (state: RootState) => state.user
   );
 
   const router = useRouter();
+  const { t } = useTranslation();
 
   const handleSubmitForm = async (data: User) => {
     try {
@@ -77,7 +71,6 @@ export function CreateUser() {
         })
       );
       router.push('/');
-      dispatch(routesActions.setCurrentRoute('/'));
     } catch (err) {
       const error = err as FirebaseError;
       dispatch(userActions.setError(error.code));
@@ -92,7 +85,7 @@ export function CreateUser() {
   return (
     <AuthGuards requireAuth={false}>
       <div className={styles.container}>
-        <h3 className={styles.title}>Sign Up</h3>
+        <h3 className={styles.title}>{t('Sign up')}</h3>
         {loading ? (
           <Spinner />
         ) : (
@@ -107,8 +100,8 @@ export function CreateUser() {
                 <Input
                   {...field}
                   error={errors.name?.message}
-                  placeholder={'First name'}
-                  label={'First name'}
+                  placeholder={t('First name')}
+                  label={t('First name')}
                   type={'text'}
                   id={'name'}
                 />
@@ -121,8 +114,8 @@ export function CreateUser() {
                 <Input
                   {...field}
                   error={errors.email?.message}
-                  placeholder={'Email'}
-                  label={'Email'}
+                  placeholder={t('Email')}
+                  label={t('Email')}
                   type={'text'}
                   id={'email'}
                 />
@@ -135,19 +128,13 @@ export function CreateUser() {
                 <Input
                   {...field}
                   error={errors.password?.message}
-                  placeholder={'Password'}
-                  label={'Password'}
+                  placeholder={t('Password')}
+                  label={t('Password')}
                   type={'password'}
                   id={'password'}
                 />
               )}
             />
-            <div className={styles['progress-bar']}>
-              <div
-                className={`${styles['progress-fill']} ${styles[`strength-${strength}`]}`}
-                style={{ width: `${(strength / 5) * 100}%` }}
-              />
-            </div>
             <Controller
               name="confirmPassword"
               control={control}
@@ -155,14 +142,18 @@ export function CreateUser() {
                 <Input
                   {...field}
                   error={errors.confirmPassword?.message}
-                  placeholder={'Confirm Password'}
-                  label={'Confirm Password'}
+                  placeholder={t('Confirm password')}
+                  label={t('Confirm password')}
                   type={'password'}
                   id={'confirmPassword'}
                 />
               )}
             />
-            <Button title="Register" type="submit" disabled={!isValid}></Button>
+            <Button
+              title={t('Sign up')}
+              type="submit"
+              disabled={!isValid}
+            ></Button>
           </form>
         )}
         {error && <p className={styles['error-message']}>{error}</p>}

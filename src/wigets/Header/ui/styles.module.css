@@ -1,9 +1,17 @@
 .app-header {
-  flex: 0 0 60px;
+  flex: 0 0 80px;
+  align-content: center;
   position: sticky;
-  top: 0px;
-  background-color: white;
+  top: 0;
+  background-color: #1f2937;
   min-width: 500px;
+  border-bottom: 2px solid lightgray;
+  transition: all 0.3s ease-in-out;
+}
+
+.scrolled {
+  flex: 0 0 60px;
+  transition: all 0.3s ease-in-out;
 }
 .app-header_rs-logo {
   margin-right: 10px;
