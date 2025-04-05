@@ -10,7 +10,6 @@ export const BodyTab = () => {
 
   const handleSetBody = (evt: ChangeEvent<HTMLTextAreaElement>) => {
     const { value } = evt.target;
-    console.log('===>value', value);
     dispatch(setBody({ body: value }));
   };
 
