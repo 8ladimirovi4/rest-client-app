@@ -10,7 +10,7 @@ import { Spinner } from 'shared/index';
 
 const Variables = () => {
   const {isAuthChecked} = useSelector((store: RootState) => store.user);
- const [storagedVars, setStoragedVars] = useLocalStorage<{key:string, value:string}[] | []>(
+ const [storagedVars] = useLocalStorage<{key:string, value:string}[] | []>(
         {
           key: 'variables',
           defaultValue: [],
@@ -29,7 +29,6 @@ const Variables = () => {
     </tr>
   </thead>
     <tbody>
-      <th></th>
      {storagedVars && storagedVars.map(variable => (
       <tr key={v4()}>
       <Variable variable={variable}/>
