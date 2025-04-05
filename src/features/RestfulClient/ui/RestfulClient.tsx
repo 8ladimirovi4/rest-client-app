@@ -34,7 +34,7 @@ export const RestfulClient = () => {
   );
 
   const { browserUrl, method, query, triggerFetch, body, headers, variables } = apiData;
-
+console.log('===>query', query)
   const resComplite = (res) => {
     setServResponse(res);
   };
@@ -44,7 +44,7 @@ export const RestfulClient = () => {
   const finnalyComplite = () => {
     setLoading(false);
   };
-  
+
   const fetchData = async () => {
     setLoading(true);
     setError('');
@@ -60,9 +60,9 @@ export const RestfulClient = () => {
       finnalyComplite,
       browserUrl,
       method,
-      query,
+      query: replaceVariables(query, variables),
       body: replaceVariables(body, variables),
-      headers,
+      headers: replaceVariables(headers, variables)
     });
     setApiStoragedData([...apiStoragedData, apiData]);
     setServData(data);
