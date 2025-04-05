@@ -4,11 +4,11 @@ import { ApiRequestState } from './types';
 
 const initialState: ApiRequestState = {
   url: '',
-  query: [],
+  query: [{key:"", value:""}],
   body: '',
   method: 'GET',
-  headers: [],
-  variables: [],
+  headers: [{key:"", value:""}],
+  variables: [{key:"", value:""}],
   textMode: false,
   type: '',
   status: null,

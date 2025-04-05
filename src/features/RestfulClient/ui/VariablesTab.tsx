@@ -24,7 +24,7 @@ export const VariablesTab: React.FC = () => {
   }, [variables]);
 
    useEffect(() => {
-      !storagedVars ? setStoragedVars([]) : dispatch(setVariables({ variables: storagedVars }));;
+      !storagedVars ? setStoragedVars([{key:"", value:""}]) : dispatch(setVariables({ variables: storagedVars }));;
     }, []);
 
   const addVariable = () => {
@@ -64,7 +64,7 @@ export const VariablesTab: React.FC = () => {
         </div>
       ))}
       <div className={styles['restful-wrapper_tabview-container_query-button']}>
-        <Button width={120} title={'add variable'} onClick={addVariable} />
+        <Button title={'add variable'} onClick={addVariable} />
       </div>
     </div>
   );

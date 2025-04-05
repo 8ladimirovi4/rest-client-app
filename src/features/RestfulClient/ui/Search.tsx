@@ -23,10 +23,8 @@ const Search = () => {
     dispatch(setMethod({ method: value }));
 
     const currentUrl = new URL(window.location.href);
-    currentUrl.pathname = `/${value}`; // Устанавливаем новый метод в path
-    currentUrl.searchParams.set('link', browserUrl); // Обновляем параметр 'link'
-
-    // Обновляем строку URL в браузере без перезагрузки страницы
+    currentUrl.pathname = `/${value}`; 
+    currentUrl.searchParams.set('link', browserUrl); 
     window.history.pushState({}, '', currentUrl.toString());
   };
 
