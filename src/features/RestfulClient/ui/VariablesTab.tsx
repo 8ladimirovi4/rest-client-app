@@ -1,11 +1,12 @@
 'use client';
 import { Button, Input } from 'shared/index';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import styles from './styles.module.css';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { apiRequestActions } from 'shared/model/apiRequest.slice';
 import { Variable } from '../types';
 import { useLocalStorage } from 'shared/lib/hooks/useLocalStorage';
+import { RootState } from 'app/providers/StoreProvider/config/store';
 
 export const VariablesTab: React.FC = () => {
     const [storagedVars, setStoragedVars] = useLocalStorage<Variable[] | []>(
@@ -14,34 +15,31 @@ export const VariablesTab: React.FC = () => {
           defaultValue: [],
         }
       );
-    const [variables, setVariables] = useState<Variable[] | []>(storagedVars || []);
+    const {variables} = useSelector((state: RootState) => state.apiRequest);
     const dispatch = useDispatch();
-    const { setVariables: setRequestVariables } = apiRequestActions;
+    const { setVariables } = apiRequestActions;
 
   useEffect(() => {
-    if (variables.length > 0) {
         setStoragedVars(variables)
-    }
   }, [variables]);
 
    useEffect(() => {
-      !storagedVars ? setStoragedVars([]) : dispatch(setRequestVariables({ variables: storagedVars }));;
+      !storagedVars ? setStoragedVars([]) : dispatch(setVariables({ variables: storagedVars }));;
     }, []);
 
   const addVariable = () => {
-    setVariables([...variables, { key: '', value: '' }]);
+    dispatch(setVariables({variables: [...variables, { key: '', value: '' }]}));
   };
 
   const removeVariable = (idx: number) => {
     const newVariables = variables.filter((_, i) => i !== idx);
-    setVariables(newVariables);
+    dispatch(setVariables({variables: newVariables}));
   };
 
   const updateVariable = (idx: number, key: string, value: string) => {
     const newVariables = [...variables];
     newVariables[idx] = { key, value };
-    setVariables(newVariables);
-    dispatch(setRequestVariables({ variables: newVariables }));
+    dispatch(setVariables({ variables: newVariables }));
   };
 
   return (

@@ -30,13 +30,9 @@ type Query = {
   value: string;
 };
 
-type Headers = {
-  ['key']: string;
-};
+type Headers =  Query
 
-type Variables = {
-  ['key']: string;
-};
+type Variables =  Query
 export interface ApiRequestState {
   url: string;
   query: Query[];
