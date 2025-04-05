@@ -54,7 +54,7 @@ export const RestfulClient = () => {
       resComplite,
       catchComplite,
       finnalyComplite,
-      browserUrl: `/api/proxy?url=${browserUrl}`,
+      browserUrl,
       method,
       query,
       body,

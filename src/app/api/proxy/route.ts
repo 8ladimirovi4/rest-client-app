@@ -5,9 +5,10 @@ async function proxyRequest(
   method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH' | 'OPTIONS' | 'HEAD'
 ) {
   const searchParams = request.nextUrl.searchParams;
-  const apiUrl = searchParams.get('url');
-
-  if (!apiUrl) {
+  const encodedUrl = searchParams.get('url') || '';
+  const apiUrl = atob(decodeURIComponent(encodedUrl));
+  
+  if (!apiUrl && !encodedUrl) {
     return NextResponse.json(
       { error: 'Missing "url" parameter' },
       { status: 400 }

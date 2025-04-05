@@ -33,7 +33,8 @@ export const apiRequest = async ({
       : { 'Content-Type': 'application/json' };
 
     const fullUrl = `${browserUrl}${queryString}`;
-
+    const encodedUrl =  encodeURIComponent(btoa(fullUrl));
+    
     const options = {
       method: method || 'GET',
       headers: {
@@ -45,8 +46,8 @@ export const apiRequest = async ({
     if (method === 'POST' || method === 'PUT' || method === 'PATCH') {
       options.body = body || '{}';
     }
-
-    const response = await fetch(fullUrl, options);
+  
+    const response = await fetch(`/api/proxy?url=${encodedUrl}`, options);
     resComplite(response);
 
     const data = await response.json();
