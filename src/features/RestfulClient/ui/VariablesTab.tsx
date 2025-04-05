@@ -24,6 +24,10 @@ export const VariablesTab: React.FC = () => {
     }
   }, [variables]);
 
+   useEffect(() => {
+      !storagedVars ? setStoragedVars([]) : dispatch(setRequestVariables({ variables: storagedVars }));;
+    }, []);
+
   const addVariable = () => {
     setVariables([...variables, { key: '', value: '' }]);
   };

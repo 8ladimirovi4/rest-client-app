@@ -16,6 +16,8 @@ import { AuthGuards } from 'shared/lib/AuthGuard/AuthGuards.tsx';
 import { BodyTab } from './BodyTab';
 import { HeadersTab } from './HeadersTab';
 import { VariablesTab } from './VariablesTab';
+import { Variable } from '../types';
+import { replaceVariables } from 'shared/utils/help';
 
 export const RestfulClient = () => {
   const { isAuthChecked } = useSelector((store: RootState) => store.user);
@@ -24,14 +26,15 @@ export const RestfulClient = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const apiData = useSelector((state: RootState) => state.apiRequest);
-  const [storagedData, setApiStoragedData] = useLocalStorage<ApiRequestState[]>(
+  const [apiStoragedData, setApiStoragedData] = useLocalStorage<ApiRequestState[]>(
     {
       key: 'restful-client',
       defaultValue: [],
     }
   );
 
-  const { browserUrl, method, query, triggerFetch, body, headers } = apiData;
+  const { browserUrl, method, query, triggerFetch, body, headers, variables } = apiData;
+
   const resComplite = (res) => {
     setServResponse(res);
   };
@@ -41,6 +44,7 @@ export const RestfulClient = () => {
   const finnalyComplite = () => {
     setLoading(false);
   };
+  
   const fetchData = async () => {
     setLoading(true);
     setError('');
@@ -50,7 +54,6 @@ export const RestfulClient = () => {
       setLoading(false);
       return;
     }
-
     const data = await apiRequest({
       resComplite,
       catchComplite,
@@ -58,16 +61,15 @@ export const RestfulClient = () => {
       browserUrl,
       method,
       query,
-      body,
+      body: replaceVariables(body, variables),
       headers,
     });
-    console.log('===>client data', data)
-    setApiStoragedData([...storagedData, apiData]);
+    setApiStoragedData([...apiStoragedData, apiData]);
     setServData(data);
   };
 
   useEffect(() => {
-    if (!storagedData) setApiStoragedData([]);
+    if (!apiStoragedData) setApiStoragedData([]);
   }, []);
 
   useEffect(() => {
