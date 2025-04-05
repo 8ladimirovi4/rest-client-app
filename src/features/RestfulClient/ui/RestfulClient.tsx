@@ -60,6 +60,7 @@ export const RestfulClient = () => {
       body,
       headers,
     });
+    console.log('===>client data', data)
     setApiStoragedData([...storagedData, apiData]);
     setServData(data);
   };

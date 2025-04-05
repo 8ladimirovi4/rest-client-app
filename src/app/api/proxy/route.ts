@@ -49,16 +49,18 @@ async function proxyRequest(
         },
       });
     }
+
     let data = null;
+    const text = await response.text(); 
+
     try {
-      data = await response.json();
+      data = JSON.parse(text);
     } catch (error) {
-      return NextResponse.json(
+        return NextResponse.json(
         { error: 'Invalid JSON response', details: `${error}` },
         { status: response.status }
       );
     }
-
     return NextResponse.json(data, { status: response.status });
   } catch (error) {
     return NextResponse.json(

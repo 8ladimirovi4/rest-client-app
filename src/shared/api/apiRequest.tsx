@@ -48,9 +48,6 @@ export const apiRequest = async ({
 
     const response = await fetch(fullUrl, options);
     resComplite(response);
-    if (!response.ok) {
-      throw new Error(`Ошибка: ${response.status} ${response.statusText}`);
-    }
 
     const data = await response.json();
     return data;
