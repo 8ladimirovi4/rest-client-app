@@ -13,7 +13,7 @@ export const Select = ({
   height = 40,
 }: SelectProps) => {
   return (
-    <div className='className="flex items-center justify-center w-full'>
+    <div className='className="flex items-center justify-center w-full mr-3'>
       {label && <Label label={label} id={id} />}
       <select
         style={{ width, height }}

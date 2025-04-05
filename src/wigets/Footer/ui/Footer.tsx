@@ -3,8 +3,11 @@ import React from 'react';
 import Image from 'next/image';
 import styles from './styles.module.css';
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 export const Footer = () => {
+  const { t } = useTranslation();
+
   return (
     <footer
       className={classNames(
@@ -33,7 +36,7 @@ export const Footer = () => {
           </a>
           <ul className="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
             <li>
-              <span className="me-4 md:me-6">© 2025 All Rights Reserved.</span>
+              <span className="me-4 md:me-6">© 2025 {t('Copyright')}</span>
             </li>
           </ul>
           <a

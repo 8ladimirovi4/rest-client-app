@@ -1,7 +1,8 @@
-import { LoginUser } from 'features/LoginUser';
+import { Home } from 'entities/Home/ui/Home';
+import React from 'react';
 
-const PageAuth = () => {
-  return <LoginUser />;
+const PageHome = () => {
+  return <Home />;
 };
 
-export default PageAuth;
+export default PageHome;

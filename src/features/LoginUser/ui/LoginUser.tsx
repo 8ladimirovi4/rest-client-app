@@ -13,15 +13,15 @@ import {
 } from 'app/providers/StoreProvider/config/store.ts';
 import { userActions } from 'shared/model/user.slice.ts';
 import { Spinner } from 'shared/ui/Spinner/Spinner.tsx';
-import styles from './styles.module.css';
+import styles from '../../../shared/styles/form.module.css';
 import firebase from 'firebase/app';
 import FirebaseError = firebase.FirebaseError;
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { loginSchema } from 'shared/lib/validation/loginSchema.ts';
-import { getPasswordStrength } from 'shared/lib/password/getPasswordStrength.ts';
-import { routesActions } from 'shared/model/routes.slice';
+import { useLoginSchema } from 'shared/lib/validation/loginSchema.ts';
 import { signInWithEmailAndPassword } from 'firebase/auth';
+import { AuthGuards } from 'shared/lib/AuthGuard/AuthGuards.tsx';
+import { useTranslation } from 'react-i18next';
 
 interface User {
   email: string;
@@ -32,21 +32,17 @@ export function LoginUser() {
   const {
     control,
     handleSubmit,
-    watch,
     formState: { errors, isValid },
   } = useForm<User>({
-    resolver: yupResolver(loginSchema),
+    resolver: yupResolver(useLoginSchema()),
     mode: 'onChange',
   });
-  const password = watch('password');
-  let strength = 0;
-  if (password) {
-    strength = getPasswordStrength(password);
-  }
   const dispatch = useDispatch<AppDispatch>();
-  const { loading, error } = useSelector((state: RootState) => state.user);
-
+  const { loading, error, isAuthChecked } = useSelector(
+    (state: RootState) => state.user
+  );
   const router = useRouter();
+  const { t } = useTranslation();
 
   const handleSubmitForm = async (data: User) => {
     try {
@@ -71,8 +67,7 @@ export function LoginUser() {
             uid: user.uid,
           })
         );
-        router.push('/home');
-        dispatch(routesActions.setCurrentRoute('/home'));
+        router.push('/');
         return userData;
       } else {
         return null;
@@ -86,52 +81,57 @@ export function LoginUser() {
     }
   };
 
+  if (!isAuthChecked) return null;
+
   return (
-    <div className={styles.container}>
-      <h3 className={styles.title}>Sign In</h3>
-      {loading ? (
-        <Spinner />
-      ) : (
-        <form className={styles.form} onSubmit={handleSubmit(handleSubmitForm)}>
-          <Controller
-            name="email"
-            control={control}
-            render={({ field }) => (
-              <Input
-                {...field}
-                error={errors.email?.message}
-                placeholder={'Email'}
-                label={'Email'}
-                type={'text'}
-                id={'email'}
-              />
-            )}
-          />
-          <Controller
-            name="password"
-            control={control}
-            render={({ field }) => (
-              <Input
-                {...field}
-                error={errors.password?.message}
-                placeholder={'Password'}
-                label={'Password'}
-                type={'password'}
-                id={'password'}
-              />
-            )}
-          />
-          <div className={styles['progress-bar']}>
-            <div
-              className={`${styles['progress-fill']} ${styles[`strength-${strength}`]}`}
-              style={{ width: `${(strength / 5) * 100}%` }}
+    <AuthGuards requireAuth={false}>
+      <div className={styles.container}>
+        <h3 className={styles.title}>{t('Sign in')}</h3>
+        {loading ? (
+          <Spinner />
+        ) : (
+          <form
+            className={styles.form}
+            onSubmit={handleSubmit(handleSubmitForm)}
+          >
+            <Controller
+              name="email"
+              control={control}
+              render={({ field }) => (
+                <Input
+                  {...field}
+                  error={errors.email?.message}
+                  placeholder={t('Email')}
+                  label={t('Email')}
+                  type={'text'}
+                  id={'email'}
+                />
+              )}
             />
-          </div>
-          <Button title="Login" type="submit" disabled={!isValid}></Button>
-        </form>
-      )}
-      {error && <p className={styles['error-message']}>{error}</p>}
-    </div>
+            <Controller
+              name="password"
+              control={control}
+              render={({ field }) => (
+                <Input
+                  {...field}
+                  error={errors.password?.message}
+                  placeholder={t('Password')}
+                  label={t('Password')}
+                  type={'password'}
+                  id={'password'}
+                />
+              )}
+            />
+            <Button
+              title={t('Sign in')}
+              type="submit"
+              disabled={!isValid}
+            ></Button>
+          </form>
+        )}
+        {error && <p className={styles['error-message']}>{error}</p>}
+      </div>
+    </AuthGuards>
   );
 }
 

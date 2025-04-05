@@ -1,46 +1,48 @@
 'use client';
-import React, { ChangeEvent, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './styles.module.css';
 import Link from 'next/link';
-import { Select } from 'shared/index';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RootState } from 'app/providers/StoreProvider/config/store.ts';
-import { langActions } from 'shared/model/lang.slice';
 import Image from 'next/image';
-import { routesActions } from 'shared/model/routes.slice';
 import { Logout } from 'features/LogoutUser';
+import { AuthLinks } from 'shared/ui/AuthLinks/AuthLinks.tsx';
+import { LangSwitcher } from 'wigets/LangSwitcher';
+import { useTranslation } from 'react-i18next';
 
 export const Header = () => {
-  const { lang, langs } = useSelector((state: RootState) => state.lang);
-  const dispatch = useDispatch();
-
-  const { setRoutes, setCurrentRoute } = routesActions;
-  const { setLang } = langActions;
-  const { isUserLoggedIn } = useSelector((state: RootState) => state.user);
-
-  const handleSetLanguage = (evt: ChangeEvent<HTMLSelectElement>) => {
-    const { value } = evt.target;
-    dispatch(setLang({ lang: value }));
-  };
+  const { t } = useTranslation();
+  const { isUserLoggedIn, isAuthChecked } = useSelector(
+    (state: RootState) => state.user
+  );
+  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
-    dispatch(setRoutes({ isUserLoggedIn }));
-  }, [isUserLoggedIn]);
+    const handleScroll = () => {
+      if (window.scrollY > 30) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   return (
-    <header className={styles['app-header']}>
-      <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
+    <header
+      className={`${styles['app-header']} ${isScrolled ? styles['scrolled'] : ''}`}
+    >
+      <nav className=" border-gray-200 px-4 lg:px-6 py-2.5">
         <div className="flex justify-between items-center mx-auto max-w-screen-xl">
-          <Link
-            href={!isUserLoggedIn ? '/' : '/home'}
-            onClick={() => {
-              dispatch(setCurrentRoute(!isUserLoggedIn ? '/' : '/home'));
-            }}
-            className="flex items-center"
-          >
+          <Link href={'/'} className="flex items-center">
             <Image
               src="/icon/rest.png"
-              className="mr-3  "
+              className="mr-3"
               alt="Restful Logo"
               width={30}
               height={30}
@@ -50,37 +52,20 @@ export const Header = () => {
             </span>
           </Link>
           <div className="flex items-center lg:order-2">
-            <Select
-              id="1"
-              options={langs}
-              value={lang}
-              onChange={handleSetLanguage}
-            />
-            {!isUserLoggedIn && (
+            <LangSwitcher />
+            {isAuthChecked && isUserLoggedIn ? (
               <>
                 <Link
-                  href={!isUserLoggedIn ? '/' : '/home'}
-                  onClick={() => {
-                    dispatch(setCurrentRoute(!isUserLoggedIn ? '/' : '/home'));
-                  }}
+                  href={'/'}
                   className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800  whitespace-nowrap"
                 >
-                  Sign In
+                  {t('Main page')}
                 </Link>
-                <Link
-                  href={!isUserLoggedIn ? '/register' : '/home'}
-                  onClick={() => {
-                    dispatch(
-                      setCurrentRoute(!isUserLoggedIn ? '/register' : '/home')
-                    );
-                  }}
-                  className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800  whitespace-nowrap"
-                >
-                  Sign Up
-                </Link>
+                <Logout isUserLoggedIn={isUserLoggedIn} />
               </>
+            ) : (
+              <AuthLinks />
             )}
-            {isUserLoggedIn && <Logout isUserLoggedIn={isUserLoggedIn} />}
             <button
               data-collapse-toggle="mobile-menu-2"
               type="button"
