@@ -1,26 +1,43 @@
 'use client'
-// dynamicVariables.js
-import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from 'app/providers/StoreProvider/config/store.ts';
+import { AuthGuards } from 'shared/lib/AuthGuard/AuthGuards.tsx';
+import {v4} from 'uuid'
+import { useLocalStorage } from 'shared/lib/hooks/useLocalStorage';
+import Variable from './Variable';
+import { Spinner } from 'shared/index';
 
-localStorage.setItem('userVariables', JSON.stringify({ packageName: 'react' }));
 
 const Variables = () => {
-  const [variables, setVariables] = useState(null);
+  const {isAuthChecked} = useSelector((store: RootState) => store.user);
+ const [storagedVars, setStoragedVars] = useLocalStorage<{key:string, value:string}[] | []>(
+        {
+          key: 'variables',
+          defaultValue: [],
+        }
+      );
 
-  useEffect(() => {
-    if (localStorage.getItem('userVariables')) {
-      setVariables(JSON.parse(localStorage.getItem('userVariables')));
-    }
-  }, []);
-
+  if (!isAuthChecked) return null;
+  if(!storagedVars) return <Spinner/>
   return (
-    <div>
-      {variables ? (
-        <pre>{JSON.stringify(variables, null, 2)}</pre>
-      ) : (
-        <p>Loading variables...</p>
-      )}
-    </div>
+   <AuthGuards requireAuth={true}>
+    <table>
+    <thead>
+    <tr>
+      <th scope="col">Variable</th>
+      <th scope="col">Value</th>
+    </tr>
+  </thead>
+    <tbody>
+      <th></th>
+     {storagedVars && storagedVars.map(variable => (
+      <tr key={v4()}>
+      <Variable variable={variable}/>
+      </tr>
+      ))}
+       </tbody>
+      </table>
+    </AuthGuards>
   );
 };
 
