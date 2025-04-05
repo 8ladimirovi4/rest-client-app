@@ -2,7 +2,7 @@
 import { useState, useEffect, PropsWithChildren } from 'react';
 import { ThemeContext } from './ThemeContext';
 import { useLocalStorage } from 'shared/lib/hooks/useLocalStorage';
-import { THEME } from 'shared/lib/utils';
+import { THEME } from 'shared/const/theme';
 import { useRunOnce } from 'shared/lib/hooks/useRunOnce';
 
 const ThemeContextProvider = ({ children }: PropsWithChildren) => {

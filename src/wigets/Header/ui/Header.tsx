@@ -1,52 +1,45 @@
 'use client';
-import React, { ChangeEvent, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './styles.module.css';
 import Link from 'next/link';
-import { Select } from 'shared/index';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RootState } from 'app/providers/StoreProvider/config/store.ts';
 import Image from 'next/image';
 import { Logout } from 'features/LogoutUser';
-import { useLocalStorage } from 'shared/lib/hooks/useLocalStorage';
-import { LANGS } from 'shared/constants/langs';
-import { langActions } from 'shared/model/lang.slice';
-import { routesActions } from 'shared/model/routes.slice';
+import { AuthLinks } from 'shared/ui/AuthLinks/AuthLinks.tsx';
+import { LangSwitcher } from 'wigets/LangSwitcher';
+import { useTranslation } from 'react-i18next';
 
 export const Header = () => {
-  const dispatch = useDispatch();
-  const [storageLang, setStoragelang] = useLocalStorage<string>({
-    key: 'lang',
-    defaultValue: 'en',
-  });
-  const { lang } = useSelector((state: RootState) => state.lang);
-  const { setRoutes, setCurrentRoute } = routesActions;
+  const { t } = useTranslation();
   const { isUserLoggedIn, isAuthChecked } = useSelector(
     (state: RootState) => state.user
   );
-
-  const { setLang } = langActions;
-  const handleSetLanguage = (evt: ChangeEvent<HTMLSelectElement>) => {
-    const { value } = evt.target;
-    setStoragelang(value);
-    dispatch(setLang({ value }));
-  };
+  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
-    if (!storageLang) setStoragelang('en');
-    dispatch(setRoutes({ isUserLoggedIn }));
-  }, [isUserLoggedIn, setRoutes, dispatch]);
+    const handleScroll = () => {
+      if (window.scrollY > 30) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   return (
-    <header className={styles['app-header']}>
-      <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
+    <header
+      className={`${styles['app-header']} ${isScrolled ? styles['scrolled'] : ''}`}
+    >
+      <nav className=" border-gray-200 px-4 lg:px-6 py-2.5">
         <div className="flex justify-between items-center mx-auto max-w-screen-xl">
-          <Link
-            href={!isUserLoggedIn ? '/login' : '/'}
-            onClick={() => {
-              dispatch(setCurrentRoute(!isUserLoggedIn ? '/' : '/home'));
-            }}
-            className="flex items-center"
-          >
+          <Link href={'/'} className="flex items-center">
             <Image
               src="/icon/rest.png"
               className={styles['app-header_rs-logo']}
@@ -59,38 +52,19 @@ export const Header = () => {
             </span>
           </Link>
           <div className="flex items-center lg:order-2">
-            <Select
-              id="1"
-              options={LANGS}
-              value={lang}
-              onChange={handleSetLanguage}
-            />
-            {!isUserLoggedIn && isAuthChecked && (
+            <LangSwitcher />
+            {isAuthChecked && isUserLoggedIn ? (
               <>
                 <Link
-                  href={!isUserLoggedIn ? '/login' : '/'}
-                  onClick={() => {
-                    dispatch(setCurrentRoute(!isUserLoggedIn ? '/login' : '/'));
-                  }}
+                  href={'/'}
                   className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800  whitespace-nowrap"
                 >
-                  Sign In
+                  {t('Main page')}
                 </Link>
-                <Link
-                  href={!isUserLoggedIn ? '/register' : '/'}
-                  onClick={() => {
-                    dispatch(
-                      setCurrentRoute(!isUserLoggedIn ? '/register' : '/')
-                    );
-                  }}
-                  className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800  whitespace-nowrap"
-                >
-                  Sign Up
-                </Link>
+                <Logout isUserLoggedIn={isUserLoggedIn} />
               </>
-            )}
-            {isUserLoggedIn && isAuthChecked && (
-              <Logout isUserLoggedIn={isUserLoggedIn} />
+            ) : (
+              <AuthLinks />
             )}
             <button
               data-collapse-toggle="mobile-menu-2"

@@ -7,14 +7,15 @@ import Search from './Search';
 import { QueryTab } from './QueryTab';
 import { useLocalStorage } from 'shared/lib/hooks/useLocalStorage';
 import { apiRequest } from 'shared/api/apiRequest';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RootState } from 'app/providers/StoreProvider/config/store';
 import { ApiRequestState } from 'shared/model/types';
 import { Spinner } from 'shared/index';
-import { apiRequestActions } from 'shared/model/apiRequest.slice';
 import { AuthGuards } from 'shared/lib/AuthGuard/AuthGuards.tsx';
 import { BodyTab } from './BodyTab';
 import { HeadersTab } from './HeadersTab';
+import { VariablesTab } from './VariablesTab';
+import { replaceVariables } from 'shared/utils/help';
 
 export const RestfulClient = () => {
   const { isAuthChecked } = useSelector((store: RootState) => store.user);
@@ -23,14 +24,16 @@ export const RestfulClient = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const apiData = useSelector((state: RootState) => state.apiRequest);
-  const [storagedData, setApiStoragedData] = useLocalStorage<ApiRequestState[]>(
-    {
-      key: 'restful-client',
-      defaultValue: [],
-    }
-  );
+  const [apiStoragedData, setApiStoragedData] = useLocalStorage<
+    ApiRequestState[]
+  >({
+    key: 'restful-client',
+    defaultValue: [],
+  });
 
-  const { browserUrl, method, query, triggerFetch, body, headers } = apiData;
+  const { browserUrl, method, query, triggerFetch, body, headers, variables } =
+    apiData;
+
   const resComplite = (res) => {
     setServResponse(res);
   };
@@ -40,6 +43,7 @@ export const RestfulClient = () => {
   const finnalyComplite = () => {
     setLoading(false);
   };
+
   const fetchData = async () => {
     setLoading(true);
     setError('');
@@ -49,23 +53,22 @@ export const RestfulClient = () => {
       setLoading(false);
       return;
     }
-
     const data = await apiRequest({
       resComplite,
       catchComplite,
       finnalyComplite,
-      browserUrl: `/api/proxy?url=${browserUrl}`,
+      browserUrl: replaceVariables(browserUrl, variables),
       method,
-      query,
-      body,
-      headers,
+      query: replaceVariables(query, variables),
+      body: replaceVariables(body, variables),
+      headers: replaceVariables(headers, variables),
     });
-    setApiStoragedData([...storagedData, apiData]);
+    setApiStoragedData([...apiStoragedData, apiData]);
     setServData(data);
   };
 
   useEffect(() => {
-    if (!storagedData) setApiStoragedData([]);
+    if (!apiStoragedData) setApiStoragedData([]);
   }, []);
 
   useEffect(() => {
@@ -95,7 +98,7 @@ export const RestfulClient = () => {
               },
               {
                 label: 'VARIABLES',
-                content: <p>This is the Contacts tab content.</p>,
+                content: <VariablesTab />,
               },
             ]}
           />

@@ -1,30 +1,30 @@
 'use client';
 import { Button, Input } from 'shared/index';
-import React, { useState } from 'react';
+import React from 'react';
 import styles from './styles.module.css';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { apiRequestActions } from 'shared/model/apiRequest.slice';
+import { RootState } from 'app/providers/StoreProvider/config/store';
 
 export const HeadersTab = () => {
-  const [headers, setHeaders] = useState([{ key: '', value: '' }]);
+  const { headers } = useSelector((state: RootState) => state.apiRequest);
   const dispatch = useDispatch();
 
-  const { setHeaders: setRequestHeaders } = apiRequestActions;
+  const { setHeaders } = apiRequestActions;
 
   const addHeader = () => {
-    setHeaders([...headers, { key: '', value: '' }]);
+    dispatch(setHeaders({ headers: [...headers, { key: '', value: '' }] }));
   };
 
   const removeHeader = (idx: number) => {
     const newHeaders = headers.filter((_, i) => i !== idx);
-    setHeaders(newHeaders);
+    dispatch(setHeaders({ headers: newHeaders }));
   };
 
   const updateHeader = (idx: number, key: string, value: string) => {
     const newHeaders = [...headers];
     newHeaders[idx] = { key, value };
-    setHeaders(newHeaders);
-    dispatch(setRequestHeaders({ headers: newHeaders }));
+    dispatch(setHeaders({ headers: newHeaders }));
   };
 
   return (

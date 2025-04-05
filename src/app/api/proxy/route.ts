@@ -5,9 +5,10 @@ async function proxyRequest(
   method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH' | 'OPTIONS' | 'HEAD'
 ) {
   const searchParams = request.nextUrl.searchParams;
-  const apiUrl = searchParams.get('url');
+  const encodedUrl = searchParams.get('url') || '';
+  const apiUrl = atob(decodeURIComponent(encodedUrl));
 
-  if (!apiUrl) {
+  if (!apiUrl && !encodedUrl) {
     return NextResponse.json(
       { error: 'Missing "url" parameter' },
       { status: 400 }
@@ -49,16 +50,18 @@ async function proxyRequest(
         },
       });
     }
+
     let data = null;
+    const text = await response.text();
+
     try {
-      data = await response.json();
+      data = JSON.parse(text);
     } catch (error) {
       return NextResponse.json(
         { error: 'Invalid JSON response', details: `${error}` },
         { status: response.status }
       );
     }
-
     return NextResponse.json(data, { status: response.status });
   } catch (error) {
     return NextResponse.json(

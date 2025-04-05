@@ -1,34 +1,35 @@
 'use client';
 import { Button, Input } from 'shared/index';
-import React, { useState } from 'react';
+import React from 'react';
 import styles from './styles.module.css';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { apiRequestActions } from 'shared/model/apiRequest.slice';
+import { RootState } from 'app/providers/StoreProvider/config/store';
 
 export const QueryTab = () => {
-  const [queryParams, setQueryParams] = useState([{ key: '', value: '' }]);
+  const { query } = useSelector((state: RootState) => state.apiRequest);
   const dispatch = useDispatch();
 
   const { setQuery } = apiRequestActions;
+
   const addQueryParam = () => {
-    setQueryParams([...queryParams, { key: '', value: '' }]);
+    dispatch(setQuery({ query: [...query, { key: '', value: '' }] }));
   };
 
   const removeQueryParam = (idx: number) => {
-    const newParams = queryParams.filter((_, i) => i !== idx);
-    setQueryParams(newParams);
+    const newParams = query.filter((_, i) => i !== idx);
+    dispatch(setQuery({ query: newParams }));
   };
 
   const updateQueryParam = (idx: number, key: string, value: string) => {
-    const newParams = [...queryParams];
+    const newParams = [...query];
     newParams[idx] = { key, value };
-    setQueryParams(newParams);
     dispatch(setQuery({ query: newParams }));
   };
 
   return (
     <div>
-      {queryParams.map((param, idx) => (
+      {query.map((param, idx) => (
         <div
           key={idx}
           className={styles['restful-wrapper_tabview-container_query']}

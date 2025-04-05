@@ -21,23 +21,25 @@ export const apiRequest = async ({
 
     const headersObject = headers.reduce((acc, header) => {
       const { key, value } = header;
-      acc[key] = value;
+      if (key) acc[key] = value;
       return acc;
     }, {});
 
     const normalizedHeaders = Object.keys(headersObject).map((key) =>
       key.toLowerCase()
     );
+
+    const fullUrl = `${browserUrl}${queryString}`;
+    const encodedUrl = encodeURIComponent(btoa(fullUrl));
+
     const contentType = normalizedHeaders.includes('content-type')
       ? {}
       : { 'Content-Type': 'application/json' };
 
-    const fullUrl = `${browserUrl}${queryString}`;
-
     const options = {
       method: method || 'GET',
       headers: {
-        'Content-Type': 'application/json',
+        ...contentType,
         ...headersObject,
       },
     };
@@ -46,11 +48,8 @@ export const apiRequest = async ({
       options.body = body || '{}';
     }
 
-    const response = await fetch(fullUrl, options);
+    const response = await fetch(`/api/proxy?url=${encodedUrl}`, options);
     resComplite(response);
-    if (!response.ok) {
-      throw new Error(`Ошибка: ${response.status} ${response.statusText}`);
-    }
 
     const data = await response.json();
     return data;
