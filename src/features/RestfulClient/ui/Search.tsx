@@ -23,8 +23,8 @@ const Search = () => {
     dispatch(setMethod({ method: value }));
 
     const currentUrl = new URL(window.location.href);
-    currentUrl.pathname = `/${value}`; 
-    currentUrl.searchParams.set('link', browserUrl); 
+    currentUrl.pathname = `/${value}`;
+    currentUrl.searchParams.set('link', browserUrl);
     window.history.pushState({}, '', currentUrl.toString());
   };
 

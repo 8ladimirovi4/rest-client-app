@@ -29,6 +29,5 @@ export function useLocalStorage<T>({
     }
   }, [key, value]);
 
-
   return [value, setValue];
 }

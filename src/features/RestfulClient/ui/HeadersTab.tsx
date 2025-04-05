@@ -7,24 +7,24 @@ import { apiRequestActions } from 'shared/model/apiRequest.slice';
 import { RootState } from 'app/providers/StoreProvider/config/store';
 
 export const HeadersTab = () => {
-  const {headers} = useSelector((state: RootState) => state.apiRequest);
+  const { headers } = useSelector((state: RootState) => state.apiRequest);
   const dispatch = useDispatch();
 
   const { setHeaders } = apiRequestActions;
 
   const addHeader = () => {
-    dispatch(setHeaders({headers: [...headers, { key: '', value: '' }]}));
+    dispatch(setHeaders({ headers: [...headers, { key: '', value: '' }] }));
   };
 
   const removeHeader = (idx: number) => {
     const newHeaders = headers.filter((_, i) => i !== idx);
-    dispatch(setHeaders({headers: newHeaders}));
+    dispatch(setHeaders({ headers: newHeaders }));
   };
 
   const updateHeader = (idx: number, key: string, value: string) => {
     const newHeaders = [...headers];
     newHeaders[idx] = { key, value };
-    dispatch(setHeaders({headers: newHeaders}));
+    dispatch(setHeaders({ headers: newHeaders }));
   };
 
   return (

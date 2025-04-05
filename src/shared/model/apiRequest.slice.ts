@@ -4,11 +4,11 @@ import { ApiRequestState } from './types';
 
 const initialState: ApiRequestState = {
   url: '',
-  query: [{key:"", value:""}],
+  query: [{ key: '', value: '' }],
   body: '',
   method: 'GET',
-  headers: [{key:"", value:""}],
-  variables: [{key:"", value:""}],
+  headers: [{ key: '', value: '' }],
+  variables: [{ key: '', value: '' }],
   textMode: false,
   type: '',
   status: null,
@@ -56,9 +56,11 @@ const apiRequestSlice = createSlice({
       const { headers } = payload;
       state.headers = headers;
     },
-    setVariables:(
+    setVariables: (
       state: ApiRequestState,
-      { payload }: PayloadAction<{ variables: { key: string; value: string }[] }>
+      {
+        payload,
+      }: PayloadAction<{ variables: { key: string; value: string }[] }>
     ) => {
       const { variables } = payload;
       state.variables = variables;

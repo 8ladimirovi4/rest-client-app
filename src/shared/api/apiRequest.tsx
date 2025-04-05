@@ -21,7 +21,7 @@ export const apiRequest = async ({
 
     const headersObject = headers.reduce((acc, header) => {
       const { key, value } = header;
-      if(key)  acc[key] = value;
+      if (key) acc[key] = value;
       return acc;
     }, {});
 
@@ -30,8 +30,8 @@ export const apiRequest = async ({
     );
 
     const fullUrl = `${browserUrl}${queryString}`;
-    const encodedUrl =  encodeURIComponent(btoa(fullUrl));
-    
+    const encodedUrl = encodeURIComponent(btoa(fullUrl));
+
     const contentType = normalizedHeaders.includes('content-type')
       ? {}
       : { 'Content-Type': 'application/json' };
@@ -47,7 +47,7 @@ export const apiRequest = async ({
     if (method === 'POST' || method === 'PUT' || method === 'PATCH') {
       options.body = body || '{}';
     }
-  
+
     const response = await fetch(`/api/proxy?url=${encodedUrl}`, options);
     resComplite(response);
 

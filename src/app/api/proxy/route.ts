@@ -7,7 +7,7 @@ async function proxyRequest(
   const searchParams = request.nextUrl.searchParams;
   const encodedUrl = searchParams.get('url') || '';
   const apiUrl = atob(decodeURIComponent(encodedUrl));
-  
+
   if (!apiUrl && !encodedUrl) {
     return NextResponse.json(
       { error: 'Missing "url" parameter' },
@@ -52,12 +52,12 @@ async function proxyRequest(
     }
 
     let data = null;
-    const text = await response.text(); 
+    const text = await response.text();
 
     try {
       data = JSON.parse(text);
     } catch (error) {
-        return NextResponse.json(
+      return NextResponse.json(
         { error: 'Invalid JSON response', details: `${error}` },
         { status: response.status }
       );

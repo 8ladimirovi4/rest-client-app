@@ -7,16 +7,14 @@ import Search from './Search';
 import { QueryTab } from './QueryTab';
 import { useLocalStorage } from 'shared/lib/hooks/useLocalStorage';
 import { apiRequest } from 'shared/api/apiRequest';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RootState } from 'app/providers/StoreProvider/config/store';
 import { ApiRequestState } from 'shared/model/types';
 import { Spinner } from 'shared/index';
-import { apiRequestActions } from 'shared/model/apiRequest.slice';
 import { AuthGuards } from 'shared/lib/AuthGuard/AuthGuards.tsx';
 import { BodyTab } from './BodyTab';
 import { HeadersTab } from './HeadersTab';
 import { VariablesTab } from './VariablesTab';
-import { Variable } from '../types';
 import { replaceVariables } from 'shared/utils/help';
 
 export const RestfulClient = () => {
@@ -26,14 +24,15 @@ export const RestfulClient = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const apiData = useSelector((state: RootState) => state.apiRequest);
-  const [apiStoragedData, setApiStoragedData] = useLocalStorage<ApiRequestState[]>(
-    {
-      key: 'restful-client',
-      defaultValue: [],
-    }
-  );
+  const [apiStoragedData, setApiStoragedData] = useLocalStorage<
+    ApiRequestState[]
+  >({
+    key: 'restful-client',
+    defaultValue: [],
+  });
 
-  const { browserUrl, method, query, triggerFetch, body, headers, variables } = apiData;
+  const { browserUrl, method, query, triggerFetch, body, headers, variables } =
+    apiData;
 
   const resComplite = (res) => {
     setServResponse(res);
@@ -62,7 +61,7 @@ export const RestfulClient = () => {
       method,
       query: replaceVariables(query, variables),
       body: replaceVariables(body, variables),
-      headers: replaceVariables(headers, variables)
+      headers: replaceVariables(headers, variables),
     });
     setApiStoragedData([...apiStoragedData, apiData]);
     setServData(data);
@@ -99,7 +98,7 @@ export const RestfulClient = () => {
               },
               {
                 label: 'VARIABLES',
-                content: <VariablesTab/>,
+                content: <VariablesTab />,
               },
             ]}
           />

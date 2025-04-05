@@ -30,9 +30,9 @@ type Query = {
   value: string;
 };
 
-type Headers =  Query
+type Headers = Query;
 
-type Variables =  Query
+type Variables = Query;
 export interface ApiRequestState {
   url: string;
   query: Query[];

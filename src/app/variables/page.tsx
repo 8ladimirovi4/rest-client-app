@@ -1,4 +1,4 @@
-import Variables from "entities/Variables/Variables";
+import Variables from 'entities/Variables/Variables';
 
 const PageVariables = () => {
   return (

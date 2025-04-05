@@ -7,24 +7,24 @@ import { apiRequestActions } from 'shared/model/apiRequest.slice';
 import { RootState } from 'app/providers/StoreProvider/config/store';
 
 export const QueryTab = () => {
-  const {query} = useSelector((state: RootState) => state.apiRequest);
+  const { query } = useSelector((state: RootState) => state.apiRequest);
   const dispatch = useDispatch();
 
   const { setQuery } = apiRequestActions;
 
   const addQueryParam = () => {
-    dispatch(setQuery({query: [...query, { key: '', value: '' }]}))
+    dispatch(setQuery({ query: [...query, { key: '', value: '' }] }));
   };
 
   const removeQueryParam = (idx: number) => {
     const newParams = query.filter((_, i) => i !== idx);
-    dispatch(setQuery({ query: newParams }))
+    dispatch(setQuery({ query: newParams }));
   };
 
   const updateQueryParam = (idx: number, key: string, value: string) => {
     const newParams = [...query];
     newParams[idx] = { key, value };
-    dispatch(setQuery({ query: newParams }))
+    dispatch(setQuery({ query: newParams }));
   };
 
   return (
