@@ -21,24 +21,25 @@ export const apiRequest = async ({
 
     const headersObject = headers.reduce((acc, header) => {
       const { key, value } = header;
-      acc[key] = value;
+      if(key)  acc[key] = value;
       return acc;
     }, {});
 
     const normalizedHeaders = Object.keys(headersObject).map((key) =>
       key.toLowerCase()
     );
-    const contentType = normalizedHeaders.includes('content-type')
-      ? {}
-      : { 'Content-Type': 'application/json' };
 
     const fullUrl = `${browserUrl}${queryString}`;
     const encodedUrl =  encodeURIComponent(btoa(fullUrl));
     
+    const contentType = normalizedHeaders.includes('content-type')
+      ? {}
+      : { 'Content-Type': 'application/json' };
+
     const options = {
       method: method || 'GET',
       headers: {
-        'Content-Type': 'application/json',
+        ...contentType,
         ...headersObject,
       },
     };
