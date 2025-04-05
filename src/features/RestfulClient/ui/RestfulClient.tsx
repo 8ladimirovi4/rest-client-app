@@ -34,7 +34,7 @@ export const RestfulClient = () => {
   );
 
   const { browserUrl, method, query, triggerFetch, body, headers, variables } = apiData;
-console.log('===>query', query)
+
   const resComplite = (res) => {
     setServResponse(res);
   };
@@ -58,7 +58,7 @@ console.log('===>query', query)
       resComplite,
       catchComplite,
       finnalyComplite,
-      browserUrl,
+      browserUrl: replaceVariables(browserUrl, variables),
       method,
       query: replaceVariables(query, variables),
       body: replaceVariables(body, variables),
