@@ -25,7 +25,7 @@ export const Footer = () => {
           >
             <Image
               src="/logos/git.png"
-              className="h-8"
+              className={styles['app-footer_logo']}
               alt="Rs-school Logo"
               width={30}
               height={30}
@@ -47,7 +47,7 @@ export const Footer = () => {
           >
             <Image
               src="/logos/rss-logo.svg"
-              className="h-8"
+              className={styles['app-footer_logo']}
               alt="Rs-school Logo"
               width={30}
               height={30}

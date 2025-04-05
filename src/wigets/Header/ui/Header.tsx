@@ -42,7 +42,7 @@ export const Header = () => {
           <Link href={'/'} className="flex items-center">
             <Image
               src="/icon/rest.png"
-              className="mr-3"
+              className={styles['app-header_rs-logo']}
               alt="Restful Logo"
               width={30}
               height={30}
