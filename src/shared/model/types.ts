@@ -35,16 +35,13 @@ type Headers = Query;
 type Variables = Query;
 
 export interface ApiRequestState {
-  url: string;
   query: Query[];
   body: string;
   method: string;
   headers: Headers[];
   variables: Variables[];
   textMode: boolean;
-  type: 'rest' | string;
   status: string;
   id: string;
   browserUrl: string;
-  triggerFetch: boolean;
 }

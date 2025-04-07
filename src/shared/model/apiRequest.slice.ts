@@ -3,18 +3,15 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import { ApiRequestState } from './types';
 
 const initialState: ApiRequestState = {
-  url: '',
   query: [{ key: '', value: '' }],
   body: '',
   method: 'GET',
   headers: [{ key: '', value: '' }],
   variables: [{ key: '', value: '' }],
   textMode: false,
-  type: '',
   status: 'N/A',
   id: '',
   browserUrl: '',
-  triggerFetch: false,
 };
 
 const apiRequestSlice = createSlice({
@@ -81,10 +78,15 @@ const apiRequestSlice = createSlice({
       }: PayloadAction<{ status: string }>
     ) => {
       const { status } = payload;
-      state.status= status;
+      state.status = status;
     },
-    setTriggerFetch: (state: ApiRequestState) => {
-      state.triggerFetch = !state.triggerFetch;
+    setHistoryState: (
+        _,
+      {
+        payload,
+      }: PayloadAction<ApiRequestState>
+    ) => {
+      return payload
     },
   },
 });

@@ -2,6 +2,9 @@ import React, { useState } from 'react'
 import { HistoryProps } from '../types'
 import { Button } from 'shared/index'
 import { ChevronDown, ChevronRight } from 'lucide-react'
+import { useDispatch } from 'react-redux'
+import { apiRequestActions } from 'shared/model/apiRequest.slice'
+import { useRouter } from 'next/navigation';
 
 export const HistoryItem = ({ history }: HistoryProps) => {
   const {
@@ -11,11 +14,19 @@ export const HistoryItem = ({ history }: HistoryProps) => {
     method,
     query,
     status,
-    triggerFetch,
     variables,
   } = history
 
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState<boolean>(false)
+  const dispatch = useDispatch()
+  const router = useRouter();
+
+  const {setHistoryState} = apiRequestActions
+  const handleHistoryAction = ():void => {
+     dispatch(setHistoryState(history))
+     //Доделать сссылку в формате GET .....!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+     router.push('/restful')
+  }
 
   return (
     <div className="w-full bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
@@ -38,7 +49,7 @@ export const HistoryItem = ({ history }: HistoryProps) => {
           </p>
         </div>
         <div className="flex-shrink-0">
-          <Button title="Go" />
+          <Button title="Go" onClick={handleHistoryAction}/>
         </div>
       </div>
       {isOpen && (

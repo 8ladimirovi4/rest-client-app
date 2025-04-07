@@ -1,6 +1,6 @@
 //@ts-nocheck
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { TabView } from './TabView';
 import styles from './styles.module.css';
 import Search from './Search';
@@ -16,7 +16,6 @@ import { BodyTab } from './BodyTab';
 import { HeadersTab } from './HeadersTab';
 import { VariablesTab } from './VariablesTab';
 import { replaceVariables } from 'shared/utils/help';
-import {v4} from 'uuid'
 import { apiRequestActions } from 'shared/model/apiRequest.slice';
 
 export const RestfulClient = () => {
@@ -34,17 +33,19 @@ export const RestfulClient = () => {
   });
   const dispatch = useDispatch()
 
-  const { browserUrl, method, query, triggerFetch, body, headers, variables } =
+  const { browserUrl, method, query, triggerFetch, body, headers, variables, id } =
     apiData;
-  const { setApiId, setApiStatus } = apiRequestActions;
+  const { setApiStatus } = apiRequestActions;
+
 
   const resComplite = (res) => {
     setServResponse(res);
-    const id = v4()
-    dispatch(setApiId({id}))
     dispatch(setApiStatus({status: res.status}))
-    setApiStoragedData([...apiStoragedData, {...apiData, id, status:res.status}]);
+    const isHistoryRequest = apiStoragedData.some(req => req.id === id)
+    if(!isHistoryRequest)
+    setApiStoragedData([...apiStoragedData, {...apiData, status:res.status}]);
   };
+
   const catchComplite = (error: Error) => {
     setError(error.message);
   };
@@ -80,7 +81,7 @@ export const RestfulClient = () => {
 
   useEffect(() => {
     fetchData();
-  }, [triggerFetch]);
+  }, [id]);
 
   if (!isAuthChecked) return null;
 
