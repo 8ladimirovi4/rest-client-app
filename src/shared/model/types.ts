@@ -33,6 +33,7 @@ type Query = {
 type Headers = Query;
 
 type Variables = Query;
+
 export interface ApiRequestState {
   url: string;
   query: Query[];
@@ -42,7 +43,7 @@ export interface ApiRequestState {
   variables: Variables[];
   textMode: boolean;
   type: 'rest' | string;
-  status: number | null;
+  status: string;
   id: string;
   browserUrl: string;
   triggerFetch: boolean;

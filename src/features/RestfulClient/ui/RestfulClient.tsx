@@ -7,7 +7,7 @@ import Search from './Search';
 import { QueryTab } from './QueryTab';
 import { useLocalStorage } from 'shared/lib/hooks/useLocalStorage';
 import { apiRequest } from 'shared/api/apiRequest';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'app/providers/StoreProvider/config/store';
 import { ApiRequestState } from 'shared/model/types';
 import { Spinner } from 'shared/index';
@@ -16,6 +16,8 @@ import { BodyTab } from './BodyTab';
 import { HeadersTab } from './HeadersTab';
 import { VariablesTab } from './VariablesTab';
 import { replaceVariables } from 'shared/utils/help';
+import {v4} from 'uuid'
+import { apiRequestActions } from 'shared/model/apiRequest.slice';
 
 export const RestfulClient = () => {
   const { isAuthChecked } = useSelector((store: RootState) => store.user);
@@ -30,12 +32,18 @@ export const RestfulClient = () => {
     key: 'restful-client',
     defaultValue: [],
   });
+  const dispatch = useDispatch()
 
   const { browserUrl, method, query, triggerFetch, body, headers, variables } =
     apiData;
+  const { setApiId, setApiStatus } = apiRequestActions;
 
   const resComplite = (res) => {
     setServResponse(res);
+    const id = v4()
+    dispatch(setApiId({id}))
+    dispatch(setApiStatus({status: res.status}))
+    setApiStoragedData([...apiStoragedData, {...apiData, id, status:res.status}]);
   };
   const catchComplite = (error: Error) => {
     setError(error.message);
@@ -63,7 +71,6 @@ export const RestfulClient = () => {
       body: replaceVariables(body, variables),
       headers: replaceVariables(headers, variables),
     });
-    setApiStoragedData([...apiStoragedData, apiData]);
     setServData(data);
   };
 

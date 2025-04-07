@@ -11,7 +11,7 @@ const initialState: ApiRequestState = {
   variables: [{ key: '', value: '' }],
   textMode: false,
   type: '',
-  status: null,
+  status: 'N/A',
   id: '',
   browserUrl: '',
   triggerFetch: false,
@@ -64,6 +64,24 @@ const apiRequestSlice = createSlice({
     ) => {
       const { variables } = payload;
       state.variables = variables;
+    },
+    setApiId: (
+      state: ApiRequestState,
+      {
+        payload,
+      }: PayloadAction<{ id: string }>
+    ) => {
+      const { id } = payload;
+      state.id = id;
+    },
+    setApiStatus: (
+      state: ApiRequestState,
+      {
+        payload,
+      }: PayloadAction<{ status: string }>
+    ) => {
+      const { status } = payload;
+      state.status= status;
     },
     setTriggerFetch: (state: ApiRequestState) => {
       state.triggerFetch = !state.triggerFetch;
