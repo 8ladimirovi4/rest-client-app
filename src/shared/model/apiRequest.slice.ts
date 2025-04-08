@@ -84,9 +84,15 @@ const apiRequestSlice = createSlice({
         _,
       {
         payload,
-      }: PayloadAction<ApiRequestState>
+      }: PayloadAction<ApiRequestState | {}>
     ) => {
-      return payload
+      if (Object.keys(payload).length === 0) {
+        return initialState; 
+      }
+      return {
+        ...initialState, 
+        ...payload,      
+      };
     },
   },
 });

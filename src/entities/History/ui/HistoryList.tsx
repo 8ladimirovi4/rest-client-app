@@ -6,34 +6,80 @@ import { useLocalStorage } from 'shared/lib/hooks/useLocalStorage';
 import { HistoryItem } from './HistoryItem';
 import { ApiRequestState } from 'shared/model/types';
 import styles from './styles.module.css'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'shared/index';
+import Link from 'next/link'
+import { buildUrl } from 'shared/utils/help';
+import { useEffect } from 'react';
+import { apiRequestActions } from 'shared/model/apiRequest.slice';
 
 export const HistoryList = () => {
   const { isAuthChecked } = useSelector((store: RootState) => store.user);
-  const [storagedHistory, setStoragedHistory] = useLocalStorage<ApiRequestState[] | []>(
+   const {method, browserUrl} = useSelector((state: RootState) => state.apiRequest);
+   const [storagedHistory, setStoragedHistory] = useLocalStorage<ApiRequestState[] | []>(
       {
         key: 'restful-client',
         defaultValue: [],
       }
     );
+    const dispatch = useDispatch()
+
+    const {setBrowserUrl, setHistoryState} = apiRequestActions
+    const currentUrl = new URL(window.location.href)
+
     const handleClearHistoryItem = (id: string):void => {
       setStoragedHistory(prev => prev.filter(item => item.id !== id))
+      dispatch(setHistoryState({}))
     }
+
+    const handleClearHistory = ():void => {
+      setStoragedHistory(() => [])
+      dispatch(setHistoryState({}))
+    }
+
+    useEffect(() => {
+        if(storagedHistory && !storagedHistory.length)
+          dispatch(setBrowserUrl({browserUrl:''}))
+    },[])
 
   if (!isAuthChecked) return null;
   return (
     <AuthGuards requireAuth={true}>
       <div className={styles["history-item-wrapper"]}>
-        <div className={styles["history-item-wrapper__button-container"]}>
-          {storagedHistory && storagedHistory.length ? <Button  title="Clear All" onClick={() => {setStoragedHistory(() => [])}} color="red"/> : null}
-          </div>
-      {storagedHistory && [...storagedHistory].reverse().map(history =>( 
-        <HistoryItem key={history.id} history={history} handleClearHistoryItem={handleClearHistoryItem}/>
-))}
-</div>
+        {storagedHistory && storagedHistory.length ? (
+          <>
+            <div className={styles["history-item-wrapper__button-container"]}>
+              <Button
+                title="Clear All"
+                onClick={handleClearHistory}
+                color="red"
+              />
+            </div>
+            {[...storagedHistory].reverse().map((history) => (
+              <HistoryItem
+                key={history.id}
+                history={history}
+                handleClearHistoryItem={handleClearHistoryItem}
+              />
+            ))}
+          </>
+        ) : (
+          <>
+          <p className="text-4xl text-gray-500 dark:text-gray-400 text-center py-4">
+           You haven't executed any requests yet
+          </p>
+           <p className="text-4xl text-gray-500 dark:text-gray-400 text-center py-4">
+           It's empty here. Try those options:
+          </p>
+          <p className="text-4xl text-gray-500 dark:text-gray-400 text-center py-4">
+          <Link href={buildUrl(currentUrl, method,  browserUrl)}>RESTful client</Link>
+          </p>
+          </>
+        )}
+      </div>
     </AuthGuards>
   );
+  
 };
 
 HistoryList.displayName = 'HistoryList';
