@@ -27,3 +27,13 @@ export const replaceVariables = (
       break;
   }
 };
+
+export const setUrl = (url: URL, method: string, path: string) => {
+  url.pathname = `/${method}`;
+  url.searchParams.set('link', path);
+  window.history.pushState({}, '', url.toString());
+}
+
+export const buildUrl = (url: URL, method: string, path: string) => {
+  return `${url.protocol}//${url.host}/${method}/?link=${path !== '' ? btoa(path): path}`
+} 

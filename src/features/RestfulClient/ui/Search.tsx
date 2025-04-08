@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { apiRequestActions } from 'shared/model/apiRequest.slice';
 import { RootState } from 'app/providers/StoreProvider/config/store';
 import {v4} from 'uuid'
+import { setUrl } from 'shared/utils/help';
 
 const Search = () => {
   const dispatch = useDispatch();
@@ -23,9 +24,7 @@ const Search = () => {
   const handleMethodSelect = (evt: ChangeEvent<HTMLSelectElement>) => {
     const { value } = evt.target;
     dispatch(setMethod({ method: value }));
-    currentUrl.pathname = `/${value}`;
-    currentUrl.searchParams.set('link', browserUrl);
-    window.history.pushState({}, '', currentUrl.toString());
+    setUrl(currentUrl, method, browserUrl)
   };
 
   const handleSetLink = (evt: ChangeEvent<HTMLInputElement>) => {
@@ -34,12 +33,10 @@ const Search = () => {
   };
 
   const handleSendRequest = () => {
-    const defaultMethod = method || 'GET';
+    const currentMethod = method || 'GET';
 
     if (browserUrl != '') {
-     currentUrl.pathname = `/${defaultMethod}`;
-     currentUrl.searchParams.set('link', browserUrl);
-     window.history.pushState({}, '', currentUrl.toString());
+      setUrl(currentUrl, currentMethod, browserUrl)
      const id = v4()
      dispatch(setApiId({id}))
     }
