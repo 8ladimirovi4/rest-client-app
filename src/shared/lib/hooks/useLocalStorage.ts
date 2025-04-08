@@ -25,7 +25,7 @@ export function useLocalStorage<T>({
   });
 
   const setAndStoreValue: SetValue<T> = (newValueOrUpdater) => {
-    setValue(prevValue => {
+    setValue((prevValue) => {
       const newValue =
         typeof newValueOrUpdater === 'function'
           ? (newValueOrUpdater as (prev: T) => T)(prevValue)

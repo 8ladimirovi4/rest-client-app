@@ -1,6 +1,6 @@
 //@ts-nocheck
 'use client';
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TabView } from './TabView';
 import styles from './styles.module.css';
 import Search from './Search';
@@ -31,19 +31,28 @@ export const RestfulClient = () => {
     key: 'restful-client',
     defaultValue: [],
   });
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const { browserUrl, method, query, triggerFetch, body, headers, variables, id } =
-    apiData;
+  const {
+    browserUrl,
+    method,
+    query,
+    body,
+    headers,
+    variables,
+    id,
+  } = apiData;
   const { setApiStatus } = apiRequestActions;
-
 
   const resComplite = (res) => {
     setServResponse(res);
-    dispatch(setApiStatus({status: res.status}))
-    const isHistoryRequest = apiStoragedData.some(req => req.id === id)
-    if(!isHistoryRequest)
-    setApiStoragedData([...apiStoragedData, {...apiData, status:res.status}]);
+    dispatch(setApiStatus({ status: res.status }));
+    const isHistoryRequest = apiStoragedData.some((req) => req.id === id);
+    if (!isHistoryRequest)
+      setApiStoragedData([
+        ...apiStoragedData,
+        { ...apiData, status: res.status },
+      ]);
   };
 
   const catchComplite = (error: Error) => {

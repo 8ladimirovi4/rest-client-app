@@ -1,7 +1,7 @@
 import { HistoryList } from 'entities/History/ui/HistoryList';
 
 const PageHistory = () => {
-  return <HistoryList />
+  return <HistoryList />;
 };
 
 export default PageHistory;

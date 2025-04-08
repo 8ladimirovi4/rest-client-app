@@ -64,34 +64,25 @@ const apiRequestSlice = createSlice({
     },
     setApiId: (
       state: ApiRequestState,
-      {
-        payload,
-      }: PayloadAction<{ id: string }>
+      { payload }: PayloadAction<{ id: string }>
     ) => {
       const { id } = payload;
       state.id = id;
     },
     setApiStatus: (
       state: ApiRequestState,
-      {
-        payload,
-      }: PayloadAction<{ status: string }>
+      { payload }: PayloadAction<{ status: string }>
     ) => {
       const { status } = payload;
       state.status = status;
     },
-    setHistoryState: (
-        _,
-      {
-        payload,
-      }: PayloadAction<ApiRequestState | {}>
-    ) => {
+    setHistoryState: (_, { payload }: PayloadAction<ApiRequestState | object>) => {
       if (Object.keys(payload).length === 0) {
-        return initialState; 
+        return initialState;
       }
       return {
-        ...initialState, 
-        ...payload,      
+        ...initialState,
+        ...payload,
       };
     },
   },

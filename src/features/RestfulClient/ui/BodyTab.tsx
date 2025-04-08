@@ -1,3 +1,4 @@
+'use client';
 import React, { ChangeEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { apiRequestActions } from 'shared/model/apiRequest.slice';

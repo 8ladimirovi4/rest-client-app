@@ -1,55 +1,57 @@
 'use client';
-
 import { RootState } from 'app/providers/StoreProvider/config/store.ts';
 import { AuthGuards } from 'shared/lib/AuthGuard/AuthGuards.tsx';
 import { useLocalStorage } from 'shared/lib/hooks/useLocalStorage';
 import { HistoryItem } from './HistoryItem';
 import { ApiRequestState } from 'shared/model/types';
-import styles from './styles.module.css'
+import styles from './styles.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Spinner } from 'shared/index';
-import Link from 'next/link'
+import Link from 'next/link';
 import { buildUrl } from 'shared/utils/help';
 import { useEffect } from 'react';
 import { apiRequestActions } from 'shared/model/apiRequest.slice';
 
 export const HistoryList = () => {
   const { isAuthChecked } = useSelector((store: RootState) => store.user);
-   const {method, browserUrl} = useSelector((state: RootState) => state.apiRequest);
-   const [storagedHistory, setStoragedHistory] = useLocalStorage<ApiRequestState[] | []>(
-      {
-        key: 'restful-client',
-        defaultValue: [],
-      }
-    );
-    const dispatch = useDispatch()
+  const { method, browserUrl } = useSelector(
+    (state: RootState) => state.apiRequest
+  );
+  const [storagedHistory, setStoragedHistory] = useLocalStorage<
+    ApiRequestState[] | []
+  >({
+    key: 'restful-client',
+    defaultValue: [],
+  });
+  const dispatch = useDispatch();
 
-    const {setBrowserUrl, setHistoryState} = apiRequestActions
-    const currentUrl =  typeof window !== 'undefined' ? new URL(window.location.href) : null
+  const { setBrowserUrl, setHistoryState } = apiRequestActions;
+  const currentUrl =
+    typeof window !== 'undefined' ? new URL(window.location.href) : null;
 
-    const handleClearHistoryItem = (id: string):void => {
-      setStoragedHistory(prev => prev.filter(item => item.id !== id))
-      dispatch(setHistoryState({}))
-    }
+  const handleClearHistoryItem = (id: string): void => {
+    setStoragedHistory((prev) => prev.filter((item) => item.id !== id));
+    dispatch(setHistoryState({}));
+  };
 
-    const handleClearHistory = ():void => {
-      setStoragedHistory(() => [])
-      dispatch(setHistoryState({}))
-    }
+  const handleClearHistory = (): void => {
+    setStoragedHistory(() => []);
+    dispatch(setHistoryState({}));
+  };
 
-    useEffect(() => {
-        if(storagedHistory && !storagedHistory.length)
-          dispatch(setBrowserUrl({browserUrl:''}))
-    },[])
+  useEffect(() => {
+    if (storagedHistory && !storagedHistory.length)
+      dispatch(setBrowserUrl({ browserUrl: '' }));
+  }, []);
 
   if (!isAuthChecked) return null;
-  if(!storagedHistory) return <Spinner/>
+  if (!storagedHistory) return <Spinner />;
   return (
     <AuthGuards requireAuth={true}>
-      <div className={styles["history-item-wrapper"]}>
+      <div className={styles['history-item-wrapper']}>
         {storagedHistory && storagedHistory.length ? (
           <>
-            <div className={styles["history-item-wrapper__button-container"]}>
+            <div className={styles['history-item-wrapper__button-container']}>
               <Button
                 title="Clear All"
                 onClick={handleClearHistory}
@@ -66,26 +68,29 @@ export const HistoryList = () => {
           </>
         ) : (
           <>
-          <p className="text-4xl text-gray-500 dark:text-gray-400 text-center py-4">
-           You haven't executed any requests yet
-          </p>
-           <p className="text-4xl text-gray-500 dark:text-gray-400 text-center py-4">
-           It's empty here. Try those options:
-          </p>
-          <p className="text-2xl text-gray-500 dark:text-gray-400 text-center py-4">
-            <Link
-              href={currentUrl ? buildUrl(currentUrl, method, browserUrl) : 'restful'}
-              className="text-blue-500 hover:underline"
-            >
-              RESTful client
-            </Link>
-          </p>
+            <p className="text-4xl text-gray-500 dark:text-gray-400 text-center py-4">
+              You haven't executed any requests yet
+            </p>
+            <p className="text-4xl text-gray-500 dark:text-gray-400 text-center py-4">
+              It's empty here. Try those options:
+            </p>
+            <p className="text-2xl text-gray-500 dark:text-gray-400 text-center py-4">
+              <Link
+                href={
+                  currentUrl
+                    ? buildUrl(currentUrl, method, browserUrl)
+                    : 'restful'
+                }
+                className="text-blue-500 hover:underline"
+              >
+                RESTful client
+              </Link>
+            </p>
           </>
         )}
       </div>
     </AuthGuards>
   );
-  
 };
 
 HistoryList.displayName = 'HistoryList';

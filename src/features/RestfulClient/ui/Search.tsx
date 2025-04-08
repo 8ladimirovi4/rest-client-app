@@ -8,12 +8,11 @@ import { useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import { apiRequestActions } from 'shared/model/apiRequest.slice';
 import { RootState } from 'app/providers/StoreProvider/config/store';
-import {v4} from 'uuid'
+import { v4 } from 'uuid';
 import { setUrl } from 'shared/utils/help';
 
 const Search = () => {
   const dispatch = useDispatch();
-  const router = useRouter();
   const { browserUrl, method } = useSelector(
     (state: RootState) => state.apiRequest
   );
@@ -35,9 +34,9 @@ const Search = () => {
     const currentMethod = method || 'GET';
 
     if (browserUrl != '') {
-      setUrl(currentUrl, currentMethod, browserUrl)
-     const id = v4()
-     dispatch(setApiId({id}))
+      setUrl(currentUrl, currentMethod, browserUrl);
+      const id = v4();
+      dispatch(setApiId({ id }));
     }
   };
 
