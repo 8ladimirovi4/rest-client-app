@@ -1,3 +1,4 @@
+'use client'
 import React, { useState } from 'react'
 import { HistoryProps } from '../types'
 import { Button } from 'shared/index'
@@ -5,12 +6,15 @@ import { ChevronDown, ChevronRight } from 'lucide-react'
 import { useDispatch } from 'react-redux'
 import { apiRequestActions } from 'shared/model/apiRequest.slice'
 import { useRouter } from 'next/navigation';
+import { buildUrl, replaceVariables } from 'shared/utils/help'
+import { KeyValueList } from './KeyValueList'
 
-export const HistoryItem = ({ history }: HistoryProps) => {
+export const HistoryItem = ({ history, handleClearHistoryItem }: HistoryProps) => {
   const {
     body,
     browserUrl,
     headers,
+    id,
     method,
     query,
     status,
@@ -22,10 +26,11 @@ export const HistoryItem = ({ history }: HistoryProps) => {
   const router = useRouter();
 
   const {setHistoryState} = apiRequestActions
+  const currentUrl = new URL(window.location.href)
+
   const handleHistoryAction = ():void => {
      dispatch(setHistoryState(history))
-     //Доделать сссылку в формате GET .....!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-     router.push('/restful')
+     router.push(buildUrl(currentUrl, method, browserUrl))
   }
 
   return (
@@ -42,23 +47,22 @@ export const HistoryItem = ({ history }: HistoryProps) => {
           <p className="text-lg font-medium text-gray-800 dark:text-gray-200">Rest</p>
           <p className="text-lg font-medium text-blue-600 dark:text-blue-400">{method}</p>
           <p
-            className="flex-1 text-lg text-gray-700 dark:text-gray-400 truncate"
-            title={browserUrl}
-          >
-            {browserUrl}
+            className="flex-1 text-lg text-gray-700 dark:text-gray-400 truncate">
+          {replaceVariables(browserUrl, variables)}
           </p>
         </div>
-        <div className="flex-shrink-0">
-          <Button title="Go" onClick={handleHistoryAction}/>
-        </div>
+        <div className="flex-shrink-0 flex items-center gap-2">
+  <Button title="Go" onClick={handleHistoryAction}/>
+  <Button title="Remove" onClick={() => {handleClearHistoryItem(id)}} color="red"/>
+</div>
       </div>
       {isOpen && (
   <div className="px-4 pb-4 pt-0 text-sm text-gray-700 dark:text-gray-300">
     <p><strong>Status:</strong> {status ?? 'N/A'}</p>
-    <p><strong>Body:</strong> {body}</p>
-    <p><strong>Headers:</strong> {JSON.stringify(headers)}</p>
-    <p><strong>Query:</strong> {JSON.stringify(query)}</p>
-    <p><strong>Variables:</strong> {JSON.stringify(variables)}</p>
+    <p><strong>Body:</strong> {body || '—'}</p>
+    <KeyValueList title="Headers" items={headers} />
+    <KeyValueList title="Query" items={query} />
+    <KeyValueList title="Variables" items={variables} />
   </div>
 )}
     </div>
