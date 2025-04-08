@@ -7,7 +7,7 @@ import { HistoryItem } from './HistoryItem';
 import { ApiRequestState } from 'shared/model/types';
 import styles from './styles.module.css'
 import { useDispatch, useSelector } from 'react-redux';
-import { Button } from 'shared/index';
+import { Button, Spinner } from 'shared/index';
 import Link from 'next/link'
 import { buildUrl } from 'shared/utils/help';
 import { useEffect } from 'react';
@@ -25,7 +25,7 @@ export const HistoryList = () => {
     const dispatch = useDispatch()
 
     const {setBrowserUrl, setHistoryState} = apiRequestActions
-    const currentUrl = new URL(window.location.href)
+    const currentUrl =  typeof window !== 'undefined' ? new URL(window.location.href) : null
 
     const handleClearHistoryItem = (id: string):void => {
       setStoragedHistory(prev => prev.filter(item => item.id !== id))
@@ -43,6 +43,7 @@ export const HistoryList = () => {
     },[])
 
   if (!isAuthChecked) return null;
+  if(!storagedHistory) return <Spinner/>
   return (
     <AuthGuards requireAuth={true}>
       <div className={styles["history-item-wrapper"]}>
@@ -71,8 +72,13 @@ export const HistoryList = () => {
            <p className="text-4xl text-gray-500 dark:text-gray-400 text-center py-4">
            It's empty here. Try those options:
           </p>
-          <p className="text-4xl text-gray-500 dark:text-gray-400 text-center py-4">
-          <Link href={buildUrl(currentUrl, method,  browserUrl)}>RESTful client</Link>
+          <p className="text-2xl text-gray-500 dark:text-gray-400 text-center py-4">
+            <Link
+              href={currentUrl ? buildUrl(currentUrl, method, browserUrl) : 'restful'}
+              className="text-blue-500 hover:underline"
+            >
+              RESTful client
+            </Link>
           </p>
           </>
         )}

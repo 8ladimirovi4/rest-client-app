@@ -26,11 +26,11 @@ export const HistoryItem = ({ history, handleClearHistoryItem }: HistoryProps) =
   const router = useRouter();
 
   const {setHistoryState} = apiRequestActions
-  const currentUrl = new URL(window.location.href)
+  const currentUrl = typeof window !== 'undefined' ? new URL(window.location.href) : null
 
   const handleHistoryAction = ():void => {
      dispatch(setHistoryState(history))
-     router.push(buildUrl(currentUrl, method, browserUrl))
+     router.push(currentUrl ? buildUrl(currentUrl, method, browserUrl): 'restful')
   }
 
   return (
@@ -59,9 +59,9 @@ export const HistoryItem = ({ history, handleClearHistoryItem }: HistoryProps) =
       {isOpen && (
   <div className="px-4 pb-4 pt-0 text-sm text-gray-700 dark:text-gray-300">
     <p><strong>Status:</strong> {status ?? 'N/A'}</p>
-    <p><strong>Body:</strong> {body || '—'}</p>
-    <KeyValueList title="Headers" items={headers} />
-    <KeyValueList title="Query" items={query} />
+    <p><strong>Body:</strong> {replaceVariables(body, variables) || '—'}</p>
+    <KeyValueList title="Headers" items={replaceVariables(headers, variables)} />
+    <KeyValueList title="Query" items={replaceVariables(query, variables)} />
     <KeyValueList title="Variables" items={variables} />
   </div>
 )}

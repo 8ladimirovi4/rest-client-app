@@ -25,7 +25,7 @@ export interface RoutesState {
   currentRoute: string;
 }
 
-type Query = {
+export type Query = {
   key: string;
   value: string;
 };

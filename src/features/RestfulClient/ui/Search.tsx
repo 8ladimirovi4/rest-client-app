@@ -24,7 +24,6 @@ const Search = () => {
   const handleMethodSelect = (evt: ChangeEvent<HTMLSelectElement>) => {
     const { value } = evt.target;
     dispatch(setMethod({ method: value }));
-    setUrl(currentUrl, method, browserUrl)
   };
 
   const handleSetLink = (evt: ChangeEvent<HTMLInputElement>) => {

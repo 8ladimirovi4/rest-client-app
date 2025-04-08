@@ -1,7 +1,8 @@
 import { Variable } from 'features/RestfulClient/types';
+import { Query } from 'shared/model/types';
 
 export const replaceVariables = (
-  template: string | Headers[],
+  template: string | Query[],
   variables: Variable[]
 ) => {
   switch (typeof template) {
@@ -23,8 +24,6 @@ export const replaceVariables = (
         });
       });
       return str.map((el) => JSON.parse(el));
-    default:
-      break;
   }
 };
 
