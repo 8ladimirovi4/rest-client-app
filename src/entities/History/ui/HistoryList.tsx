@@ -26,7 +26,7 @@ export const HistoryList = () => {
     <AuthGuards requireAuth={true}>
       <div className={styles["history-item-wrapper"]}>
         <div className={styles["history-item-wrapper__button-container"]}>
-          <Button  title="Clear All" onClick={() => {setStoragedHistory(() => [])}} color="red"/>
+          {storagedHistory && storagedHistory.length ? <Button  title="Clear All" onClick={() => {setStoragedHistory(() => [])}} color="red"/> : null}
           </div>
       {storagedHistory && [...storagedHistory].reverse().map(history =>( 
         <HistoryItem key={history.id} history={history} handleClearHistoryItem={handleClearHistoryItem}/>
