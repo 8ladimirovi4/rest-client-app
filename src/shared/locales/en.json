@@ -23,5 +23,23 @@
   "Welcome": "Welcome",
   "Welcome back": "Welcome Back",
   "Restful": "Rest client",
-  "History": "History"
+  "History": "History",
+  "Buttons": {
+    "ClearAll": "Clear All",
+    "Go": "Go",
+    "Remove": "Remove"
+  },
+  "EmptyState": {
+    "NoRequests": "You haven't executed any requests yet.",
+    "EmptyPrompt": "It's empty here. Try those options:",
+    "RestfulClientLink": "RESTful client",
+    "RequestCreated": "request created"
+  },
+  "Rest": {
+    "Status": "Status",
+    "Body": "Body",
+    "Headers": "Headers",
+    "Query": "Query",
+    "Variables": "Variables"
+  }
 }

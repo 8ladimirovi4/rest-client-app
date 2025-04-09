@@ -15,7 +15,7 @@ import { AuthGuards } from 'shared/lib/AuthGuard/AuthGuards.tsx';
 import { BodyTab } from './BodyTab';
 import { HeadersTab } from './HeadersTab';
 import { VariablesTab } from './VariablesTab';
-import { replaceVariables } from 'shared/utils/help';
+import { formatDateToString, replaceVariables } from 'shared/utils/help';
 import { apiRequestActions } from 'shared/model/apiRequest.slice';
 
 export const RestfulClient = () => {
@@ -33,17 +33,9 @@ export const RestfulClient = () => {
   });
   const dispatch = useDispatch();
 
-  const {
-    browserUrl,
-    method,
-    query,
-    body,
-    headers,
-    variables,
-    id,
-  } = apiData;
+  const { browserUrl, method, query, body, headers, variables, id } = apiData;
   const { setApiStatus } = apiRequestActions;
-
+  const dateNow = new Date();
   const resComplite = (res) => {
     setServResponse(res);
     dispatch(setApiStatus({ status: res.status }));
@@ -51,7 +43,12 @@ export const RestfulClient = () => {
     if (!isHistoryRequest)
       setApiStoragedData([
         ...apiStoragedData,
-        { ...apiData, status: res.status },
+        {
+          ...apiData,
+          status: res.status,
+          date: formatDateToString(dateNow),
+          utc: dateNow,
+        },
       ]);
   };
 

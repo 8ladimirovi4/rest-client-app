@@ -8,13 +8,24 @@ import { apiRequestActions } from 'shared/model/apiRequest.slice';
 import { useRouter } from 'next/navigation';
 import { buildUrl, replaceVariables } from 'shared/utils/help';
 import { KeyValueList } from './KeyValueList';
+import { useTranslation } from 'react-i18next';
 
 export const HistoryItem = ({
   history,
   handleClearHistoryItem,
 }: HistoryProps) => {
-  const { body, browserUrl, headers, id, method, query, status, variables } =
-    history;
+  const { t } = useTranslation();
+  const {
+    body,
+    browserUrl,
+    headers,
+    id,
+    method,
+    query,
+    status,
+    variables,
+    date,
+  } = history;
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const dispatch = useDispatch();
@@ -33,6 +44,12 @@ export const HistoryItem = ({
 
   return (
     <div className="w-full bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+      {date && (
+        <div className="p-2  border-gray-200 dark:border-gray-700 text-sm text-gray-500 dark:text-gray-400">
+          <strong>{t('EmptyState.RequestCreated')}: </strong>
+          {date}
+        </div>
+      )}
       <div className="p-4 flex items-center justify-between gap-4">
         <div className="flex items-center gap-4">
           <button
@@ -53,9 +70,9 @@ export const HistoryItem = ({
           </p>
         </div>
         <div className="flex-shrink-0 flex items-center gap-2">
-          <Button title="Go" onClick={handleHistoryAction} />
+          <Button title={t('Buttons.Go')} onClick={handleHistoryAction} />
           <Button
-            title="Remove"
+            title={t('Buttons.Remove')}
             onClick={() => {
               handleClearHistoryItem(id);
             }}
@@ -66,20 +83,21 @@ export const HistoryItem = ({
       {isOpen && (
         <div className="px-4 pb-4 pt-0 text-sm text-gray-700 dark:text-gray-300">
           <p>
-            <strong>Status:</strong> {status ?? 'N/A'}
+            <strong>{`${t('Rest.Status')}:`}</strong> {status ?? 'N/A'}
           </p>
           <p>
-            <strong>Body:</strong> {replaceVariables(body, variables) || '—'}
+            <strong>{`${t('Rest.Body')}:`}</strong>{' '}
+            {replaceVariables(body, variables) || '—'}
           </p>
           <KeyValueList
-            title="Headers"
+            title={`${t('Rest.Headers')}:`}
             items={replaceVariables(headers, variables)}
           />
           <KeyValueList
-            title="Query"
+            title={`${t('Rest.Query')}:`}
             items={replaceVariables(query, variables)}
           />
-          <KeyValueList title="Variables" items={variables} />
+          <KeyValueList title={`${t('Rest.Variables')}:`} items={variables} />
         </div>
       )}
     </div>

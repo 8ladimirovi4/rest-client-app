@@ -36,3 +36,13 @@ export const setUrl = (url: URL, method: string, path: string) => {
 export const buildUrl = (url: URL, method: string, path: string) => {
   return `${url.protocol}//${url.host}/${method}/?link=${path !== '' ? btoa(path) : path}`;
 };
+
+export const formatDateToString = (date: Date) => {
+  const yy = String(date.getFullYear()).slice(2); // ГГ
+  const mm = String(date.getMonth() + 1).padStart(2, '0'); // ММ (нумерация с 0)
+  const dd = String(date.getDate()).padStart(2, '0'); // дд
+  const hh = String(date.getHours()).padStart(2, '0'); // чч
+  const mi = String(date.getMinutes()).padStart(2, '0'); // мм
+
+  return `${yy}.${mm}.${dd} ${hh}.${mi}`;
+};

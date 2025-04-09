@@ -12,6 +12,7 @@ const initialState: ApiRequestState = {
   status: 'N/A',
   id: '',
   browserUrl: '',
+  date: '',
 };
 
 const apiRequestSlice = createSlice({
@@ -76,7 +77,10 @@ const apiRequestSlice = createSlice({
       const { status } = payload;
       state.status = status;
     },
-    setHistoryState: (_, { payload }: PayloadAction<ApiRequestState | object>) => {
+    setHistoryState: (
+      _,
+      { payload }: PayloadAction<ApiRequestState | object>
+    ) => {
       if (Object.keys(payload).length === 0) {
         return initialState;
       }

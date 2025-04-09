@@ -11,8 +11,10 @@ import Link from 'next/link';
 import { buildUrl } from 'shared/utils/help';
 import { useEffect } from 'react';
 import { apiRequestActions } from 'shared/model/apiRequest.slice';
+import { useTranslation } from 'react-i18next';
 
 export const HistoryList = () => {
+  const { t } = useTranslation();
   const { isAuthChecked } = useSelector((store: RootState) => store.user);
   const { method, browserUrl } = useSelector(
     (state: RootState) => state.apiRequest
@@ -42,7 +44,7 @@ export const HistoryList = () => {
   useEffect(() => {
     if (storagedHistory && !storagedHistory.length)
       dispatch(setBrowserUrl({ browserUrl: '' }));
-  }, []);
+  }, [dispatch, setBrowserUrl, storagedHistory]);
 
   if (!isAuthChecked) return null;
   if (!storagedHistory) return <Spinner />;
@@ -53,7 +55,7 @@ export const HistoryList = () => {
           <>
             <div className={styles['history-item-wrapper__button-container']}>
               <Button
-                title="Clear All"
+                title={t('Buttons.ClearAll')}
                 onClick={handleClearHistory}
                 color="red"
               />
@@ -69,10 +71,10 @@ export const HistoryList = () => {
         ) : (
           <>
             <p className="text-4xl text-gray-500 dark:text-gray-400 text-center py-4">
-              You haven't executed any requests yet
+              {t('EmptyState.NoRequests')}
             </p>
             <p className="text-4xl text-gray-500 dark:text-gray-400 text-center py-4">
-              It's empty here. Try those options:
+              {t('EmptyState.EmptyPrompt')}
             </p>
             <p className="text-2xl text-gray-500 dark:text-gray-400 text-center py-4">
               <Link
@@ -83,7 +85,7 @@ export const HistoryList = () => {
                 }
                 className="text-blue-500 hover:underline"
               >
-                RESTful client
+                {t('EmptyState.RestfulClientLink')}
               </Link>
             </p>
           </>

@@ -44,4 +44,5 @@ export interface ApiRequestState {
   status: string;
   id: string;
   browserUrl: string;
+  date: string;
 }
