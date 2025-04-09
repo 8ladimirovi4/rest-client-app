@@ -7,7 +7,7 @@ import { useLocalStorage } from 'shared/lib/hooks/useLocalStorage';
 import Variable from './Variable';
 import { Spinner } from 'shared/index';
 
-const Variables = () => {
+export const VariablesList = () => {
   const { isAuthChecked } = useSelector((store: RootState) => store.user);
   const [storagedVars] = useLocalStorage<{ key: string; value: string }[] | []>(
     {
@@ -40,4 +40,4 @@ const Variables = () => {
   );
 };
 
-export default Variables;
+VariablesList.displayName = ' VariablesList';

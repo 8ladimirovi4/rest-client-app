@@ -7,7 +7,7 @@ import Search from './Search';
 import { QueryTab } from './QueryTab';
 import { useLocalStorage } from 'shared/lib/hooks/useLocalStorage';
 import { apiRequest } from 'shared/api/apiRequest';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'app/providers/StoreProvider/config/store';
 import { ApiRequestState } from 'shared/model/types';
 import { Spinner } from 'shared/index';
@@ -15,7 +15,8 @@ import { AuthGuards } from 'shared/lib/AuthGuard/AuthGuards.tsx';
 import { BodyTab } from './BodyTab';
 import { HeadersTab } from './HeadersTab';
 import { VariablesTab } from './VariablesTab';
-import { replaceVariables } from 'shared/utils/help';
+import { formatDateToString, replaceVariables } from 'shared/utils/help';
+import { apiRequestActions } from 'shared/model/apiRequest.slice';
 
 export const RestfulClient = () => {
   const { isAuthChecked } = useSelector((store: RootState) => store.user);
@@ -30,13 +31,27 @@ export const RestfulClient = () => {
     key: 'restful-client',
     defaultValue: [],
   });
+  const dispatch = useDispatch();
 
-  const { browserUrl, method, query, triggerFetch, body, headers, variables } =
-    apiData;
-
+  const { browserUrl, method, query, body, headers, variables, id } = apiData;
+  const { setApiStatus } = apiRequestActions;
+  const dateNow = new Date();
   const resComplite = (res) => {
     setServResponse(res);
+    dispatch(setApiStatus({ status: res.status }));
+    const isHistoryRequest = apiStoragedData.some((req) => req.id === id);
+    if (!isHistoryRequest)
+      setApiStoragedData([
+        ...apiStoragedData,
+        {
+          ...apiData,
+          status: res.status,
+          date: formatDateToString(dateNow),
+          utc: dateNow,
+        },
+      ]);
   };
+
   const catchComplite = (error: Error) => {
     setError(error.message);
   };
@@ -63,7 +78,6 @@ export const RestfulClient = () => {
       body: replaceVariables(body, variables),
       headers: replaceVariables(headers, variables),
     });
-    setApiStoragedData([...apiStoragedData, apiData]);
     setServData(data);
   };
 
@@ -73,7 +87,7 @@ export const RestfulClient = () => {
 
   useEffect(() => {
     fetchData();
-  }, [triggerFetch]);
+  }, [id]);
 
   if (!isAuthChecked) return null;
 

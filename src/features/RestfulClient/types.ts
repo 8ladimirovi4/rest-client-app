@@ -10,7 +10,7 @@ export interface TabViewProps {
   }[];
 }
 
-type QueryParam = {
+export type QueryParam = {
   key: string;
   value: string;
 };

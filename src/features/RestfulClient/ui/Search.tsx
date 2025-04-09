@@ -8,24 +8,21 @@ import { useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import { apiRequestActions } from 'shared/model/apiRequest.slice';
 import { RootState } from 'app/providers/StoreProvider/config/store';
+import { v4 } from 'uuid';
+import { setUrl } from 'shared/utils/help';
 
 const Search = () => {
   const dispatch = useDispatch();
-  const router = useRouter();
   const { browserUrl, method } = useSelector(
     (state: RootState) => state.apiRequest
   );
 
-  const { setBrowserUrl, setMethod, setTriggerFetch } = apiRequestActions;
+  const { setBrowserUrl, setMethod, setApiId } = apiRequestActions;
+  const currentUrl = new URL(window.location.href);
 
   const handleMethodSelect = (evt: ChangeEvent<HTMLSelectElement>) => {
     const { value } = evt.target;
     dispatch(setMethod({ method: value }));
-
-    const currentUrl = new URL(window.location.href);
-    currentUrl.pathname = `/${value}`;
-    currentUrl.searchParams.set('link', browserUrl);
-    window.history.pushState({}, '', currentUrl.toString());
   };
 
   const handleSetLink = (evt: ChangeEvent<HTMLInputElement>) => {
@@ -34,10 +31,12 @@ const Search = () => {
   };
 
   const handleSendRequest = () => {
-    const defaultMethod = method || 'GET';
+    const currentMethod = method || 'GET';
+
     if (browserUrl != '') {
-      router.push(`/${defaultMethod}?link=${encodeURIComponent(browserUrl)}`);
-      dispatch(setTriggerFetch());
+      setUrl(currentUrl, currentMethod, browserUrl);
+      const id = v4();
+      dispatch(setApiId({ id }));
     }
   };
 

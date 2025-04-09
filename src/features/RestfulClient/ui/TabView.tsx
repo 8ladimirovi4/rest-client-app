@@ -1,5 +1,4 @@
 'use client';
-
 import { useState } from 'react';
 import { TabViewProps } from '../types';
 import { Tab } from './Tab';

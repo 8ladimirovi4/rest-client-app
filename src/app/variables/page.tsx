@@ -1,9 +1,9 @@
-import Variables from 'entities/Variables/Variables';
+import { VariablesList } from 'entities/Variables/VariablesList';
 
 const PageVariables = () => {
   return (
     <>
-      <Variables />
+      <VariablesList />
     </>
   );
 };
