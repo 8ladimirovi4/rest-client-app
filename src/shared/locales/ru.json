@@ -36,10 +36,10 @@
     "RestfulClientLink": "RESTful клиент",
     "RequestCreated": "запрос создан",
     "Key": "Ключ",
-       "Value": "Значение",
-       "Edit": "Редактировать",
-       "Done": "Завершить",
-       "Remove": "Удалить"
+    "Value": "Значение",
+    "Edit": "Редактировать",
+    "Done": "Завершить",
+    "Remove": "Удалить"
   },
   "Rest": {
     "Status": "Статус",

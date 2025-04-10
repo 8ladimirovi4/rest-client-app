@@ -18,10 +18,10 @@ export const Input = ({
   type,
   error,
   width,
-  height
+  height,
 }: Props) => {
   return (
-    <div className={styles['input-wrapper']}    style={{width, height}}>
+    <div className={styles['input-wrapper']} style={{ width, height }}>
       {label && <Label label={label} id={id} />}
       <input
         className="text-lg w-full h-full block p-4 ps-10 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 

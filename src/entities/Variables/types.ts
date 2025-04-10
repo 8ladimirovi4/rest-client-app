@@ -1,9 +1,9 @@
 export interface VariableProps {
-  id: number
+  id: number;
   variable: {
     key: string;
     value: string;
   };
-  updateVariable: (id:number, key: string, value: string) => void;
+  updateVariable: (id: number, key: string, value: string) => void;
   removeVariable: (id: number) => void;
 }
