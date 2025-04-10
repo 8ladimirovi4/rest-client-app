@@ -27,13 +27,19 @@
   "Buttons": {
     "ClearAll": "Clear All",
     "Go": "Go",
-    "Remove": "Remove"
+    "Remove": "Remove",
+    "Add": "Add"
   },
   "EmptyState": {
     "NoRequests": "You haven't executed any requests yet.",
     "EmptyPrompt": "It's empty here. Try those options:",
     "RestfulClientLink": "RESTful client",
-    "RequestCreated": "request created"
+    "RequestCreated": "request created",
+    "Key": "Key",
+    "Value": "Value",
+    "Edit": "Edit",
+    "Done": "Done",
+    "Remove": "Remove"
   },
   "Rest": {
     "Status": "Status",

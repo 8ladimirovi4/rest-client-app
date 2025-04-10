@@ -1,6 +1,8 @@
+import { ReactNode } from 'react';
+
 export interface ButtonProps {
   onClick?: () => void;
-  title?: string;
+  title?: string | ReactNode;
   status?: 'success' | 'error' | 'pending' | null;
   color?: string;
   disabled?: boolean;

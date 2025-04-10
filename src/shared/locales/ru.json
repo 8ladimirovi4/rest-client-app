@@ -27,13 +27,19 @@
   "Buttons": {
     "ClearAll": "Удалить все",
     "Go": "Вперед",
-    "Remove": "Удалить"
+    "Remove": "Удалить",
+    "Add": "Добавить"
   },
   "EmptyState": {
     "NoRequests": "Вы ещё не выполнили ни одного запроса.",
     "EmptyPrompt": "Здесь пока пусто. Попробуйте следующие варианты:",
     "RestfulClientLink": "RESTful клиент",
-    "RequestCreated": "запрос создан"
+    "RequestCreated": "запрос создан",
+    "Key": "Ключ",
+    "Value": "Значение",
+    "Edit": "Редактировать",
+    "Done": "Завершить",
+    "Remove": "Удалить"
   },
   "Rest": {
     "Status": "Статус",

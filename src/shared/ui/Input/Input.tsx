@@ -17,15 +17,17 @@ export const Input = ({
   onChange,
   type,
   error,
+  width,
+  height,
 }: Props) => {
   return (
-    <div className={styles['input-wrappet']}>
+    <div className={styles['input-wrapper']} style={{ width, height }}>
       {label && <Label label={label} id={id} />}
       <input
-        className="w-full h-full block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 
-             outline-none focus:ring-2 focus:ring-blue-800 focus:border-blue-300
-             dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white 
-             dark:focus:ring-blue-800 dark:focus:border-blue-800"
+        className="text-lg w-full h-full block p-4 ps-10 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 
+        outline-none focus:ring-2 focus:ring-blue-800 focus:border-blue-300
+        dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white 
+        dark:focus:ring-blue-800 dark:focus:border-blue-800"
         name={name}
         id={id}
         disabled={disabled}
