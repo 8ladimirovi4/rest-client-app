@@ -15,8 +15,8 @@ export type QueryParam = {
   value: string;
 };
 
-export type Variable = QueryParam;
-export type Headers = QueryParam;
+export type VariableType = QueryParam;
+export type HeadersType = QueryParam;
 
 export interface QueryTabProps {
   setQueryParams: React.Dispatch<React.SetStateAction<QueryParam[]>>;

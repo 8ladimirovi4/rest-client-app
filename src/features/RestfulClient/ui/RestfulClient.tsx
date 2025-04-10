@@ -1,4 +1,3 @@
-//@ts-nocheck
 'use client';
 import React, { useEffect, useState } from 'react';
 import { TabView } from './TabView';
@@ -17,13 +16,18 @@ import { HeadersTab } from './HeadersTab';
 import { VariablesTab } from './VariablesTab';
 import { formatDateToString, replaceVariables } from 'shared/utils/help';
 import { apiRequestActions } from 'shared/model/apiRequest.slice';
+import { ApiResponse } from 'shared/api/types';
+import { HeadersType, QueryParam } from '../types';
 
 export const RestfulClient = () => {
   const { isAuthChecked } = useSelector((store: RootState) => store.user);
-  const [servResponse, setServResponse] = useState(null);
-  const [servData, setServData] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [servResponse, setServResponse] = useState<ApiResponse<unknown>>({
+    status: '',
+    data: null,
+  });
+  const [servData, setServData] = useState<ApiResponse<unknown> | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>('');
   const apiData = useSelector((state: RootState) => state.apiRequest);
   const [apiStoragedData, setApiStoragedData] = useLocalStorage<
     ApiRequestState[]
@@ -36,7 +40,7 @@ export const RestfulClient = () => {
   const { browserUrl, method, query, body, headers, variables, id } = apiData;
   const { setApiStatus } = apiRequestActions;
   const dateNow = new Date();
-  const resComplite = (res) => {
+  const resComplite = (res: ApiResponse): void => {
     setServResponse(res);
     dispatch(setApiStatus({ status: res.status }));
     const isHistoryRequest = apiStoragedData.some((req) => req.id === id);
@@ -47,15 +51,14 @@ export const RestfulClient = () => {
           ...apiData,
           status: res.status,
           date: formatDateToString(dateNow),
-          utc: dateNow,
         },
       ]);
   };
 
-  const catchComplite = (error: Error) => {
+  const catchComplite = (error: Error): void => {
     setError(error.message);
   };
-  const finnalyComplite = () => {
+  const finnalyComplite = (): void => {
     setLoading(false);
   };
 
@@ -72,13 +75,13 @@ export const RestfulClient = () => {
       resComplite,
       catchComplite,
       finnalyComplite,
-      browserUrl: replaceVariables(browserUrl, variables),
+      browserUrl: replaceVariables(browserUrl, variables) as string,
       method,
-      query: replaceVariables(query, variables),
-      body: replaceVariables(body, variables),
-      headers: replaceVariables(headers, variables),
+      query: replaceVariables(query, variables) as QueryParam[],
+      body: replaceVariables(body, variables) as string,
+      headers: replaceVariables(headers, variables) as HeadersType[],
     });
-    setServData(data);
+    setServData(data as ApiResponse<unknown>);
   };
 
   useEffect(() => {
@@ -90,7 +93,6 @@ export const RestfulClient = () => {
   }, [id]);
 
   if (!isAuthChecked) return null;
-
   return (
     <AuthGuards requireAuth={true}>
       <div className={styles['restful-wrapper']}>
@@ -117,10 +119,13 @@ export const RestfulClient = () => {
             ]}
           />
         </div>
+        <div className={styles['restful-wrapper__spacer']} />
         {error && <p style={{ color: 'red', marginTop: 10 }}>{error}</p>}
         {loading && <Spinner />}
         {servData && (
-          <h1>Response status {servResponse && servResponse.status}</h1>
+          <h1 className="text-lg">
+            Response status {servResponse && servResponse.status}
+          </h1>
         )}
 
         <pre className={styles['restful-wrapper_respose-text']}>

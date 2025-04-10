@@ -28,7 +28,13 @@
     "ClearAll": "Clear All",
     "Go": "Go",
     "Remove": "Remove",
-    "Add": "Add"
+    "Add": "Add",
+    "Send": "SEND",
+    "ReloadPage": "Reload Page"
+  },
+  "Placeholders": {
+    "Key": "Key",
+    "Value": "Value"
   },
   "EmptyState": {
     "NoRequests": "You haven't executed any requests yet.",
@@ -39,7 +45,8 @@
     "Value": "Value",
     "Edit": "Edit",
     "Done": "Done",
-    "Remove": "Remove"
+    "Remove": "Remove",
+    "ProvideJson": "Provide JSON here"
   },
   "Rest": {
     "Status": "Status",

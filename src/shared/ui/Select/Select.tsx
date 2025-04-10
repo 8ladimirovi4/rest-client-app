@@ -17,10 +17,10 @@ export const Select = ({
       {label && <Label label={label} id={id} />}
       <select
         style={{ width, height }}
-        className="w-full h-full block w-full ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 
-             outline-none focus:ring-2 focus:ring-blue-800 focus:border-blue-300
-             dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white 
-             dark:focus:ring-blue-800 dark:focus:border-blue-800"
+        className={`text-base w-full h-full block ps-10 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 
+           outline-none focus:ring-2 focus:ring-blue-800 focus:border-blue-300
+           dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white 
+           dark:focus:ring-blue-800 dark:focus:border-blue-800`}
         name={name}
         id={id}
         disabled={disabled}

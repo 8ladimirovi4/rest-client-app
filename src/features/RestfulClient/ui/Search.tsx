@@ -1,17 +1,17 @@
-//@ts-nocheck
 'use client';
 import React, { ChangeEvent } from 'react';
 import styles from './styles.module.css';
 import { Select, Input, Button } from 'shared/index';
 import { METHODS } from 'shared/constants/http-methods';
-import { useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import { apiRequestActions } from 'shared/model/apiRequest.slice';
 import { RootState } from 'app/providers/StoreProvider/config/store';
 import { v4 } from 'uuid';
 import { setUrl } from 'shared/utils/help';
+import { useTranslation } from 'react-i18next';
 
 const Search = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const { browserUrl, method } = useSelector(
     (state: RootState) => state.apiRequest
@@ -56,7 +56,11 @@ const Search = () => {
         <Input id="1" type="text" value={browserUrl} onChange={handleSetLink} />
       </div>
       <div className={styles['restful-wrapper_search-container_button']}>
-        <Button title={'SEND'} height={50} onClick={handleSendRequest} />
+        <Button
+          title={t('Buttons.Send')}
+          height={50}
+          onClick={handleSendRequest}
+        />
       </div>
     </div>
   );
