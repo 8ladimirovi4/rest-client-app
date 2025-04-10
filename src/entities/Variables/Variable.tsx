@@ -2,8 +2,10 @@
 import React, { useState } from 'react';
 import { VariableProps } from './types';
 import { Input } from 'shared/ui/Input/Input';
+import { useTranslation } from 'react-i18next';
 
 const Variable = ({ variable, updateVariable, removeVariable, id }: VariableProps) => {
+     const { t } = useTranslation();
     const [isEdit, setIsEdit] = useState<boolean>(false)
   return (
     <>
@@ -31,11 +33,11 @@ const Variable = ({ variable, updateVariable, removeVariable, id }: VariableProp
                   />
                 )}
                 </td>
-                <td className="text-lg px-6 py-4 w-[200px] text-center" >
-                    <a href="#" onClick={() => setIsEdit(prev => !prev)} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">{!isEdit ? 'Edit' : 'Done'}</a>
+                <td className="text-lg px-6 py-4 w-[200px]" >
+                    <a href="#" onClick={() => setIsEdit(prev => !prev)} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">{!isEdit ? `${t('EmptyState.Edit')}` : `${t('EmptyState.Done')}`}</a>
                 </td>
-                <td className="text-lg px-6 py-4 w-[200px] text-center">
-                    <a href="#" onClick={() => removeVariable(id)} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Remove</a>
+                <td className="text-lg px-6 py-4 w-[200px]">
+                    <a href="#" onClick={() => removeVariable(id)} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">{t('EmptyState.Remove')}</a>
                 </td>
             </tr>
     </>

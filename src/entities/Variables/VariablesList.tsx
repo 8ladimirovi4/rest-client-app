@@ -8,8 +8,10 @@ import { Button, Spinner } from 'shared/index';
 import { useEffect } from 'react';
 import { apiRequestActions } from 'shared/model/apiRequest.slice';
 import styles from './styles.module.css'
+import { useTranslation } from 'react-i18next';
 
 export const VariablesList = () => {
+   const { t } = useTranslation();
   const { isAuthChecked } = useSelector((store: RootState) => store.user);
   const { variables } = useSelector((state: RootState) => state.apiRequest);
   const [storagedVars, setStoragedVars] = useLocalStorage<{ key: string; value: string }[] | []>(
@@ -61,17 +63,17 @@ export const VariablesList = () => {
     <AuthGuards requireAuth={true}>
   <div className={styles["var-list-wrapper"]}>
     <div className={styles["var-list-wrapper__button"]}>
-    <Button title={<><span className="mr-2">+</span><span>Add Row</span></>} onClick={addRow}/>
-    <Button title="Clear All" color="red" onClick={removeVariables}/>
+    <Button title={<><span className="mr-2">+</span><span>{t('Buttons.Add')}</span></>} onClick={addRow}/>
+    <Button title={t('Buttons.ClearAll')} color="red" onClick={removeVariables}/>
     </div>
     <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr className="text-lg">
                 <th scope="col" className="px-6 py-3">
-                    Key
+                    {t('EmptyState.Key')}
                 </th>
                 <th scope="col" className="px-6 py-3">
-                   Value
+                {t('EmptyState.Value')}
                 </th>
                 <th scope="col" className="px-6 py-3">
                   
