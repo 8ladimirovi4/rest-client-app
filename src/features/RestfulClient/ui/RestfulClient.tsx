@@ -117,10 +117,11 @@ export const RestfulClient = () => {
             ]}
           />
         </div>
+        <div className={styles["restful-wrapper__spacer"]}/>
         {error && <p style={{ color: 'red', marginTop: 10 }}>{error}</p>}
         {loading && <Spinner />}
         {servData && (
-          <h1>Response status {servResponse && servResponse.status}</h1>
+          <h1 className='text-lg'>Response status {servResponse && servResponse.status}</h1>
         )}
 
         <pre className={styles['restful-wrapper_respose-text']}>

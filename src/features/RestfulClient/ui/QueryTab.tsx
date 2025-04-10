@@ -17,6 +17,10 @@ export const QueryTab = () => {
   };
 
   const removeQueryParam = (idx: number) => {
+    if(query && query.length === 1) {
+      dispatch(setQuery({ query: [{key:'', value:''}] }))
+      return
+    }
     const newParams = query.filter((_, i) => i !== idx);
     dispatch(setQuery({ query: newParams }));
   };
@@ -28,7 +32,10 @@ export const QueryTab = () => {
   };
 
   return (
-    <div>
+    <div className={styles["restful-wrapper_tabview-container__tab-wrapper"]}>
+       <div className={styles['restful-wrapper_tabview-container_query-button']}>
+        <Button title={ <><span className="mr-2">+</span><span>{'Add'}</span></>} onClick={addQueryParam} />
+      </div>
       {query.map((param, idx) => (
         <div
           key={idx}
@@ -48,12 +55,9 @@ export const QueryTab = () => {
             onChange={(e) => updateQueryParam(idx, param.key, e.target.value)}
             placeholder="Value"
           />
-          <Button title={'remove'} onClick={() => removeQueryParam(idx)} />
+          <Button color="red" title={'Remove'} onClick={() => removeQueryParam(idx)} />
         </div>
       ))}
-      <div className={styles['restful-wrapper_tabview-container_query-button']}>
-        <Button title={'add param'} onClick={addQueryParam} />
-      </div>
     </div>
   );
 };

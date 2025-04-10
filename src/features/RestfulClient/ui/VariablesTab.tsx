@@ -34,6 +34,10 @@ export const VariablesTab: React.FC = () => {
   };
 
   const removeVariable = (idx: number) => {
+    if(variables && variables.length === 1){
+      dispatch(setVariables({ variables: [{key:'', value:''}] }));
+      return
+    }
     const newVariables = variables.filter((_, i) => i !== idx);
     dispatch(setVariables({ variables: newVariables }));
   };
@@ -45,7 +49,10 @@ export const VariablesTab: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className={styles["restful-wrapper_tabview-container__tab-wrapper"]}>
+       <div className={styles['restful-wrapper_tabview-container_query-button']}>
+        <Button title={<><span className="mr-2">+</span><span>{'Add'}</span></>} onClick={addVariable} />
+      </div>
       {variables.map((variable, idx) => (
         <div
           key={idx}
@@ -67,12 +74,9 @@ export const VariablesTab: React.FC = () => {
             onChange={(e) => updateVariable(idx, variable.key, e.target.value)}
             placeholder="Value"
           />
-          <Button title={'remove'} onClick={() => removeVariable(idx)} />
+          <Button color="red" title={'Remove'} onClick={() => removeVariable(idx)} />
         </div>
       ))}
-      <div className={styles['restful-wrapper_tabview-container_query-button']}>
-        <Button title={'add variable'} onClick={addVariable} />
-      </div>
     </div>
   );
 };

@@ -17,6 +17,10 @@ export const HeadersTab = () => {
   };
 
   const removeHeader = (idx: number) => {
+    if(headers && headers.length === 1) {
+      dispatch(setHeaders({ headers: [{key:'', value:''}] }));
+      return
+    }
     const newHeaders = headers.filter((_, i) => i !== idx);
     dispatch(setHeaders({ headers: newHeaders }));
   };
@@ -28,7 +32,10 @@ export const HeadersTab = () => {
   };
 
   return (
-    <div>
+    <div className={styles["restful-wrapper_tabview-container__tab-wrapper"]}>
+      <div className={styles['restful-wrapper_tabview-container_query-button']}>
+        <Button title={<><span className="mr-2">+</span><span>{'Add'}</span></>} onClick={addHeader} />
+      </div>
       {headers.map((header, idx) => (
         <div
           key={idx}
@@ -48,12 +55,9 @@ export const HeadersTab = () => {
             onChange={(e) => updateHeader(idx, header.key, e.target.value)}
             placeholder="Value"
           />
-          <Button title={'remove'} onClick={() => removeHeader(idx)} />
+          <Button color="red" title={'Rremove'} onClick={() => removeHeader(idx)} />
         </div>
       ))}
-      <div className={styles['restful-wrapper_tabview-container_query-button']}>
-        <Button title={'add header'} onClick={addHeader} />
-      </div>
     </div>
   );
 };

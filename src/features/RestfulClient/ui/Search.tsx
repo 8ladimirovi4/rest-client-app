@@ -47,7 +47,7 @@ const Search = () => {
           id="1"
           options={METHODS}
           height={50}
-          width={130}
+          width={140}
           value={method}
           onChange={handleMethodSelect}
         />
