@@ -28,14 +28,22 @@ export const VariablesList = () => {
     dispatch(setVariables({ variables: newVariables }));
   } 
 
+  const removeVariables = ():void => {
+    dispatch(setVariables({ variables: [{key:'', value:''}] }));
+  } 
+
   const removeVariable = (idx: number): void =>{
+    if(variables && variables.length === 1){
+      removeVariables()
+      return
+    }
     const newVariables = variables.filter((_,i) => i !== idx);
     dispatch(setVariables({ variables: newVariables }));
   } 
 
-  const removeVariables = ():void => {
-    dispatch(setVariables({ variables: [{key:'', value:''}] }));
-  } 
+  const addRow= (): void => {
+    dispatch(setVariables({ variables: [...variables, {key:'', value:''}]}));
+  }
 
    useEffect(() => {
       !storagedVars
@@ -53,11 +61,12 @@ export const VariablesList = () => {
     <AuthGuards requireAuth={true}>
   <div className={styles["var-list-wrapper"]}>
     <div className={styles["var-list-wrapper__button"]}>
+    <Button title={<><span className="mr-2">+</span><span>Add Row</span></>} onClick={addRow}/>
     <Button title="Clear All" color="red" onClick={removeVariables}/>
     </div>
     <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
+            <tr className="text-lg">
                 <th scope="col" className="px-6 py-3">
                     Key
                 </th>
