@@ -1,10 +1,8 @@
-//@ts-nocheck
 'use client';
-import React, { ChangeEvent, useTransition } from 'react';
+import React, { ChangeEvent } from 'react';
 import styles from './styles.module.css';
 import { Select, Input, Button } from 'shared/index';
 import { METHODS } from 'shared/constants/http-methods';
-import { useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import { apiRequestActions } from 'shared/model/apiRequest.slice';
 import { RootState } from 'app/providers/StoreProvider/config/store';

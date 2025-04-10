@@ -1,4 +1,5 @@
-//@ts-nocheck
+import { ApiRequestType, ApiResponse } from "./types";
+
 export const apiRequest = async ({
   resComplite,
   catchComplite,
@@ -8,7 +9,7 @@ export const apiRequest = async ({
   query = [],
   body = null,
   headers = [],
-}) => {
+}:ApiRequestType):Promise<unknown> => {
   try {
     const queryString = query.length
       ? `?${query
@@ -19,7 +20,7 @@ export const apiRequest = async ({
           .join('&')}`
       : '';
 
-    const headersObject = headers.reduce((acc, header) => {
+    const headersObject = headers.reduce<Record<string, string>>((acc, header) => {
       const { key, value } = header;
       if (key) acc[key] = value;
       return acc;
@@ -28,18 +29,15 @@ export const apiRequest = async ({
     const normalizedHeaders = Object.keys(headersObject).map((key) =>
       key.toLowerCase()
     );
+    const shouldAddContentType = !normalizedHeaders.includes('content-type');
 
     const fullUrl = `${browserUrl}${queryString}`;
     const encodedUrl = encodeURIComponent(btoa(fullUrl));
 
-    const contentType = normalizedHeaders.includes('content-type')
-      ? {}
-      : { 'Content-Type': 'application/json' };
-
-    const options = {
+    const options: RequestInit = {
       method: method || 'GET',
       headers: {
-        ...contentType,
+       ...(shouldAddContentType ? { 'Content-Type': 'application/json' } : {}),
         ...headersObject,
       },
     };
@@ -49,12 +47,20 @@ export const apiRequest = async ({
     }
 
     const response = await fetch(`/api/proxy?url=${encodedUrl}`, options);
-    resComplite(response);
-
     const data = await response.json();
+
+    const apiResponse: ApiResponse = {
+      status: response.status.toString(),
+      statusText: response.statusText,
+      headers: Object.fromEntries(response.headers.entries()),
+      data,
+    };
+
+    resComplite(apiResponse);
     return data;
   } catch (error) {
-    catchComplite(error);
+    const err = error as Error
+    catchComplite(err);
   } finally {
     finnalyComplite();
   }

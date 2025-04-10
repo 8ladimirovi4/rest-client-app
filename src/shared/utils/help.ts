@@ -1,9 +1,9 @@
-import { Variable } from 'features/RestfulClient/types';
+import { VariableType } from 'features/RestfulClient/types';
 import { Query } from 'shared/model/types';
 
 export const replaceVariables = (
   template: string | Query[],
-  variables: Variable[]
+  variables: VariableType[]
 ) => {
   switch (typeof template) {
     case 'string':
@@ -27,17 +27,17 @@ export const replaceVariables = (
   }
 };
 
-export const setUrl = (url: URL, method: string, path: string) => {
+export const setUrl = (url: URL, method: string, path: string): void => {
   url.pathname = `/${method}`;
   url.searchParams.set('link', path);
   window.history.pushState({}, '', url.toString());
 };
 
-export const buildUrl = (url: URL, method: string, path: string) => {
+export const buildUrl = (url: URL, method: string, path: string): string => {
   return `${url.protocol}//${url.host}/${method}/?link=${path !== '' ? btoa(path) : path}`;
 };
 
-export const formatDateToString = (date: Date) => {
+export const formatDateToString = (date: Date): string => {
   const yy = String(date.getFullYear()).slice(2); // ГГ
   const mm = String(date.getMonth() + 1).padStart(2, '0'); // ММ (нумерация с 0)
   const dd = String(date.getDate()).padStart(2, '0'); // дд

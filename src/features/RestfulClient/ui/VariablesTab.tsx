@@ -4,14 +4,14 @@ import React, { useEffect } from 'react';
 import styles from './styles.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { apiRequestActions } from 'shared/model/apiRequest.slice';
-import { Variable } from '../types';
+import { VariableType } from '../types';
 import { useLocalStorage } from 'shared/lib/hooks/useLocalStorage';
 import { RootState } from 'app/providers/StoreProvider/config/store';
 import { useTranslation } from 'react-i18next';
 
 export const VariablesTab: React.FC = () => {
   const {t} = useTranslation()
-  const [storagedVars, setStoragedVars] = useLocalStorage<Variable[] | []>({
+  const [storagedVars, setStoragedVars] = useLocalStorage<VariableType[] | []>({
     key: 'variables',
     defaultValue: [],
   });
