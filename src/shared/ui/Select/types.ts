@@ -16,4 +16,5 @@ export interface SelectProps {
   options: Option[];
   width?: number;
   height?: number;
+  textSize?: string;
 }

@@ -24,8 +24,8 @@ export const TabView = ({ tabs }: TabViewProps) => {
         </ul>
       </div>
       <div id="default-styled-tab-content">
-        {tabs.map((tab) => (
-          <div
+        {tabs.map((tab) => {
+         return <div
             key={tab.label}
             className={`p-4 rounded-lg bg-gray-50 dark:bg-gray-800 ${activeTab !== tab.label ? 'hidden' : ''}`}
             id={`styled-${tab.label}`}
@@ -34,7 +34,7 @@ export const TabView = ({ tabs }: TabViewProps) => {
           >
             {tab.content}
           </div>
-        ))}
+})}
       </div>
     </>
   );

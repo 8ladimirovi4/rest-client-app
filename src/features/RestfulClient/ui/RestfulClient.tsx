@@ -17,8 +17,10 @@ import { HeadersTab } from './HeadersTab';
 import { VariablesTab } from './VariablesTab';
 import { formatDateToString, replaceVariables } from 'shared/utils/help';
 import { apiRequestActions } from 'shared/model/apiRequest.slice';
+import { useTranslation } from 'react-i18next';
 
 export const RestfulClient = () => {
+  const { t } = useTranslation();
   const { isAuthChecked } = useSelector((store: RootState) => store.user);
   const [servResponse, setServResponse] = useState(null);
   const [servData, setServData] = useState(null);
@@ -89,8 +91,8 @@ export const RestfulClient = () => {
     fetchData();
   }, [id]);
 
-  if (!isAuthChecked) return null;
 
+  if (!isAuthChecked) return null;
   return (
     <AuthGuards requireAuth={true}>
       <div className={styles['restful-wrapper']}>

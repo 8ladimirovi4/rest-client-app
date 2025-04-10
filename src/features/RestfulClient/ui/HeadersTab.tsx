@@ -5,8 +5,10 @@ import styles from './styles.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { apiRequestActions } from 'shared/model/apiRequest.slice';
 import { RootState } from 'app/providers/StoreProvider/config/store';
+import { useTranslation } from 'react-i18next';
 
 export const HeadersTab = () => {
+  const {t} = useTranslation()
   const { headers } = useSelector((state: RootState) => state.apiRequest);
   const dispatch = useDispatch();
 
@@ -34,7 +36,7 @@ export const HeadersTab = () => {
   return (
     <div className={styles["restful-wrapper_tabview-container__tab-wrapper"]}>
       <div className={styles['restful-wrapper_tabview-container_query-button']}>
-        <Button title={<><span className="mr-2">+</span><span>{'Add'}</span></>} onClick={addHeader} />
+        <Button title={<><span className="mr-2">+</span><span>{t('Buttons.Add')}</span></>} onClick={addHeader} />
       </div>
       {headers.map((header, idx) => (
         <div
@@ -46,16 +48,16 @@ export const HeadersTab = () => {
             type="text"
             value={header.key}
             onChange={(e) => updateHeader(idx, e.target.value, header.value)}
-            placeholder="Key"
+            placeholder={t('Placeholders.Key')}
           />
           <Input
             id={(idx + 1).toString()}
             type="text"
             value={header.value}
             onChange={(e) => updateHeader(idx, header.key, e.target.value)}
-            placeholder="Value"
+            placeholder={t('Placeholders.Value')}
           />
-          <Button color="red" title={'Rremove'} onClick={() => removeHeader(idx)} />
+          <Button color="red" title={t('Buttons.Remove')} onClick={() => removeHeader(idx)} />
         </div>
       ))}
     </div>

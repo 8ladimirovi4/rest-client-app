@@ -7,8 +7,10 @@ import { apiRequestActions } from 'shared/model/apiRequest.slice';
 import { Variable } from '../types';
 import { useLocalStorage } from 'shared/lib/hooks/useLocalStorage';
 import { RootState } from 'app/providers/StoreProvider/config/store';
+import { useTranslation } from 'react-i18next';
 
 export const VariablesTab: React.FC = () => {
+  const {t} = useTranslation()
   const [storagedVars, setStoragedVars] = useLocalStorage<Variable[] | []>({
     key: 'variables',
     defaultValue: [],
@@ -51,7 +53,7 @@ export const VariablesTab: React.FC = () => {
   return (
     <div className={styles["restful-wrapper_tabview-container__tab-wrapper"]}>
        <div className={styles['restful-wrapper_tabview-container_query-button']}>
-        <Button title={<><span className="mr-2">+</span><span>{'Add'}</span></>} onClick={addVariable} />
+        <Button title={<><span className="mr-2">+</span><span>{t('Buttons.Add')}</span></>} onClick={addVariable} />
       </div>
       {variables.map((variable, idx) => (
         <div
@@ -65,16 +67,16 @@ export const VariablesTab: React.FC = () => {
             onChange={(e) =>
               updateVariable(idx, e.target.value, variable.value)
             }
-            placeholder="Key"
+            placeholder={t('Placeholders.Key')}
           />
           <Input
             id={(idx + 1).toString()}
             type="text"
             value={variable.value}
             onChange={(e) => updateVariable(idx, variable.key, e.target.value)}
-            placeholder="Value"
+            placeholder={t('Placeholders.Value')}
           />
-          <Button color="red" title={'Remove'} onClick={() => removeVariable(idx)} />
+          <Button color="red" title={t('Buttons.Remove')} onClick={() => removeVariable(idx)} />
         </div>
       ))}
     </div>
