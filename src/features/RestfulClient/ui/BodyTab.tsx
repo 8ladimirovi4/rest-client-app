@@ -6,7 +6,7 @@ import { RootState } from 'app/providers/StoreProvider/config/store';
 import { useTranslation } from 'react-i18next';
 
 export const BodyTab = () => {
-  const {t} = useTranslation()
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const { body } = useSelector((state: RootState) => state.apiRequest);
   const { setBody } = apiRequestActions;

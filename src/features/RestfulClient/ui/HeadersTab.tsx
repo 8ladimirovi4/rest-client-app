@@ -8,7 +8,7 @@ import { RootState } from 'app/providers/StoreProvider/config/store';
 import { useTranslation } from 'react-i18next';
 
 export const HeadersTab = () => {
-  const {t} = useTranslation()
+  const { t } = useTranslation();
   const { headers } = useSelector((state: RootState) => state.apiRequest);
   const dispatch = useDispatch();
 
@@ -19,9 +19,9 @@ export const HeadersTab = () => {
   };
 
   const removeHeader = (idx: number) => {
-    if(headers && headers.length === 1) {
-      dispatch(setHeaders({ headers: [{key:'', value:''}] }));
-      return
+    if (headers && headers.length === 1) {
+      dispatch(setHeaders({ headers: [{ key: '', value: '' }] }));
+      return;
     }
     const newHeaders = headers.filter((_, i) => i !== idx);
     dispatch(setHeaders({ headers: newHeaders }));
@@ -34,9 +34,17 @@ export const HeadersTab = () => {
   };
 
   return (
-    <div className={styles["restful-wrapper_tabview-container__tab-wrapper"]}>
+    <div className={styles['restful-wrapper_tabview-container__tab-wrapper']}>
       <div className={styles['restful-wrapper_tabview-container_query-button']}>
-        <Button title={<><span className="mr-2">+</span><span>{t('Buttons.Add')}</span></>} onClick={addHeader} />
+        <Button
+          title={
+            <>
+              <span className="mr-2">+</span>
+              <span>{t('Buttons.Add')}</span>
+            </>
+          }
+          onClick={addHeader}
+        />
       </div>
       {headers.map((header, idx) => (
         <div
@@ -57,7 +65,11 @@ export const HeadersTab = () => {
             onChange={(e) => updateHeader(idx, header.key, e.target.value)}
             placeholder={t('Placeholders.Value')}
           />
-          <Button color="red" title={t('Buttons.Remove')} onClick={() => removeHeader(idx)} />
+          <Button
+            color="red"
+            title={t('Buttons.Remove')}
+            onClick={() => removeHeader(idx)}
+          />
         </div>
       ))}
     </div>

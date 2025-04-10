@@ -8,7 +8,7 @@ import { RootState } from 'app/providers/StoreProvider/config/store';
 import { useTranslation } from 'react-i18next';
 
 export const QueryTab = () => {
-  const {t} = useTranslation()
+  const { t } = useTranslation();
   const { query } = useSelector((state: RootState) => state.apiRequest);
   const dispatch = useDispatch();
 
@@ -19,9 +19,9 @@ export const QueryTab = () => {
   };
 
   const removeQueryParam = (idx: number) => {
-    if(query && query.length === 1) {
-      dispatch(setQuery({ query: [{key:'', value:''}] }))
-      return
+    if (query && query.length === 1) {
+      dispatch(setQuery({ query: [{ key: '', value: '' }] }));
+      return;
     }
     const newParams = query.filter((_, i) => i !== idx);
     dispatch(setQuery({ query: newParams }));
@@ -34,9 +34,17 @@ export const QueryTab = () => {
   };
 
   return (
-    <div className={styles["restful-wrapper_tabview-container__tab-wrapper"]}>
-       <div className={styles['restful-wrapper_tabview-container_query-button']}>
-        <Button title={ <><span className="mr-2">+</span><span>{t('Buttons.Add')}</span></>} onClick={addQueryParam} />
+    <div className={styles['restful-wrapper_tabview-container__tab-wrapper']}>
+      <div className={styles['restful-wrapper_tabview-container_query-button']}>
+        <Button
+          title={
+            <>
+              <span className="mr-2">+</span>
+              <span>{t('Buttons.Add')}</span>
+            </>
+          }
+          onClick={addQueryParam}
+        />
       </div>
       {query.map((param, idx) => (
         <div
@@ -57,7 +65,11 @@ export const QueryTab = () => {
             onChange={(e) => updateQueryParam(idx, param.key, e.target.value)}
             placeholder={t('Placeholders.Value')}
           />
-          <Button color="red" title={t('Buttons.Remove')} onClick={() => removeQueryParam(idx)} />
+          <Button
+            color="red"
+            title={t('Buttons.Remove')}
+            onClick={() => removeQueryParam(idx)}
+          />
         </div>
       ))}
     </div>

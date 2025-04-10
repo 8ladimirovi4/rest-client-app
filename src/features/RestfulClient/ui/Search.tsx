@@ -56,7 +56,11 @@ const Search = () => {
         <Input id="1" type="text" value={browserUrl} onChange={handleSetLink} />
       </div>
       <div className={styles['restful-wrapper_search-container_button']}>
-        <Button title={t('Buttons.Send')} height={50} onClick={handleSendRequest} />
+        <Button
+          title={t('Buttons.Send')}
+          height={50}
+          onClick={handleSendRequest}
+        />
       </div>
     </div>
   );

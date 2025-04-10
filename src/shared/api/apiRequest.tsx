@@ -1,4 +1,4 @@
-import { ApiRequestType, ApiResponse } from "./types";
+import { ApiRequestType, ApiResponse } from './types';
 
 export const apiRequest = async ({
   resComplite,
@@ -9,7 +9,7 @@ export const apiRequest = async ({
   query = [],
   body = null,
   headers = [],
-}:ApiRequestType):Promise<unknown> => {
+}: ApiRequestType) => {
   try {
     const queryString = query.length
       ? `?${query
@@ -20,11 +20,14 @@ export const apiRequest = async ({
           .join('&')}`
       : '';
 
-    const headersObject = headers.reduce<Record<string, string>>((acc, header) => {
-      const { key, value } = header;
-      if (key) acc[key] = value;
-      return acc;
-    }, {});
+    const headersObject = headers.reduce<Record<string, string>>(
+      (acc, header) => {
+        const { key, value } = header;
+        if (key) acc[key] = value;
+        return acc;
+      },
+      {}
+    );
 
     const normalizedHeaders = Object.keys(headersObject).map((key) =>
       key.toLowerCase()
@@ -37,7 +40,7 @@ export const apiRequest = async ({
     const options: RequestInit = {
       method: method || 'GET',
       headers: {
-       ...(shouldAddContentType ? { 'Content-Type': 'application/json' } : {}),
+        ...(shouldAddContentType ? { 'Content-Type': 'application/json' } : {}),
         ...headersObject,
       },
     };
@@ -59,7 +62,7 @@ export const apiRequest = async ({
     resComplite(apiResponse);
     return data;
   } catch (error) {
-    const err = error as Error
+    const err = error as Error;
     catchComplite(err);
   } finally {
     finnalyComplite();

@@ -10,10 +10,10 @@ import { RootState } from 'app/providers/StoreProvider/config/store';
 import { useTranslation } from 'react-i18next';
 
 export const VariablesTab: React.FC = () => {
-  const {t} = useTranslation()
+  const { t } = useTranslation();
   const [storagedVars, setStoragedVars] = useLocalStorage<VariableType[] | []>({
     key: 'variables',
-    defaultValue: [],
+    defaultValue: [{ key: '', value: '' }],
   });
   const { variables } = useSelector((state: RootState) => state.apiRequest);
   const dispatch = useDispatch();
@@ -24,9 +24,9 @@ export const VariablesTab: React.FC = () => {
   }, [variables]);
 
   useEffect(() => {
-    !storagedVars
-      ? setStoragedVars([{ key: '', value: '' }])
-      : dispatch(setVariables({ variables: storagedVars }));
+    if (storagedVars) {
+      dispatch(setVariables({ variables: storagedVars }));
+    }
   }, []);
 
   const addVariable = () => {
@@ -36,9 +36,9 @@ export const VariablesTab: React.FC = () => {
   };
 
   const removeVariable = (idx: number) => {
-    if(variables && variables.length === 1){
-      dispatch(setVariables({ variables: [{key:'', value:''}] }));
-      return
+    if (variables && variables.length === 1) {
+      dispatch(setVariables({ variables: [{ key: '', value: '' }] }));
+      return;
     }
     const newVariables = variables.filter((_, i) => i !== idx);
     dispatch(setVariables({ variables: newVariables }));
@@ -51,9 +51,17 @@ export const VariablesTab: React.FC = () => {
   };
 
   return (
-    <div className={styles["restful-wrapper_tabview-container__tab-wrapper"]}>
-       <div className={styles['restful-wrapper_tabview-container_query-button']}>
-        <Button title={<><span className="mr-2">+</span><span>{t('Buttons.Add')}</span></>} onClick={addVariable} />
+    <div className={styles['restful-wrapper_tabview-container__tab-wrapper']}>
+      <div className={styles['restful-wrapper_tabview-container_query-button']}>
+        <Button
+          title={
+            <>
+              <span className="mr-2">+</span>
+              <span>{t('Buttons.Add')}</span>
+            </>
+          }
+          onClick={addVariable}
+        />
       </div>
       {variables.map((variable, idx) => (
         <div
@@ -76,7 +84,11 @@ export const VariablesTab: React.FC = () => {
             onChange={(e) => updateVariable(idx, variable.key, e.target.value)}
             placeholder={t('Placeholders.Value')}
           />
-          <Button color="red" title={t('Buttons.Remove')} onClick={() => removeVariable(idx)} />
+          <Button
+            color="red"
+            title={t('Buttons.Remove')}
+            onClick={() => removeVariable(idx)}
+          />
         </div>
       ))}
     </div>

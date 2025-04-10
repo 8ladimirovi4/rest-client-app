@@ -30,9 +30,9 @@
     "Remove": "Удалить",
     "Add": "Добавить",
     "Send": "ОТПРАВИТЬ",
-     "ReloadPage": "Перезагрузить страницу"
+    "ReloadPage": "Перезагрузить страницу"
   },
-  "Placeholders":{
+  "Placeholders": {
     "Key": "Ключ",
     "Value": "Значение"
   },

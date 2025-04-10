@@ -6,14 +6,15 @@ export const replaceVariables = (
   variables: VariableType[]
 ) => {
   switch (typeof template) {
-    case 'string':
+    case 'string': {
       return template.replace(/\{\{(.*?)\}\}/g, (_, variableName) => {
         const variableObj = variables.find(
           (varObj) => varObj.key === variableName
         );
         return variableObj ? variableObj.value : template.toString();
       });
-    case 'object':
+    }
+    case 'object': {
       const str = template.map((templateObj) => {
         const templateObjStr = JSON.stringify(templateObj);
         return templateObjStr.replace(/\{\{(.*?)\}\}/g, (_, variableName) => {
@@ -24,6 +25,7 @@ export const replaceVariables = (
         });
       });
       return str.map((el) => JSON.parse(el));
+    }
   }
 };
 

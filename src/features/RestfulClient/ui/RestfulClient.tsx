@@ -21,7 +21,10 @@ import { HeadersType, QueryParam } from '../types';
 
 export const RestfulClient = () => {
   const { isAuthChecked } = useSelector((store: RootState) => store.user);
-  const [servResponse, setServResponse] = useState<ApiResponse<unknown>>({status:'', data: null});
+  const [servResponse, setServResponse] = useState<ApiResponse<unknown>>({
+    status: '',
+    data: null,
+  });
   const [servData, setServData] = useState<ApiResponse<unknown> | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
@@ -37,7 +40,7 @@ export const RestfulClient = () => {
   const { browserUrl, method, query, body, headers, variables, id } = apiData;
   const { setApiStatus } = apiRequestActions;
   const dateNow = new Date();
-  const resComplite = (res: ApiResponse):void => {
+  const resComplite = (res: ApiResponse): void => {
     setServResponse(res);
     dispatch(setApiStatus({ status: res.status }));
     const isHistoryRequest = apiStoragedData.some((req) => req.id === id);
@@ -47,15 +50,15 @@ export const RestfulClient = () => {
         {
           ...apiData,
           status: res.status,
-          date: formatDateToString(dateNow)
+          date: formatDateToString(dateNow),
         },
       ]);
   };
 
-  const catchComplite = (error: Error):void => {
+  const catchComplite = (error: Error): void => {
     setError(error.message);
   };
-  const finnalyComplite = ():void => {
+  const finnalyComplite = (): void => {
     setLoading(false);
   };
 
@@ -74,7 +77,7 @@ export const RestfulClient = () => {
       finnalyComplite,
       browserUrl: replaceVariables(browserUrl, variables) as string,
       method,
-      query:  replaceVariables(query, variables) as QueryParam[],
+      query: replaceVariables(query, variables) as QueryParam[],
       body: replaceVariables(body, variables) as string,
       headers: replaceVariables(headers, variables) as HeadersType[],
     });
@@ -88,7 +91,6 @@ export const RestfulClient = () => {
   useEffect(() => {
     fetchData();
   }, [id]);
-
 
   if (!isAuthChecked) return null;
   return (
@@ -117,11 +119,13 @@ export const RestfulClient = () => {
             ]}
           />
         </div>
-        <div className={styles["restful-wrapper__spacer"]}/>
+        <div className={styles['restful-wrapper__spacer']} />
         {error && <p style={{ color: 'red', marginTop: 10 }}>{error}</p>}
         {loading && <Spinner />}
         {servData && (
-          <h1 className='text-lg'>Response status {servResponse && servResponse.status}</h1>
+          <h1 className="text-lg">
+            Response status {servResponse && servResponse.status}
+          </h1>
         )}
 
         <pre className={styles['restful-wrapper_respose-text']}>

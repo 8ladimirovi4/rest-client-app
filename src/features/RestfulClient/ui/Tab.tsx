@@ -4,10 +4,10 @@ import { TabProps } from '../types';
 
 export const Tab = ({ label, activeTab, setActiveTab }: TabProps) => {
   const { t } = useTranslation();
-  const capitalizeFirstLetter = (str:string):string => {
+  const capitalizeFirstLetter = (str: string): string => {
     if (!str) return str; // Проверка на пустую строку
     return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
-}
+  };
   return (
     <li role="presentation">
       <button

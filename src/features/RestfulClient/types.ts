@@ -22,5 +22,3 @@ export interface QueryTabProps {
   setQueryParams: React.Dispatch<React.SetStateAction<QueryParam[]>>;
   queryParams: QueryParam[];
 }
-
-

@@ -25,16 +25,18 @@ export const TabView = ({ tabs }: TabViewProps) => {
       </div>
       <div id="default-styled-tab-content">
         {tabs.map((tab) => {
-         return <div
-            key={tab.label}
-            className={`p-4 rounded-lg bg-gray-50 dark:bg-gray-800 ${activeTab !== tab.label ? 'hidden' : ''}`}
-            id={`styled-${tab.label}`}
-            role="tabpanel"
-            aria-labelledby={`${tab.label}-tab`}
-          >
-            {tab.content}
-          </div>
-})}
+          return (
+            <div
+              key={tab.label}
+              className={`p-4 rounded-lg bg-gray-50 dark:bg-gray-800 ${activeTab !== tab.label ? 'hidden' : ''}`}
+              id={`styled-${tab.label}`}
+              role="tabpanel"
+              aria-labelledby={`${tab.label}-tab`}
+            >
+              {tab.content}
+            </div>
+          );
+        })}
       </div>
     </>
   );
