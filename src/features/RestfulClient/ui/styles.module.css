@@ -48,3 +48,18 @@
   height: 100%;
   min-height: 300px;
 }
+.restful-wrapper_tabview-container_code{
+  background: #f4f4f4;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 10px;
+  overflow-x: auto;
+  width: 80vw;
+  min-height: 100px;
+  max-height: 200px;
+
+}
+
+.error {
+  color: red;
+}

@@ -27,7 +27,7 @@ export const Button = ({
       disabled={disabled}
       type={type}
     >
-      {title}
+      <span className='text-base'>{title}</span>
     </button>
   );
 };

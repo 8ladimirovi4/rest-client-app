@@ -53,6 +53,7 @@
     "Body": "Body",
     "Headers": "Headers",
     "Query": "Query",
-    "Variables": "Variables"
+    "Variables": "Variables",
+    "Code": "Code generator"
   }
 }
