@@ -5,7 +5,7 @@ import { TabProps } from '../types';
 export const Tab = ({ label, activeTab, setActiveTab }: TabProps) => {
   const { t } = useTranslation();
   const capitalizeFirstLetter = (str: string): string => {
-    if (!str) return str; // Проверка на пустую строку
+    if (!str) return str;
     return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
   };
   return (
@@ -17,7 +17,7 @@ export const Tab = ({ label, activeTab, setActiveTab }: TabProps) => {
         aria-controls={`styled-${label}`}
         aria-selected={activeTab === label}
       >
-        {t(`Rest.${capitalizeFirstLetter(label)}`)}
+        <span className="text-lg">{t(`Rest.${capitalizeFirstLetter(label)}`)}</span>
       </button>
     </li>
   );

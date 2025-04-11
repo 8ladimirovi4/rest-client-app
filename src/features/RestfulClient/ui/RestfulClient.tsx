@@ -18,6 +18,8 @@ import { formatDateToString, replaceVariables } from 'shared/utils/help';
 import { apiRequestActions } from 'shared/model/apiRequest.slice';
 import { ApiResponse } from 'shared/api/types';
 import { HeadersType, QueryParam } from '../types';
+import { GenerateCodeTab } from './GenerateCodeTab';
+
 
 export const RestfulClient = () => {
   const { isAuthChecked } = useSelector((store: RootState) => store.user);
@@ -115,6 +117,10 @@ export const RestfulClient = () => {
               {
                 label: 'VARIABLES',
                 content: <VariablesTab />,
+              },
+              {
+                label: 'CODE',
+                content: <GenerateCodeTab />,
               },
             ]}
           />
