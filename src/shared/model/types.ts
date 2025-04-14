@@ -24,3 +24,25 @@ export interface RoutesState {
   routes: Route[];
   currentRoute: string;
 }
+
+export type Query = {
+  key: string;
+  value: string;
+};
+
+type Headers = Query;
+
+type Variables = Query;
+
+export interface ApiRequestState {
+  query: Query[];
+  body: string;
+  method: string;
+  headers: Headers[];
+  variables: Variables[];
+  textMode: boolean;
+  status: string;
+  id: string;
+  browserUrl: string;
+  date: string;
+}

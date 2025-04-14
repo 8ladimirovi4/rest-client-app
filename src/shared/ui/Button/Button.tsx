@@ -12,6 +12,8 @@ export const Button = ({
   color = 'blue',
   disabled = false,
   type,
+  width = 100,
+  height = 40,
 }: ButtonProps) => {
   const buttonClass = disabled
     ? BUTTON_CLASSES.gray
@@ -19,12 +21,13 @@ export const Button = ({
 
   return (
     <button
+      style={{ width, height }}
       onClick={onClick}
       className={`w-full h-full text-white focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 flex justify-center items-center custom-button ${buttonClass}`}
       disabled={disabled}
       type={type}
     >
-      {title}
+      <span className="text-base">{title}</span>
     </button>
   );
 };

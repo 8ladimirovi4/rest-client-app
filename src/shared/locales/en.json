@@ -23,5 +23,37 @@
   "Welcome": "Welcome",
   "Welcome back": "Welcome Back",
   "Restful": "Rest client",
-  "History": "History"
+  "History": "History",
+  "Buttons": {
+    "ClearAll": "Clear All",
+    "Go": "Go",
+    "Remove": "Remove",
+    "Add": "Add",
+    "Send": "SEND",
+    "ReloadPage": "Reload Page"
+  },
+  "Placeholders": {
+    "Key": "Key",
+    "Value": "Value"
+  },
+  "EmptyState": {
+    "NoRequests": "You haven't executed any requests yet.",
+    "EmptyPrompt": "It's empty here. Try those options:",
+    "RestfulClientLink": "RESTful client",
+    "RequestCreated": "request created",
+    "Key": "Key",
+    "Value": "Value",
+    "Edit": "Edit",
+    "Done": "Done",
+    "Remove": "Remove",
+    "ProvideJson": "Provide JSON here"
+  },
+  "Rest": {
+    "Status": "Status",
+    "Body": "Body",
+    "Headers": "Headers",
+    "Query": "Query",
+    "Variables": "Variables",
+    "Code": "Code generator"
+  }
 }

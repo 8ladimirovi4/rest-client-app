@@ -1,12 +1,7 @@
-import { History } from 'entities/History/ui/History';
+import { HistoryList } from 'entities/History/ui/HistoryList';
 
 const PageHistory = () => {
-  return (
-    <>
-      <h1>History Page</h1>
-      <History />
-    </>
-  );
+  return <HistoryList />;
 };
 
 export default PageHistory;

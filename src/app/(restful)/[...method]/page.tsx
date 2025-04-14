@@ -1,4 +1,4 @@
-import RestfulClient from 'features/RestfulClient/RestfulClient';
+import { RestfulClient } from 'features/RestfulClient/ui/RestfulClient';
 import React from 'react';
 
 const PageRestful = () => {

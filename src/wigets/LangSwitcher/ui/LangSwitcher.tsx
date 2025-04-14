@@ -30,6 +30,7 @@ export const LangSwitcher = memo(() => {
       value={currentLang}
       options={langs}
       onChange={changeLanguage}
+      textSize="text-base"
     />
   );
 });

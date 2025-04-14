@@ -23,5 +23,37 @@
   "Welcome": "Добро пожаловать",
   "Welcome back": "С возвращением",
   "Restful": "REST клиент",
-  "History": "История"
+  "History": "История",
+  "Buttons": {
+    "ClearAll": "Удалить все",
+    "Go": "Вперед",
+    "Remove": "Удалить",
+    "Add": "Добавить",
+    "Send": "ОТПРАВИТЬ",
+    "ReloadPage": "Перезагрузить страницу"
+  },
+  "Placeholders": {
+    "Key": "Ключ",
+    "Value": "Значение"
+  },
+  "EmptyState": {
+    "NoRequests": "Вы ещё не выполнили ни одного запроса.",
+    "EmptyPrompt": "Здесь пока пусто. Попробуйте следующие варианты:",
+    "RestfulClientLink": "RESTful клиент",
+    "RequestCreated": "запрос создан",
+    "Key": "Ключ",
+    "Value": "Значение",
+    "Edit": "Редактировать",
+    "Done": "Завершить",
+    "Remove": "Удалить",
+    "ProvideJson": "Введите JSON"
+  },
+  "Rest": {
+    "Status": "Статус",
+    "Body": "Тело запроса",
+    "Headers": "Заголовки",
+    "Query": "Параметры запроса",
+    "Variables": "Переменные",
+    "Code": "Код генератор"
+  }
 }
