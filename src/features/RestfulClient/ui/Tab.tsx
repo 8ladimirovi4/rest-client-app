@@ -17,7 +17,9 @@ export const Tab = ({ label, activeTab, setActiveTab }: TabProps) => {
         aria-controls={`styled-${label}`}
         aria-selected={activeTab === label}
       >
-        <span className="text-lg">{t(`Rest.${capitalizeFirstLetter(label)}`)}</span>
+        <span className="text-lg">
+          {t(`Rest.${capitalizeFirstLetter(label)}`)}
+        </span>
       </button>
     </li>
   );
