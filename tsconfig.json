@@ -44,7 +44,7 @@
     ".next/types/**/*.ts",
     "src",
     "./.next/types/**/*.ts",
-    "src/types/**/*.d.ts",
+    "src/types/**/*.d.ts"
   ],
   "exclude": ["./node_modules"],
   "references": []

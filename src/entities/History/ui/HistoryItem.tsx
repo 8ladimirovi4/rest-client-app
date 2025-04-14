@@ -46,8 +46,10 @@ export const HistoryItem = ({
     <div className="w-full bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
       {date && (
         <div className="p-2  border-gray-200 dark:border-gray-700 text-sm text-gray-500 dark:text-gray-400">
-          <strong className="text-base">{t('EmptyState.RequestCreated')}: </strong>
-          <span className='text-base'>{date}</span>
+          <strong className="text-base">
+            {t('EmptyState.RequestCreated')}:{' '}
+          </strong>
+          <span className="text-base">{date}</span>
         </div>
       )}
       <div className="p-4 flex items-center justify-between gap-4">
