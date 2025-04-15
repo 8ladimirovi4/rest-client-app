@@ -4,7 +4,7 @@ export const Spinner = ({ size = 10 }: SpinnerProps) => {
   const spinnerSize = size * 5;
 
   return (
-    <div role="status">
+    <div className="mx-auto content-center" role="status">
       <svg
         aria-hidden="true"
         style={{ width: `${spinnerSize}px`, height: `${spinnerSize}px` }}

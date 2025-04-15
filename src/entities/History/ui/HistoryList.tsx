@@ -13,7 +13,7 @@ import { useEffect } from 'react';
 import { apiRequestActions } from 'shared/model/apiRequest.slice';
 import { useTranslation } from 'react-i18next';
 
-export const HistoryList = () => {
+const HistoryList = () => {
   const { t } = useTranslation();
   const { isAuthChecked } = useSelector((store: RootState) => store.user);
   const { method, browserUrl } = useSelector(
@@ -95,4 +95,5 @@ export const HistoryList = () => {
   );
 };
 
+export default HistoryList;
 HistoryList.displayName = 'HistoryList';

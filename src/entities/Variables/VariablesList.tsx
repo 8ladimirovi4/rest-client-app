@@ -10,7 +10,7 @@ import { apiRequestActions } from 'shared/model/apiRequest.slice';
 import styles from './styles.module.css';
 import { useTranslation } from 'react-i18next';
 
-export const VariablesList = () => {
+const VariablesList = () => {
   const { t } = useTranslation();
   const { isAuthChecked } = useSelector((store: RootState) => store.user);
   const { variables } = useSelector((state: RootState) => state.apiRequest);
@@ -110,4 +110,5 @@ export const VariablesList = () => {
   );
 };
 
+export default VariablesList;
 VariablesList.displayName = ' VariablesList';
