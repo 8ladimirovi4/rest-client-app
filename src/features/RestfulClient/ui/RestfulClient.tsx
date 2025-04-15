@@ -20,7 +20,7 @@ import { ApiResponse } from 'shared/api/types';
 import { HeadersType, QueryParam } from '../types';
 import { GenerateCodeTab } from './GenerateCodeTab';
 
-export const RestfulClient = () => {
+const RestfulClient = () => {
   const { isAuthChecked } = useSelector((store: RootState) => store.user);
   const [servResponse, setServResponse] = useState<ApiResponse<unknown>>({
     status: '',
@@ -141,4 +141,5 @@ export const RestfulClient = () => {
   );
 };
 
+export default RestfulClient;
 RestfulClient.displayName = 'RestfulClient';

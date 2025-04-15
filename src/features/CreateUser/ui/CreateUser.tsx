@@ -30,7 +30,7 @@ interface User {
   confirmPassword: string;
 }
 
-export function CreateUser() {
+export default function CreateUser() {
   const {
     control,
     handleSubmit,
