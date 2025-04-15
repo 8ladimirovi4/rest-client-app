@@ -9,7 +9,7 @@ import { apiRequest } from 'shared/api/apiRequest';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'app/providers/StoreProvider/config/store';
 import { ApiRequestState } from 'shared/model/types';
-import { Spinner } from 'shared/index';
+import { Flayout, Spinner } from 'shared/index';
 import { AuthGuards } from 'shared/lib/AuthGuard/AuthGuards.tsx';
 import { BodyTab } from './BodyTab';
 import { HeadersTab } from './HeadersTab';
@@ -90,6 +90,10 @@ const RestfulClient = () => {
     setServData(data as ApiResponse<unknown>);
   };
 
+  const handleHideFlayout = () => {
+    setError('')
+  }
+
   useEffect(() => {
     if (!apiStoragedData) setApiStoragedData([]);
   }, []);
@@ -132,7 +136,8 @@ const RestfulClient = () => {
           />
         </div>
         <div className={styles['restful-wrapper__spacer']} />
-        {error && <p style={{ color: 'red', marginTop: 10 }}>{error}</p>}
+        {/* {error && <p style={{ color: 'red', marginTop: 10 }}>{error}</p>} */}
+        {error && <Flayout title={error} onClick={handleHideFlayout}/>}
         {loading && <Spinner />}
         {servData && (
           <h1 className="text-lg">

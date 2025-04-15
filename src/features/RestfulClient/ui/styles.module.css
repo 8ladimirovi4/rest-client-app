@@ -4,6 +4,7 @@
   flex: 1;
   align-items: center;
   padding: 50px;
+  position: relative;
 }
 .restful-wrapper_search-container {
   display: flex;
