@@ -29,6 +29,7 @@ export default [
         ...globals.browser,
         ...globals.node,
         React: 'writable',
+        RequestInit: true,
       },
       parser: tsParser,
     },
