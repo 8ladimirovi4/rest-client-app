@@ -40,7 +40,7 @@ export const BodyTab = () => {
         </button>
       </div>
       <Editor
-        height="200px"
+        height="150px"
         language={format}
         defaultLanguage={'json'}
         defaultValue=""

@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { TabView } from './TabView';
 import styles from './styles.module.css';
 import Search from './Search';
@@ -19,6 +19,9 @@ import { apiRequestActions } from 'shared/model/apiRequest.slice';
 import { ApiResponse } from 'shared/api/types';
 import { HeadersType, QueryParam } from '../types';
 import { GenerateCodeTab } from './GenerateCodeTab';
+import Editor from '@monaco-editor/react';
+
+
 
 const RestfulClient = () => {
   const { isAuthChecked } = useSelector((store: RootState) => store.user);
@@ -93,6 +96,8 @@ const RestfulClient = () => {
     fetchData();
   }, [id]);
 
+  
+
   if (!isAuthChecked) return null;
   return (
     <AuthGuards requireAuth={true}>
@@ -133,9 +138,34 @@ const RestfulClient = () => {
           </h1>
         )}
 
-        <pre className={styles['restful-wrapper_respose-text']}>
+        {/* <pre className={styles['restful-wrapper_respose-text']}>
           {servData && JSON.stringify(servData, null, 2)}
-        </pre>
+        </pre> */}
+        <div className={styles['restful-wrapper_tabview-container_response']}>
+          {servData 
+          && 
+<Editor
+        height="300px"
+        defaultLanguage={'json'}
+        defaultValue=""
+        value={JSON.stringify(servData, null, 2)}
+        options={{
+          fontSize: 14,
+          minimap: { enabled: false },
+          formatOnType: true,
+          formatOnPaste: true,
+          lineNumbers: 'off',
+          renderLineHighlight: 'none',
+          glyphMargin: false,
+          folding: false,
+          scrollBeyondLastLine: false,
+          domReadOnly: true,
+          readOnly: true,
+        }}
+      />
+          }
+         
+</div>
       </div>
     </AuthGuards>
   );
