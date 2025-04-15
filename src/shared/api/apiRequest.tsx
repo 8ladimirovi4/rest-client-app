@@ -49,7 +49,7 @@ export const apiRequest = async ({
       options.body = body || '{}';
     }
 
-    const response = await fetch(`/api/proxy?url=${encodedUrl}`, options);
+    const response = await fetch(`/api/${method}/${encodedUrl}`, options);
     const data = await response.json();
 
     const apiResponse: ApiResponse = {

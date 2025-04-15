@@ -100,6 +100,22 @@ const RestfulClient = () => {
 
   useEffect(() => {
     fetchData();
+
+  const payload = {
+    browserUrl,
+    method,
+    query,
+    body,
+    headers,
+    variables
+  };
+
+  if(browserUrl){
+    const encoded = btoa(encodeURIComponent(JSON.stringify(payload)));
+    const url = new URL(window.location.href);
+    url.searchParams.set('q', encoded);
+    window.history.replaceState(null, '', url.toString());
+  }
   }, [id]);
 
   

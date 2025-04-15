@@ -36,7 +36,7 @@ export const setUrl = (url: URL, method: string, path: string): void => {
 };
 
 export const buildUrl = (url: URL, method: string, path: string): string => {
-  return `${url.protocol}//${url.host}/${method}/?link=${path !== '' ? btoa(path) : path}`;
+  return `${url.protocol}//${url.host}/${method}/${path !== '' ? btoa(path) : path}`;
 };
 
 export const formatDateToString = (date: Date): string => {
