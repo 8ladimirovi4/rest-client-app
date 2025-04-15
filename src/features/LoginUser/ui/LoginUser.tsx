@@ -28,7 +28,7 @@ interface User {
   password: string;
 }
 
-export function LoginUser() {
+export default function LoginUser() {
   const {
     control,
     handleSubmit,
