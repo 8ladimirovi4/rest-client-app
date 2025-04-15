@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TabView } from './TabView';
 import styles from './styles.module.css';
 import Search from './Search';
@@ -20,10 +20,12 @@ import { ApiResponse } from 'shared/api/types';
 import { HeadersType, QueryParam } from '../types';
 import { GenerateCodeTab } from './GenerateCodeTab';
 import Editor from '@monaco-editor/react';
+import { useTranslation } from 'react-i18next';
 
 
 
 const RestfulClient = () => {
+  const { t } = useTranslation();
   const { isAuthChecked } = useSelector((store: RootState) => store.user);
   const [servResponse, setServResponse] = useState<ApiResponse<unknown>>({
     status: '',
@@ -134,13 +136,9 @@ const RestfulClient = () => {
         {loading && <Spinner />}
         {servData && (
           <h1 className="text-lg">
-            Response status {servResponse && servResponse.status}
+            {`${t('EmptyState.ResponseStatus')} ${servResponse && servResponse.status}`}
           </h1>
         )}
-
-        {/* <pre className={styles['restful-wrapper_respose-text']}>
-          {servData && JSON.stringify(servData, null, 2)}
-        </pre> */}
         <div className={styles['restful-wrapper_tabview-container_response']}>
           {servData 
           && 

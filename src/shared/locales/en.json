@@ -48,7 +48,8 @@
     "Edit": "Edit",
     "Done": "Done",
     "Remove": "Remove",
-    "ProvideJson": "Provide JSON here"
+    "ProvideJson": "Provide JSON here",
+    "ResponseStatus": "Response status"
   },
   "Rest": {
     "Status": "Status",

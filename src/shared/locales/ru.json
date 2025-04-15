@@ -48,7 +48,8 @@
     "Edit": "Редактировать",
     "Done": "Завершить",
     "Remove": "Удалить",
-    "ProvideJson": "Введите JSON"
+    "ProvideJson": "Введите JSON",
+    "ResponseStatus": "Код ответа"
   },
   "Rest": {
     "Status": "Статус",
