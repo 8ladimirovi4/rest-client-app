@@ -66,7 +66,7 @@ export const Footer = () => {
               </a>
             </div>
           </div>
-          <ul className="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
+          <ul className="flex flex-wrap items-center mb-6 text-lg font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
             <li>
               <span className="me-4 md:me-6">© 2025 {t('Copyright')}</span>
             </li>
