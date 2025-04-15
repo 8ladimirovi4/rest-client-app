@@ -52,7 +52,6 @@ export const Header = () => {
             </span>
           </Link>
           <div className="flex items-center lg:order-2">
-            <LangSwitcher />
             {isAuthChecked && isUserLoggedIn ? (
               <>
                 <Link
@@ -66,6 +65,7 @@ export const Header = () => {
             ) : (
               <AuthLinks />
             )}
+            <LangSwitcher />
             <button
               data-collapse-toggle="mobile-menu-2"
               type="button"
