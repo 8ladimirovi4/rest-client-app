@@ -2,7 +2,9 @@
 import { createContext } from 'react';
 import { THEME } from 'shared/const/theme';
 
-export const ThemeContext = createContext<[THEME, React.Dispatch<THEME>]>([
-  THEME.DARK,
-  () => {},
-]);
+export interface IThemeContext {
+  theme?: THEME;
+  setTheme?: (theme: THEME) => void;
+}
+
+export const ThemeContext = createContext<IThemeContext>({});

@@ -9,6 +9,7 @@ import { Logout } from 'features/LogoutUser';
 import { AuthLinks } from 'shared/ui/AuthLinks/AuthLinks.tsx';
 import { LangSwitcher } from 'wigets/LangSwitcher';
 import { useTranslation } from 'react-i18next';
+import { ThemeSwitcher } from 'wigets/ThemeSwitcher';
 
 export const Header = () => {
   const { t } = useTranslation();
@@ -65,6 +66,7 @@ export const Header = () => {
             ) : (
               <AuthLinks />
             )}
+            <ThemeSwitcher />
             <LangSwitcher />
             <button
               data-collapse-toggle="mobile-menu-2"
