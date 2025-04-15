@@ -30,7 +30,9 @@
     "Remove": "Remove",
     "Add": "Add",
     "Send": "SEND",
-    "ReloadPage": "Reload Page"
+    "ReloadPage": "Reload Page",
+    "Json": "JSON",
+    "Text": "Text"
   },
   "Placeholders": {
     "Key": "Key",

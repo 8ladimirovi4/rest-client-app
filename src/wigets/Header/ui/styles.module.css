@@ -7,6 +7,7 @@
   min-width: 500px;
   border-bottom: 2px solid lightgray;
   transition: all 0.3s ease-in-out;
+  z-index: 10000;
 }
 
 .scrolled {
