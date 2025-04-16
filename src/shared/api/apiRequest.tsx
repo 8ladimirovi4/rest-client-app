@@ -23,6 +23,7 @@ export const apiRequest = async ({
     const normalizedHeaders = Object.keys(headersObject).map((key) =>
       key.toLowerCase()
     );
+    console.log('===>browserUrl', browserUrl)
     const shouldAddContentType = !normalizedHeaders.includes('content-type');
     const encodedUrl = encodeURIComponent(btoa(browserUrl));
 

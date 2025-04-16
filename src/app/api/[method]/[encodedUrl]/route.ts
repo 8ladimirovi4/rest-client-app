@@ -8,7 +8,9 @@ export async function handler(
     params: { method: string; encodedUrl: string };
   }
 ) {
-  const { method, encodedUrl } = params;
+  const { method, encodedUrl } = await params;
+  console.log('=============================================>method ', method)
+  console.log('=============================================>encodedUrl ', encodedUrl)
   const decodedMethod = method.toUpperCase() as
     | 'GET'
     | 'POST'
@@ -19,7 +21,6 @@ export async function handler(
     | 'HEAD';
 
   const apiUrl = atob(decodeURIComponent(encodedUrl));
-  console.log('===> apiUrl', apiUrl);
 
   if (!apiUrl) {
     return NextResponse.json(
