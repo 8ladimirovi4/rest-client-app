@@ -9,8 +9,7 @@ export async function handler(
   }
 ) {
   const { method, encodedUrl } = await params;
-  console.log('=============================================>method ', method)
-  console.log('=============================================>encodedUrl ', encodedUrl)
+ 
   const decodedMethod = method.toUpperCase() as
     | 'GET'
     | 'POST'
@@ -34,6 +33,7 @@ export async function handler(
 
     if (!['GET', 'DELETE', 'OPTIONS', 'HEAD'].includes(decodedMethod)) {
       const contentType = request.headers.get('Content-Type') || '';
+      console.log('============================>contentType ', contentType)
       if (contentType.includes('application/json')) {
         body = JSON.stringify(await request.json());
       } else {
@@ -41,6 +41,7 @@ export async function handler(
       }
     }
 
+    console.log('=============================> request.headers', request.headers)
     const response = await fetch(apiUrl, {
       method: decodedMethod,
       headers: request.headers,
