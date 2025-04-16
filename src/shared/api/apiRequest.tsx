@@ -6,20 +6,10 @@ export const apiRequest = async ({
   finnalyComplite,
   browserUrl,
   method = 'GET',
-  query = [],
   body = null,
   headers = [],
 }: ApiRequestType) => {
   try {
-    const queryString = query.length
-      ? `?${query
-          .map((param) => {
-            const { key, value } = param;
-            return `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
-          })
-          .join('&')}`
-      : '';
-
     const headersObject = headers.reduce<Record<string, string>>(
       (acc, header) => {
         const { key, value } = header;
@@ -32,10 +22,9 @@ export const apiRequest = async ({
     const normalizedHeaders = Object.keys(headersObject).map((key) =>
       key.toLowerCase()
     );
-    const shouldAddContentType = !normalizedHeaders.includes('content-type');
 
-    const fullUrl = `${browserUrl}${queryString}`;
-    const encodedUrl = encodeURIComponent(btoa(fullUrl));
+    const shouldAddContentType = !normalizedHeaders.includes('content-type');
+    const encodedUrl = encodeURIComponent(btoa(browserUrl));
 
     const options: RequestInit = {
       method: method || 'GET',
@@ -49,7 +38,7 @@ export const apiRequest = async ({
       options.body = body || '{}';
     }
 
-    const response = await fetch(`/api/proxy?url=${encodedUrl}`, options);
+    const response = await fetch(`/api/${method}/${encodedUrl}`, options);
     const data = await response.json();
 
     const apiResponse: ApiResponse = {

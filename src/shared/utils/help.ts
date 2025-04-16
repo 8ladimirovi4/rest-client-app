@@ -1,5 +1,6 @@
 import { VariableType } from 'features/RestfulClient/types';
 import { Query } from 'shared/model/types';
+import { Headers, Variables } from 'shared/model/types';
 
 export const replaceVariables = (
   template: string | Query[],
@@ -29,14 +30,46 @@ export const replaceVariables = (
   }
 };
 
-export const setUrl = (url: URL, method: string, path: string): void => {
-  url.pathname = `/${method}`;
-  url.searchParams.set('link', path);
-  window.history.pushState({}, '', url.toString());
+export const queryToString = (
+  query: { key: string; value: string }[]
+): string => {
+  return query
+    .map((q) => {
+      const key = q.key;
+      const value = q.value;
+      if (key === '' && value === '') {
+        return '';
+      }
+      return `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
+    })
+    .join('&');
 };
 
 export const buildUrl = (url: URL, method: string, path: string): string => {
-  return `${url.protocol}//${url.host}/${method}/?link=${path !== '' ? btoa(path) : path}`;
+  return `${url.protocol}//${url.host}/${method}/${path !== '' ? btoa(path) : path}`;
+};
+
+export const encodeUrl = (
+  url: URL,
+  method: string,
+  path: string,
+  body: string,
+  headers: Headers[],
+  variables: Variables[]
+): void => {
+  const decodedBodyVariables = replaceVariables(body, variables) as string;
+  const encodedBody = btoa(encodeURIComponent(decodedBodyVariables));
+  const headersString =
+    encodeURIComponent(queryToString(headers)) ||
+    'Content-Type=application/json';
+  const newUrl = buildUrl(url, method, path);
+  let fullUrl;
+  if (encodedBody) {
+    fullUrl = `${newUrl}/${encodedBody}?${encodeURIComponent(headersString)}`;
+  } else {
+    fullUrl = newUrl;
+  }
+  window.history.pushState({}, '', fullUrl);
 };
 
 export const formatDateToString = (date: Date): string => {

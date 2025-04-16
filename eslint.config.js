@@ -30,6 +30,7 @@ export default [
         ...globals.node,
         React: 'writable',
         RequestInit: true,
+        BodyInit: true
       },
       parser: tsParser,
     },

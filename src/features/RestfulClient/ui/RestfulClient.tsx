@@ -9,7 +9,7 @@ import { apiRequest } from 'shared/api/apiRequest';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'app/providers/StoreProvider/config/store';
 import { ApiRequestState } from 'shared/model/types';
-import { Spinner } from 'shared/index';
+import { Flayout, Spinner } from 'shared/index';
 import { AuthGuards } from 'shared/lib/AuthGuard/AuthGuards.tsx';
 import { BodyTab } from './BodyTab';
 import { HeadersTab } from './HeadersTab';
@@ -19,8 +19,11 @@ import { apiRequestActions } from 'shared/model/apiRequest.slice';
 import { ApiResponse } from 'shared/api/types';
 import { HeadersType, QueryParam } from '../types';
 import { GenerateCodeTab } from './GenerateCodeTab';
+import Editor from '@monaco-editor/react';
+import { useTranslation } from 'react-i18next';
 
 const RestfulClient = () => {
+  const { t } = useTranslation();
   const { isAuthChecked } = useSelector((store: RootState) => store.user);
   const [servResponse, setServResponse] = useState<ApiResponse<unknown>>({
     status: '',
@@ -85,6 +88,10 @@ const RestfulClient = () => {
     setServData(data as ApiResponse<unknown>);
   };
 
+  const handleHideFlayout = () => {
+    setError('');
+  };
+
   useEffect(() => {
     if (!apiStoragedData) setApiStoragedData([]);
   }, []);
@@ -125,17 +132,37 @@ const RestfulClient = () => {
           />
         </div>
         <div className={styles['restful-wrapper__spacer']} />
-        {error && <p style={{ color: 'red', marginTop: 10 }}>{error}</p>}
+        {/* {error && <p style={{ color: 'red', marginTop: 10 }}>{error}</p>} */}
+        {error && <Flayout title={error} onClick={handleHideFlayout} />}
         {loading && <Spinner />}
         {servData && (
           <h1 className="text-lg">
-            Response status {servResponse && servResponse.status}
+            {`${t('EmptyState.ResponseStatus')} ${servResponse && servResponse.status}`}
           </h1>
         )}
-
-        <pre className={styles['restful-wrapper_respose-text']}>
-          {servData && JSON.stringify(servData, null, 2)}
-        </pre>
+        <div className={styles['restful-wrapper_tabview-container_response']}>
+          {servData && (
+            <Editor
+              height="300px"
+              defaultLanguage={'json'}
+              defaultValue=""
+              value={JSON.stringify(servData, null, 2)}
+              options={{
+                fontSize: 14,
+                minimap: { enabled: false },
+                formatOnType: true,
+                formatOnPaste: true,
+                lineNumbers: 'off',
+                renderLineHighlight: 'none',
+                glyphMargin: false,
+                folding: false,
+                scrollBeyondLastLine: false,
+                domReadOnly: true,
+                readOnly: true,
+              }}
+            />
+          )}
+        </div>
       </div>
     </AuthGuards>
   );

@@ -30,7 +30,9 @@
     "Remove": "Удалить",
     "Add": "Добавить",
     "Send": "ОТПРАВИТЬ",
-    "ReloadPage": "Перезагрузить страницу"
+    "ReloadPage": "Перезагрузить страницу",
+    "Json": "JSON",
+    "Text": "Текст"
   },
   "Placeholders": {
     "Key": "Ключ",
@@ -46,7 +48,8 @@
     "Edit": "Редактировать",
     "Done": "Завершить",
     "Remove": "Удалить",
-    "ProvideJson": "Введите JSON"
+    "ProvideJson": "Введите JSON",
+    "ResponseStatus": "Код ответа"
   },
   "Rest": {
     "Status": "Статус",

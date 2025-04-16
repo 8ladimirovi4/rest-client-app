@@ -8,6 +8,7 @@ import { replaceVariables } from 'shared/utils/help';
 import { cGlangOptions } from 'shared/constants/codeGenerator';
 import { Select } from 'shared/index';
 import classNames from 'classnames';
+import Editor from '@monaco-editor/react';
 
 export const GenerateCodeTab = () => {
   const [codeSnippet, setCodeSnippet] = useState<string>('');
@@ -17,7 +18,6 @@ export const GenerateCodeTab = () => {
     framework: 'curl',
     label: 'cUrl',
   });
-  const [codeValue, setCodeValue] = useState<string>(cGlangOptions[0].value);
   const apiData = useSelector((state: RootState) => state.apiRequest);
   const { browserUrl, method, body, headers, variables, id } = apiData;
 
@@ -62,7 +62,6 @@ export const GenerateCodeTab = () => {
 
   const handleLanguageChange = (evt: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = evt.target.value;
-    setCodeValue(selectedValue);
 
     const selected = JSON.parse(selectedValue);
     setCodegenParams({
@@ -76,16 +75,40 @@ export const GenerateCodeTab = () => {
       <Select
         width={210}
         id="language-select"
-        value={codeValue}
+        value={JSON.stringify(codegenParams)}
         onChange={(evt) => handleLanguageChange(evt)}
         options={cGlangOptions}
       />
       {codegenError && <p style={{ color: 'red' }}>{codegenError}</p>}
-      <pre
+      {/* <pre
         className={classNames(styles['restful-wrapper_tabview-container_code'])}
       >
         {codeSnippet}
-      </pre>
+      </pre> */}
+      <div
+        className={classNames(styles['restful-wrapper_tabview-container_code'])}
+      >
+        <Editor
+          height="300px"
+          language={codegenParams.language}
+          defaultLanguage={'curl'}
+          defaultValue=""
+          value={codeSnippet.trim()}
+          options={{
+            fontSize: 14,
+            minimap: { enabled: false },
+            formatOnType: true,
+            formatOnPaste: true,
+            lineNumbers: 'off',
+            renderLineHighlight: 'none',
+            glyphMargin: false,
+            folding: false,
+            scrollBeyondLastLine: false,
+            domReadOnly: true,
+            readOnly: true,
+          }}
+        />
+      </div>
     </>
   );
 };
