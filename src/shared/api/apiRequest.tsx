@@ -10,7 +10,6 @@ export const apiRequest = async ({
   headers = [],
 }: ApiRequestType) => {
   try {
-
     const headersObject = headers.reduce<Record<string, string>>(
       (acc, header) => {
         const { key, value } = header;

@@ -5,8 +5,7 @@ import { FlayoutProps } from './types';
 import classNames from 'classnames';
 
 export const Flayout = ({ title, onClick = () => {} }: FlayoutProps) => {
-
-  setTimeout(() => onClick(), 5000)
+  setTimeout(() => onClick(), 5000);
   return (
     <div
       className={classNames(

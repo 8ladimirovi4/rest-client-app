@@ -85,27 +85,29 @@ export const GenerateCodeTab = () => {
       >
         {codeSnippet}
       </pre> */}
-      <div className={classNames(styles['restful-wrapper_tabview-container_code'])}>
-      <Editor
-        height="300px"
-        language={codegenParams.language}
-        defaultLanguage={'curl'}
-        defaultValue=""
-        value={codeSnippet.trim()}
-        options={{
-          fontSize: 14,
-          minimap: { enabled: false },
-          formatOnType: true,
-          formatOnPaste: true,
-          lineNumbers: 'off',
-          renderLineHighlight: 'none',
-          glyphMargin: false,
-          folding: false,
-          scrollBeyondLastLine: false,
-          domReadOnly: true,
-          readOnly: true,
-        }}
-      />
+      <div
+        className={classNames(styles['restful-wrapper_tabview-container_code'])}
+      >
+        <Editor
+          height="300px"
+          language={codegenParams.language}
+          defaultLanguage={'curl'}
+          defaultValue=""
+          value={codeSnippet.trim()}
+          options={{
+            fontSize: 14,
+            minimap: { enabled: false },
+            formatOnType: true,
+            formatOnPaste: true,
+            lineNumbers: 'off',
+            renderLineHighlight: 'none',
+            glyphMargin: false,
+            folding: false,
+            scrollBeyondLastLine: false,
+            domReadOnly: true,
+            readOnly: true,
+          }}
+        />
       </div>
     </>
   );

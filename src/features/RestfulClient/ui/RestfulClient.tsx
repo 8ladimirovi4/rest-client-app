@@ -22,8 +22,6 @@ import { GenerateCodeTab } from './GenerateCodeTab';
 import Editor from '@monaco-editor/react';
 import { useTranslation } from 'react-i18next';
 
-
-
 const RestfulClient = () => {
   const { t } = useTranslation();
   const { isAuthChecked } = useSelector((store: RootState) => store.user);
@@ -91,8 +89,8 @@ const RestfulClient = () => {
   };
 
   const handleHideFlayout = () => {
-    setError('')
-  }
+    setError('');
+  };
 
   useEffect(() => {
     if (!apiStoragedData) setApiStoragedData([]);
@@ -101,8 +99,6 @@ const RestfulClient = () => {
   useEffect(() => {
     fetchData();
   }, [id]);
-
-  
 
   if (!isAuthChecked) return null;
   return (
@@ -137,7 +133,7 @@ const RestfulClient = () => {
         </div>
         <div className={styles['restful-wrapper__spacer']} />
         {/* {error && <p style={{ color: 'red', marginTop: 10 }}>{error}</p>} */}
-        {error && <Flayout title={error} onClick={handleHideFlayout}/>}
+        {error && <Flayout title={error} onClick={handleHideFlayout} />}
         {loading && <Spinner />}
         {servData && (
           <h1 className="text-lg">
@@ -145,30 +141,28 @@ const RestfulClient = () => {
           </h1>
         )}
         <div className={styles['restful-wrapper_tabview-container_response']}>
-          {servData 
-          && 
-<Editor
-        height="300px"
-        defaultLanguage={'json'}
-        defaultValue=""
-        value={JSON.stringify(servData, null, 2)}
-        options={{
-          fontSize: 14,
-          minimap: { enabled: false },
-          formatOnType: true,
-          formatOnPaste: true,
-          lineNumbers: 'off',
-          renderLineHighlight: 'none',
-          glyphMargin: false,
-          folding: false,
-          scrollBeyondLastLine: false,
-          domReadOnly: true,
-          readOnly: true,
-        }}
-      />
-          }
-         
-</div>
+          {servData && (
+            <Editor
+              height="300px"
+              defaultLanguage={'json'}
+              defaultValue=""
+              value={JSON.stringify(servData, null, 2)}
+              options={{
+                fontSize: 14,
+                minimap: { enabled: false },
+                formatOnType: true,
+                formatOnPaste: true,
+                lineNumbers: 'off',
+                renderLineHighlight: 'none',
+                glyphMargin: false,
+                folding: false,
+                scrollBeyondLastLine: false,
+                domReadOnly: true,
+                readOnly: true,
+              }}
+            />
+          )}
+        </div>
       </div>
     </AuthGuards>
   );

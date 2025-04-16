@@ -34,7 +34,14 @@ const Search = () => {
     const currentMethod = method || 'GET';
 
     if (browserUrl != '') {
-      encodeUrl(currentUrl, currentMethod, browserUrl, body, headers, variables);
+      encodeUrl(
+        currentUrl,
+        currentMethod,
+        browserUrl,
+        body,
+        headers,
+        variables
+      );
       const id = v4();
       dispatch(setApiId({ id }));
     }

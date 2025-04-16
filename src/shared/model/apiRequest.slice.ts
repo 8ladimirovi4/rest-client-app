@@ -26,8 +26,8 @@ const apiRequestSlice = createSlice({
     ) => {
       const { browserUrl } = payload;
 
-      state.browserUrl =  browserUrl
-      state.query = initialState.query
+      state.browserUrl = browserUrl;
+      state.query = initialState.query;
     },
     setMethod: (
       state: ApiRequestState,
@@ -42,10 +42,10 @@ const apiRequestSlice = createSlice({
     ) => {
       const { query } = payload;
 
-      if(state.browserUrl){
-        const queryString = queryToString(query)
-        const url = state.browserUrl.split('?').slice(0,1).join('')
-        state.browserUrl = queryString ? `${url}?${queryString}` : url
+      if (state.browserUrl) {
+        const queryString = queryToString(query);
+        const url = state.browserUrl.split('?').slice(0, 1).join('');
+        state.browserUrl = queryString ? `${url}?${queryString}` : url;
       }
       state.query = query;
     },
