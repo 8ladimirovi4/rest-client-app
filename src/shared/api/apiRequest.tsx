@@ -6,19 +6,10 @@ export const apiRequest = async ({
   finnalyComplite,
   browserUrl,
   method = 'GET',
-  query = [],
   body = null,
   headers = [],
 }: ApiRequestType) => {
   try {
-    const queryString = query.length
-      ? `?${query
-          .map((param) => {
-            const { key, value } = param;
-            return `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
-          })
-          .join('&')}`
-      : '';
 
     const headersObject = headers.reduce<Record<string, string>>(
       (acc, header) => {
@@ -33,9 +24,7 @@ export const apiRequest = async ({
       key.toLowerCase()
     );
     const shouldAddContentType = !normalizedHeaders.includes('content-type');
-
-    const fullUrl = `${browserUrl}${queryString}`;
-    const encodedUrl = encodeURIComponent(btoa(fullUrl));
+    const encodedUrl = encodeURIComponent(btoa(browserUrl));
 
     const options: RequestInit = {
       method: method || 'GET',

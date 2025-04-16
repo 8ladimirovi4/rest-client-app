@@ -24,7 +24,9 @@ const apiRequestSlice = createSlice({
       { payload }: PayloadAction<{ browserUrl: string }>
     ) => {
       const { browserUrl } = payload;
-      state.browserUrl = browserUrl;
+
+      state.browserUrl =  browserUrl
+      state.query = initialState.query
     },
     setMethod: (
       state: ApiRequestState,
@@ -38,6 +40,19 @@ const apiRequestSlice = createSlice({
       { payload }: PayloadAction<{ query: { key: string; value: string }[] }>
     ) => {
       const { query } = payload;
+
+      if(state.browserUrl){
+        const queryString = query.map(q => {
+          const key = q.key
+          const value = q.value
+          if(key === '' && value === ''){
+            return ''
+          }
+          return `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
+        }).join('&')
+        const url = state.browserUrl.split('?').slice(0,1).join('')
+        state.browserUrl = queryString ? `${url}?${queryString}` : url
+      }
       state.query = query;
     },
     setBody: (
