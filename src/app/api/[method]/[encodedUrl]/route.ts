@@ -1,12 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function handler(
+async function handler(
   request: NextRequest,
-  {
-    params,
-  }: {
-    params: { method: string; encodedUrl: string };
-  }
+  { params }: { params: Promise<{ method: string; encodedUrl: string }> }
 ) {
   const { method, encodedUrl } = await params;
 
