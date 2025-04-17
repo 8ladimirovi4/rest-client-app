@@ -7,12 +7,12 @@ export const KeyValueList = ({ title, items }: KeyValueListProps) => {
 
   return (
     <div className="mt-2">
-      <p className="font-semibold text-gray-800 dark:text-gray-200">{title}</p>
+      <p className="font-semibold text-gray-800 dark:text-gray-200 text-base">{title}</p>
       <ul className="pl-4 list-disc text-gray-700 dark:text-gray-300">
         {typeof items !== 'string' &&
           items.map(({ key, value }) => (
             <li key={v4()} className="mb-1">
-              <span className="font-medium">{key || '(empty)'}:</span> {value}
+              <span className="font-medium text-base">{key || '(empty)'}:</span> <span className="text-base">{value}</span>
             </li>
           ))}
       </ul>
