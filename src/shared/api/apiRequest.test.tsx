@@ -5,7 +5,7 @@ import {
   setupStaticFetch,
   resetMockFetch,
   setupFetchError,
-} from 'tests/setupMockFetch';
+} from 'tests/moks/setupMockFetch';
 
 global.fetch = vi.fn();
 describe('apiRequest', () => {
@@ -81,7 +81,7 @@ describe('apiRequest', () => {
     setupStaticFetch(mockResponse);
 
     const result = await apiRequest({
-      browserUrl: 'https://api.example.com/test',
+      browserUrl: 'https://example.com/api',
       method: 'GET',
       resComplite,
       catchComplite,
@@ -111,7 +111,7 @@ describe('apiRequest', () => {
       resComplite,
       catchComplite,
       finnalyComplite,
-      browserUrl: 'https://test.com',
+      browserUrl: 'https://example.com/api',
       method: 'GET',
       headers: [], // 👈 Content-Type не передан
     });
@@ -133,7 +133,7 @@ describe('apiRequest', () => {
       resComplite,
       catchComplite,
       finnalyComplite,
-      browserUrl: 'https://test.com',
+      browserUrl: 'https://example.com/api',
       method: 'GET',
       headers: [{ key: 'Content-Type', value: 'application/xml' }],
     });
