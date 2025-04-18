@@ -1,12 +1,9 @@
-import { describe, it, vi, afterEach, expect } from 'vitest';
+import { describe, it, vi, expect } from 'vitest';
 import { render, fireEvent } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { Button } from './Button';
 
 describe('Button component', () => {
-  afterEach(() => {
-    vi.clearAllMocks();
-  });
   it('renders with default props', () => {
     const { getByRole } = render(<Button />);
     const btn = getByRole('button');
