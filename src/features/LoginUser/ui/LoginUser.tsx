@@ -46,6 +46,7 @@ export default function LoginUser() {
 
   const handleSubmitForm = async (data: User) => {
     try {
+      dispatch(userActions.setError(null));
       dispatch(userActions.setLoading(true));
       const userCredential = await signInWithEmailAndPassword(
         auth,
@@ -87,48 +88,47 @@ export default function LoginUser() {
     <AuthGuards requireAuth={false}>
       <div className={styles.container}>
         <h3 className={styles.title}>{t('Sign in')}</h3>
-        {loading ? (
-          <Spinner />
-        ) : (
-          <form
-            className={styles.form}
-            onSubmit={handleSubmit(handleSubmitForm)}
-          >
-            <Controller
-              name="email"
-              control={control}
-              render={({ field }) => (
-                <Input
-                  {...field}
-                  error={errors.email?.message}
-                  placeholder={t('Email')}
-                  label={t('Email')}
-                  type={'text'}
-                  id={'email'}
-                />
-              )}
-            />
-            <Controller
-              name="password"
-              control={control}
-              render={({ field }) => (
-                <Input
-                  {...field}
-                  error={errors.password?.message}
-                  placeholder={t('Password')}
-                  label={t('Password')}
-                  type={'password'}
-                  id={'password'}
-                />
-              )}
-            />
+        <form className={styles.form} onSubmit={handleSubmit(handleSubmitForm)}>
+          <Controller
+            name="email"
+            control={control}
+            render={({ field }) => (
+              <Input
+                {...field}
+                error={errors.email?.message}
+                placeholder={t('Email')}
+                label={t('Email')}
+                type={'text'}
+                id={'email'}
+                disabled={loading}
+              />
+            )}
+          />
+          <Controller
+            name="password"
+            control={control}
+            render={({ field }) => (
+              <Input
+                {...field}
+                error={errors.password?.message}
+                placeholder={t('Password')}
+                label={t('Password')}
+                type={'password'}
+                id={'password'}
+                disabled={loading}
+              />
+            )}
+          />
+          {loading ? (
+            <Spinner className="mr-auto ml-0" />
+          ) : (
             <Button
               title={t('Sign in')}
               type="submit"
               disabled={!isValid}
             ></Button>
-          </form>
-        )}
+          )}
+        </form>
         {error && <p className={styles['error-message']}>{error}</p>}
       </div>
     </AuthGuards>
