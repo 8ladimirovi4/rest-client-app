@@ -3,7 +3,7 @@ import styles from './styles.module.css';
 import { Label } from '../Label/Label';
 
 interface Props extends InputProps {
-  type: string;
+  type?: string;
   error?: string;
 }
 
@@ -15,7 +15,7 @@ export const Input = ({
   label,
   value,
   onChange,
-  type,
+  type = 'text',
   error,
   width,
   height,
