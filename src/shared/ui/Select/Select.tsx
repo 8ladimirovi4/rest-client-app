@@ -27,7 +27,7 @@ export const Select = ({
         value={value}
         onChange={onChange}
       >
-        {options ? (
+        {options && options.length ? (
           options.map((option) => (
             <option key={option.id} value={option.value}>
               {option.label}

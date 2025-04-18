@@ -7,9 +7,6 @@ interface Props extends InputProps {
   type: string;
   error?: string;
 }
-// const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref) => {
-//   return <input ref={ref} {...props} />;
-// });
 
 export const Input = React.forwardRef<HTMLInputElement, Props>(
   (
@@ -21,7 +18,7 @@ export const Input = React.forwardRef<HTMLInputElement, Props>(
       label,
       value,
       onChange,
-      type,
+      type = 'text',
       error,
       width,
       height,
@@ -32,7 +29,7 @@ export const Input = React.forwardRef<HTMLInputElement, Props>(
       <div className={styles['input-wrapper']} style={{ width, height }}>
         {label && <Label label={label} id={id} />}
         <input
-          className="text-base w-full h-full block p-4 ps-10 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 
+          className="text-base w-full h-full block p-4 ps-10 text-gray-900 border border-gray-300 rounded-lg bg-gray-50
         outline-none focus:ring-2 focus:ring-blue-800 focus:border-blue-300
         dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white 
         dark:focus:ring-blue-800 dark:focus:border-blue-800"

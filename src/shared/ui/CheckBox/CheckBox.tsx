@@ -14,7 +14,7 @@ export const CheckBox = ({ onChange, checked, id, label }: CheckBoxProps) => {
       )}
     >
       <input
-        data-testid={`qatype-custom-checkbox`}
+        data-testid={`qatype-checkbox`}
         onChange={onChange}
         checked={checked}
         id="default-checkbox"
