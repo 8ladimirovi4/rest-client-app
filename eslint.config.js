@@ -29,6 +29,8 @@ export default [
         ...globals.browser,
         ...globals.node,
         React: 'writable',
+        RequestInit: true,
+        BodyInit: true,
       },
       parser: tsParser,
     },
@@ -56,6 +58,7 @@ export default [
             'getServerSideProps',
             'getStaticProps',
             'getInitialProps',
+            'metadata',
           ],
         },
       ],
@@ -63,6 +66,7 @@ export default [
       'sort-imports': 'off',
       '@typescript-eslint/no-dynamic-delete': 'error',
       'prettier/prettier': 'error',
+      'react-hooks/exhaustive-deps': 'off',
     },
     settings: {
       react: {

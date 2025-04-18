@@ -31,5 +31,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/api/proxy/:path*'],
+  matcher: ['/api/:path*'],
 };

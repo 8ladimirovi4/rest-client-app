@@ -3,32 +3,21 @@ import { useState, useEffect, PropsWithChildren } from 'react';
 import { ThemeContext } from './ThemeContext';
 import { useLocalStorage } from 'shared/lib/hooks/useLocalStorage';
 import { THEME } from 'shared/const/theme';
-import { useRunOnce } from 'shared/lib/hooks/useRunOnce';
 
 const ThemeContextProvider = ({ children }: PropsWithChildren) => {
   const [userTheme, setUserTheme] = useLocalStorage({
     key: 'theme',
-    defaultValue: THEME.LIGHT,
+    defaultValue: THEME.DARK,
   });
-
-  const [themeValue, setThemeValue] = useState(THEME.LIGHT);
-
-  useRunOnce(
-    {
-      fn: () => setThemeValue(userTheme),
-    },
-    [userTheme]
-  );
+  const [theme, setTheme] = useState<THEME>(userTheme);
 
   useEffect(() => {
-    // if(!userTheme) setUserTheme(THEME.LIGHT)
-    setUserTheme(themeValue);
-    document.body.className = themeValue;
-  }, [setUserTheme, themeValue]);
+    setUserTheme(theme);
+    document.body.className = theme;
+  }, [theme, setUserTheme]);
 
-  if (!userTheme) setUserTheme(THEME.LIGHT);
   return (
-    <ThemeContext.Provider value={[themeValue, setThemeValue]}>
+    <ThemeContext.Provider value={{ theme, setTheme }}>
       {children}
     </ThemeContext.Provider>
   );

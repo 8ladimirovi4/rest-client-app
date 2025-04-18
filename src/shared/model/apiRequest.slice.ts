@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { ApiRequestState } from './types';
+import { queryToString } from 'shared/utils/help';
 
 const initialState: ApiRequestState = {
   query: [{ key: '', value: '' }],
@@ -24,7 +25,9 @@ const apiRequestSlice = createSlice({
       { payload }: PayloadAction<{ browserUrl: string }>
     ) => {
       const { browserUrl } = payload;
+
       state.browserUrl = browserUrl;
+      state.query = initialState.query;
     },
     setMethod: (
       state: ApiRequestState,
@@ -38,6 +41,12 @@ const apiRequestSlice = createSlice({
       { payload }: PayloadAction<{ query: { key: string; value: string }[] }>
     ) => {
       const { query } = payload;
+
+      if (state.browserUrl) {
+        const queryString = queryToString(query);
+        const url = state.browserUrl.split('?').slice(0, 1).join('');
+        state.browserUrl = queryString ? `${url}?${queryString}` : url;
+      }
       state.query = query;
     },
     setBody: (

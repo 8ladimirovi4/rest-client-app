@@ -30,9 +30,9 @@ export type Query = {
   value: string;
 };
 
-type Headers = Query;
+export type Headers = Query;
 
-type Variables = Query;
+export type Variables = Query;
 
 export interface ApiRequestState {
   query: Query[];

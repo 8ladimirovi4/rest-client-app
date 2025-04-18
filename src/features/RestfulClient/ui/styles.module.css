@@ -4,6 +4,7 @@
   flex: 1;
   align-items: center;
   padding: 50px;
+  position: relative;
 }
 .restful-wrapper_search-container {
   display: flex;
@@ -57,6 +58,56 @@
   width: 80vw;
   min-height: 100px;
   max-height: 200px;
+}
+.restful-wrapper_tabview-container_body {
+  background: #f4f4f4;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 10px;
+  width: 80vw;
+}
+.restful-wrapper_tabview-container_response {
+  background: #f4f4f4;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 10px;
+  width: 90vw;
+  min-height: 300px;
+}
+.restful-wrapper_tabview-container_textarea {
+  width: 100%;
+  font-family: monospace;
+  border: 2px solid transparent;
+  outline: none;
+  resize: none;
+}
+
+.restful-wrapper_tabview-container_format-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.restful-wrapper_tabview-container_button {
+  padding: 6px 12px;
+  border: 2px solid #1d4ed8;
+  background-color: white;
+  color: #1d4ed8;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s ease;
+  font-weight: 500;
+}
+
+.restful-wrapper_tabview-container_button:hover {
+  background-color: #1d4ed8;
+  color: white;
+}
+
+.restful-wrapper_tabview-container_active {
+  background-color: #1d4ed8;
+  color: white;
 }
 
 .error {

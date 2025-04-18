@@ -7,13 +7,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { apiRequestActions } from 'shared/model/apiRequest.slice';
 import { RootState } from 'app/providers/StoreProvider/config/store';
 import { v4 } from 'uuid';
-import { setUrl } from 'shared/utils/help';
+import { encodeUrl } from 'shared/utils/help';
 import { useTranslation } from 'react-i18next';
 
 const Search = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { browserUrl, method } = useSelector(
+  const { browserUrl, method, body, headers, variables } = useSelector(
     (state: RootState) => state.apiRequest
   );
 
@@ -34,7 +34,14 @@ const Search = () => {
     const currentMethod = method || 'GET';
 
     if (browserUrl != '') {
-      setUrl(currentUrl, currentMethod, browserUrl);
+      encodeUrl(
+        currentUrl,
+        currentMethod,
+        browserUrl,
+        body,
+        headers,
+        variables
+      );
       const id = v4();
       dispatch(setApiId({ id }));
     }
