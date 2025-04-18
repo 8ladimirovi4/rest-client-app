@@ -23,7 +23,7 @@ import Editor from '@monaco-editor/react';
 import { useTranslation } from 'react-i18next';
 
 const RestfulClient = () => {
-  const [dateNow] = useState<Date>(new Date())
+  const [dateNow] = useState<Date>(new Date());
   const { t } = useTranslation();
   const { isAuthChecked } = useSelector((store: RootState) => store.user);
   const [servResponse, setServResponse] = useState<ApiResponse<unknown>>({

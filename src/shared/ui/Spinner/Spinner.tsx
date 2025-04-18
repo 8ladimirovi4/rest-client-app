@@ -6,7 +6,11 @@ export const Spinner = (props: SpinnerProps) => {
   const spinnerSize = size * 5;
 
   return (
-    <div className={`mx-auto content-center ${className}`} role="status">
+    <div
+      data-testid={'spinner'}
+      className={`mx-auto content-center ${className}`}
+      role="status"
+    >
       <svg
         aria-hidden="true"
         style={{ width: `${spinnerSize}px`, height: `${spinnerSize}px` }}

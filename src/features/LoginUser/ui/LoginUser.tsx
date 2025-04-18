@@ -86,7 +86,7 @@ export default function LoginUser() {
 
   return (
     <AuthGuards requireAuth={false}>
-      <div className={styles.container}>
+      <div data-testid={'login'} className={styles.container}>
         <h3 className={styles.title}>{t('Sign in')}</h3>
         <form className={styles.form} onSubmit={handleSubmit(handleSubmitForm)}>
           <Controller
@@ -123,13 +123,18 @@ export default function LoginUser() {
             <Spinner className="mr-auto ml-0" />
           ) : (
             <Button
+              dataTestid={'login-button'}
               title={t('Sign in')}
               type="submit"
               disabled={!isValid}
             ></Button>
           )}
         </form>
-        {error && <p className={styles['error-message']}>{error}</p>}
+        {error && (
+          <p data-testid={'error-element'} className={styles['error-message']}>
+            {error}
+          </p>
+        )}
       </div>
     </AuthGuards>
   );

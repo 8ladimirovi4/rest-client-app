@@ -14,6 +14,7 @@ export const Button = ({
   type,
   width = 100,
   height = 40,
+  dataTestid = '',
 }: ButtonProps) => {
   const buttonClass = disabled
     ? BUTTON_CLASSES.gray
@@ -21,6 +22,7 @@ export const Button = ({
 
   return (
     <button
+      data-testid={dataTestid}
       style={{ width, height }}
       onClick={onClick}
       className={`w-full h-full text-white focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 flex justify-center items-center custom-button ${buttonClass}`}
