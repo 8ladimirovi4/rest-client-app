@@ -14,7 +14,6 @@ export function useLocalStorage<T>({
   defaultValue,
 }: UseLocalStorageArgs<T>): [T, SetValue<T>] {
   const [value, setValue] = useState<T>(() => {
-    if (window && typeof window === 'undefined') return defaultValue;
     try {
       const rawValue = window.localStorage.getItem(key);
       if (rawValue) return JSON.parse(rawValue);
