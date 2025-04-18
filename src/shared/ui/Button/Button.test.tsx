@@ -1,9 +1,15 @@
-import { describe, it, vi, expect } from 'vitest';
+import { describe, it, vi, expect, afterEach } from 'vitest';
 import { render, fireEvent } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { Button } from './Button';
 
 describe('Button component', () => {
+  const handleClick = vi.fn();
+
+  afterEach(() => {
+    vi.clearAllMocks();
+    vi.resetAllMocks();
+  });
   it('renders with default props', () => {
     const { getByRole } = render(<Button />);
     const btn = getByRole('button');
@@ -36,13 +42,11 @@ describe('Button component', () => {
     expect(btn).toBeDisabled();
   });
   it('calls onClick when clicked', async () => {
-    const handleClick = vi.fn();
     const { getByRole } = render(<Button onClick={handleClick} />);
     await userEvent.click(getByRole('button'));
     expect(handleClick).toHaveBeenCalled();
   });
   it('does not call onClick when disabled', async () => {
-    const handleClick = vi.fn();
     const { getByRole } = render(<Button onClick={handleClick} disabled />);
     await userEvent.click(getByRole('button'));
     expect(handleClick).not.toHaveBeenCalled();
