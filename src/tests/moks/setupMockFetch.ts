@@ -1,6 +1,5 @@
 import { vi } from 'vitest';
 
-
 type MockFetchResponse<T = unknown> = {
   status?: string;
   statusText?: string;
@@ -24,7 +23,9 @@ export const createMockFetchResponse = ({
   } as unknown as Response;
 };
 
-export const setupMockFetch = (mockImpl: (url: string, options?: RequestInit) => Promise<Response>) => {
+export const setupMockFetch = (
+  mockImpl: (url: string, options?: RequestInit) => Promise<Response>
+) => {
   vi.stubGlobal('fetch', vi.fn().mockImplementation(mockImpl));
 };
 
@@ -34,8 +35,8 @@ export const setupStaticFetch = (response: MockFetchResponse) => {
 };
 
 export const setupFetchError = (error: Error = new Error('Request Error')) => {
-    setupMockFetch(() => Promise.reject(error));
-  };
+  setupMockFetch(() => Promise.reject(error));
+};
 
 export const resetMockFetch = () => {
   vi.restoreAllMocks();
