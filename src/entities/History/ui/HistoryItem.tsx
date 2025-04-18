@@ -28,15 +28,15 @@ export const HistoryItem = ({
   } = history;
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [currentUrl, setCurrentUrl] = useState<URL | null>(null)
+  const [currentUrl, setCurrentUrl] = useState<URL | null>(null);
   const dispatch = useDispatch();
   const router = useRouter();
 
   const { setHistoryState } = apiRequestActions;
 
   useEffect(() => {
-    setCurrentUrl(new URL(window.location.href))
-  },[])
+    setCurrentUrl(new URL(window.location.href));
+  }, []);
 
   const handleHistoryAction = (): void => {
     dispatch(setHistoryState(history));
@@ -88,11 +88,15 @@ export const HistoryItem = ({
       {isOpen && (
         <div className="px-4 pb-4 pt-0 text-sm text-gray-700 dark:text-gray-300">
           <p>
-            <strong className="text-base">{`${t('Rest.Status')}:`}</strong> <span className="text-base">{status ?? 'N/A'}</span>
+            <strong className="text-base">{`${t('Rest.Status')}:`}</strong>{' '}
+            <span className="text-base">{status ?? 'N/A'}</span>
           </p>
           <p>
-            <strong className="text-base">{`${t('Rest.Body')}:`}</strong> <span className="text-base">{' '}
-            {replaceVariables(body, variables) || '—'}</span>
+            <strong className="text-base">{`${t('Rest.Body')}:`}</strong>{' '}
+            <span className="text-base">
+              {' '}
+              {replaceVariables(body, variables) || '—'}
+            </span>
           </p>
           <KeyValueList
             title={`${t('Rest.Headers')}:`}
