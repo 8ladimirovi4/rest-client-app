@@ -1,10 +1,12 @@
 import { SpinnerProps } from './types';
 
-export const Spinner = ({ size = 10 }: SpinnerProps) => {
+export const Spinner = (props: SpinnerProps) => {
+  const { className = '', size = 10 } = props;
+
   const spinnerSize = size * 5;
 
   return (
-    <div className="mx-auto content-center" role="status">
+    <div className={`mx-auto content-center ${className}`} role="status">
       <svg
         aria-hidden="true"
         style={{ width: `${spinnerSize}px`, height: `${spinnerSize}px` }}
