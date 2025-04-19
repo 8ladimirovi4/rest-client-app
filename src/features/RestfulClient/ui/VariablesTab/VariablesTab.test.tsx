@@ -18,14 +18,6 @@ vi.mock('react-redux', async () => {
   };
 });
 
-vi.mock('next/navigation', async () => {
-  const actual = await vi.importActual('next/navigation');
-  return {
-    ...actual,
-    useRouter: vi.fn(),
-  };
-});
-
 describe('VariablesTab feature', () => {
   const mockState = {
     user: {},

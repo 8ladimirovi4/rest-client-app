@@ -14,16 +14,8 @@ vi.mock('shared/lib/hooks/useLocalStorage', () => ({
   useLocalStorage: () => [[], setAndStoreValue],
 }));
 
-vi.mock('next/navigation', async () => {
-  const actual = await vi.importActual('next/navigation');
-  return {
-    ...actual,
-    useRouter: vi.fn(),
-  };
-});
-
 import RestfulClient from '../RestfulClient/RestfulClient';
-describe('QueryTab feature', () => {
+describe('RestfulClient feature', () => {
   const mockState = {
     user: {
       isUserLoggedIn: true,

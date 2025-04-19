@@ -1,13 +1,13 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { HistoryProps } from '../types';
+import { HistoryProps } from '../../types';
 import { Button } from 'shared/index';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 import { useDispatch } from 'react-redux';
 import { apiRequestActions } from 'shared/model/apiRequest.slice';
 import { useRouter } from 'next/navigation';
 import { buildUrl, replaceVariables } from 'shared/utils/help';
-import { KeyValueList } from './KeyValueList';
+import { KeyValueList } from '../KeyValueList/KeyValueList';
 import { useTranslation } from 'react-i18next';
 
 export const HistoryItem = ({

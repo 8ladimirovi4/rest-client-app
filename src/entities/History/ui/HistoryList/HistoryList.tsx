@@ -2,9 +2,9 @@
 import { RootState } from 'app/providers/StoreProvider/config/store.ts';
 import { AuthGuards } from 'shared/lib/AuthGuard/AuthGuards.tsx';
 import { useLocalStorage } from 'shared/lib/hooks/useLocalStorage';
-import { HistoryItem } from './HistoryItem';
+import { HistoryItem } from '../HistoryItem/HistoryItem';
 import { ApiRequestState } from 'shared/model/types';
-import styles from './styles.module.css';
+import styles from '../styles.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Spinner } from 'shared/index';
 import Link from 'next/link';
