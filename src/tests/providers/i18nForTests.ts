@@ -2,77 +2,80 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
 i18n.use(initReactI18next).init({
-    lng: 'en',
-    fallbackLng: 'en',
-    resources: {
-      en: {
-        translation: {
-            "Ru": "Ru",
-            "En": "En",
-            "Sign in": "Sign in",
-            "Sign up": "Sign up",
-            "First name": "First name",
-            "Email": "Email",
-            "Password": "Password",
-            "Confirm password": "Confirm password",
-            "Name valid": "First letter must be uppercase",
-            "Email valid": "Email must be valid, example@gmail.com",
-            "Password valid digit": "Password must contain at least one digit",
-            "Password valid letter": "Password must contain at least one letter",
-            "Password valid upper letter": "Password must contain at least one uppercase letter",
-            "Password valid lower letter": "Password must contain at least one lowercase letter",
-            "Password valid special char": "Password must contain at least one special character",
-            "Password valid length": "Password must be at least 8 characters long",
-            "Confirm password valid": "Passwords don't match",
-            "Required": "This field is required",
-            "Copyright": "All Rights Reserved.",
-            "Main page": "Main page",
-            "Sign out": "Sign Out",
-            "Welcome": "Welcome",
-            "Welcome back": "Welcome Back",
-            "Restful": "Rest client",
-            "History": "History",
-            "Buttons": {
-              "ClearAll": "Clear All",
-              "Go": "Go",
-              "Remove": "Remove",
-              "Add": "Add",
-              "Send": "SEND",
-              "ReloadPage": "Reload Page",
-              "Json": "JSON",
-              "Text": "Text"
-            },
-            "Placeholders": {
-              "Key": "Key",
-              "Value": "Value"
-            },
-            "EmptyState": {
-              "NoRequests": "You haven't executed any requests yet.",
-              "EmptyPrompt": "It's empty here. Try those options:",
-              "RestfulClientLink": "RESTful client",
-              "RequestCreated": "request created",
-              "Key": "Key",
-              "Value": "Value",
-              "Edit": "Edit",
-              "Done": "Done",
-              "Remove": "Remove",
-              "ProvideJson": "Provide JSON here",
-              "ResponseStatus": "Response status"
-            },
-            "Rest": {
-              "Status": "Status",
-              "Body": "Body",
-              "Headers": "Headers",
-              "Query": "Query",
-              "Variables": "Variables",
-              "Code": "Code generator"
-            }
+  lng: 'en',
+  fallbackLng: 'en',
+  resources: {
+    en: {
+      translation: {
+        Ru: 'Ru',
+        En: 'En',
+        'Sign in': 'Sign in',
+        'Sign up': 'Sign up',
+        'First name': 'First name',
+        Email: 'Email',
+        Password: 'Password',
+        'Confirm password': 'Confirm password',
+        'Name valid': 'First letter must be uppercase',
+        'Email valid': 'Email must be valid, example@gmail.com',
+        'Password valid digit': 'Password must contain at least one digit',
+        'Password valid letter': 'Password must contain at least one letter',
+        'Password valid upper letter':
+          'Password must contain at least one uppercase letter',
+        'Password valid lower letter':
+          'Password must contain at least one lowercase letter',
+        'Password valid special char':
+          'Password must contain at least one special character',
+        'Password valid length': 'Password must be at least 8 characters long',
+        'Confirm password valid': "Passwords don't match",
+        Required: 'This field is required',
+        Copyright: 'All Rights Reserved.',
+        'Main page': 'Main page',
+        'Sign out': 'Sign Out',
+        Welcome: 'Welcome',
+        'Welcome back': 'Welcome Back',
+        Restful: 'Rest client',
+        History: 'History',
+        Buttons: {
+          ClearAll: 'Clear All',
+          Go: 'Go',
+          Remove: 'Remove',
+          Add: 'Add',
+          Send: 'SEND',
+          ReloadPage: 'Reload Page',
+          Json: 'JSON',
+          Text: 'Text',
+        },
+        Placeholders: {
+          Key: 'Key',
+          Value: 'Value',
+        },
+        EmptyState: {
+          NoRequests: "You haven't executed any requests yet.",
+          EmptyPrompt: "It's empty here. Try those options:",
+          RestfulClientLink: 'RESTful client',
+          RequestCreated: 'request created',
+          Key: 'Key',
+          Value: 'Value',
+          Edit: 'Edit',
+          Done: 'Done',
+          Remove: 'Remove',
+          ProvideJson: 'Provide JSON here',
+          ResponseStatus: 'Response status',
+        },
+        Rest: {
+          Status: 'Status',
+          Body: 'Body',
+          Headers: 'Headers',
+          Query: 'Query',
+          Variables: 'Variables',
+          Code: 'Code generator',
         },
       },
     },
-    interpolation: {
-      escapeValue: false,
-    },
-  });
+  },
+  interpolation: {
+    escapeValue: false,
+  },
+});
 
-  export default i18n;
+export default i18n;
