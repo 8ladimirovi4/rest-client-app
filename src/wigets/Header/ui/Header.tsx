@@ -62,7 +62,7 @@ export const Header = () => {
                 >
                   {t('Main page')}
                 </Link>
-                <Logout isUserLoggedIn={isUserLoggedIn} />
+                <Logout />
               </>
             ) : (
               <AuthLinks />
