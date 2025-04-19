@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { TabView } from '../TabView/TabView';
 import styles from '../styles.module.css';
-import Search from '../Search/Search';
+import { Search } from '../Search/Search';
 import { QueryTab } from '../QueryTab/QueryTab';
 import { useLocalStorage } from 'shared/lib/hooks/useLocalStorage';
 import { apiRequest } from 'shared/api/apiRequest';
