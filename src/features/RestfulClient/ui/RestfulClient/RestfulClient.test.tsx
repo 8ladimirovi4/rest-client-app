@@ -6,13 +6,13 @@ import { useRouter } from 'next/navigation';
 import { mockRouter } from 'tests/moks/mockRouter';
 import { RootState } from 'app/providers/StoreProvider/config/store';
 import { apiRequest } from 'shared/api/apiRequest';
+import { ApiRequestState } from 'shared/model/types';
+import { UserState } from 'shared/model/user.slice';
 
 const setAndStoreValue = vi.fn();
 vi.mock('shared/lib/hooks/useLocalStorage', () => ({
   useLocalStorage: () => [[], setAndStoreValue],
 }));
-
-import RestfulClient from '../RestfulClient/RestfulClient';
 
 vi.mock('next/navigation', async () => {
   const actual = await vi.importActual('next/navigation');
@@ -22,14 +22,12 @@ vi.mock('next/navigation', async () => {
   };
 });
 
+import RestfulClient from '../RestfulClient/RestfulClient';
 describe('QueryTab feature', () => {
   const mockState = {
     user: {
       isUserLoggedIn: true,
       isAuthChecked: true,
-      user: null,
-      loading: false,
-      error: null,
     },
     alert: {},
     apiRequest: {
@@ -38,17 +36,14 @@ describe('QueryTab feature', () => {
       method: 'GET',
       headers: [{ key: '', value: '' }],
       variables: [{ key: '', value: '' }],
-      textMode: false,
-      status: 'N/A',
       id: '1',
       browserUrl: 'http://localhost:3000',
-      date: '',
     },
   };
 
   const preloadedState: Partial<RootState> = {
-    user: mockState.user,
-    apiRequest: mockState.apiRequest,
+    user: mockState.user as UserState,
+    apiRequest: mockState.apiRequest as ApiRequestState,
   };
 
   beforeEach(() => {

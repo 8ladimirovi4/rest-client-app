@@ -40,6 +40,7 @@ export const BodyTab = () => {
         </button>
       </div>
       <Editor
+        data-testid="qatype-monaco-editor"
         height="150px"
         language={format}
         defaultLanguage={'json'}
