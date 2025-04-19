@@ -1,6 +1,6 @@
 'use client';
 import React, { ChangeEvent } from 'react';
-import styles from './styles.module.css';
+import styles from '../styles.module.css';
 import { Select, Input, Button } from 'shared/index';
 import { METHODS } from 'shared/constants/http-methods';
 import { useDispatch, useSelector } from 'react-redux';

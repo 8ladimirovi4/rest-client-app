@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic';
 import { Spinner } from 'shared/ui/Spinner/Spinner.tsx';
 
 const RestfulClient = dynamic(
-  () => import('features/RestfulClient/ui/RestfulClient'),
+  () => import('features/RestfulClient/ui/RestfulClient/RestfulClient'),
   {
     loading: () => <Spinner />,
   }
