@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'app/providers/StoreProvider/config/store.ts';
 import { AuthGuards } from 'shared/lib/AuthGuard/AuthGuards.tsx';
 import { useLocalStorage } from 'shared/lib/hooks/useLocalStorage';
-import Variable from './Variable';
+import { Variable } from '../Variable/Variable';
 import { Button, Spinner } from 'shared/index';
 import { useEffect } from 'react';
 import { apiRequestActions } from 'shared/model/apiRequest.slice';
-import styles from './styles.module.css';
+import styles from '../styles.module.css';
 import { useTranslation } from 'react-i18next';
 
 const VariablesList = () => {
