@@ -2,7 +2,7 @@ import { describe, it, beforeEach, expect, vi } from 'vitest';
 import { screen, fireEvent } from '@testing-library/react';
 import { useSelector } from 'react-redux';
 import { Header } from './Header';
-import renderWithProviders from 'tests/providers/renderWithProviders';
+import { renderWithProviders } from 'tests/providers/renderWithProviders';
 
 vi.mock('features/LogoutUser', () => ({
   Logout: () => <div data-testid="logout" />,

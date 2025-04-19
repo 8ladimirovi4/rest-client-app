@@ -3,7 +3,7 @@ import codegen from 'postman-code-generators';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from 'app/providers/StoreProvider/config/store';
-import styles from './styles.module.css';
+import styles from '../styles.module.css';
 import { replaceVariables } from 'shared/utils/help';
 import { cGlangOptions } from 'shared/constants/codeGenerator';
 import { Select } from 'shared/index';

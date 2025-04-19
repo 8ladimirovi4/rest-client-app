@@ -14,7 +14,7 @@ console.error = (...params) => {
 
 vi.mock('*.module.css', () => ({}));
 
-vi.mock('next/router', async (importOriginalModule) => {
+vi.mock('next/navigation', async (importOriginalModule) => {
   const actual = (await importOriginalModule()) as Record<string, unknown>;
   return {
     ...actual,

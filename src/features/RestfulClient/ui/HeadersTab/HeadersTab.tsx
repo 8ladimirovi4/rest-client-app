@@ -1,7 +1,7 @@
 'use client';
 import { Button, Input } from 'shared/index';
 import React from 'react';
-import styles from './styles.module.css';
+import styles from '../styles.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { apiRequestActions } from 'shared/model/apiRequest.slice';
 import { RootState } from 'app/providers/StoreProvider/config/store';

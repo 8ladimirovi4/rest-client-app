@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
-import { TabViewProps } from '../types';
-import { Tab } from './Tab';
+import { TabViewProps } from '../../types';
+import { Tab } from '../Tab/Tab';
 
 export const TabView = ({ tabs }: TabViewProps) => {
   const [activeTab, setActiveTab] = useState(tabs[0].label); // по умолчанию активен первый таб
