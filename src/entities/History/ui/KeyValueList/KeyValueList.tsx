@@ -1,6 +1,6 @@
 'use client';
 import { v4 } from 'uuid';
-import { KeyValueListProps } from '../types';
+import { KeyValueListProps } from '../../types';
 
 export const KeyValueList = ({ title, items }: KeyValueListProps) => {
   if (!items || items.length === 0) return null;
