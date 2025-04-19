@@ -48,7 +48,7 @@ vi.mock('postman-collection', () => ({
   },
 }));
 
-describe('BodyTab feature', () => {
+describe('CodeGeneratorTab feature', () => {
   beforeEach(() => {
     mockFirebase();
     vi.clearAllMocks();
@@ -104,8 +104,6 @@ describe('BodyTab feature', () => {
 
     fireEvent.change(select, { target: { value: newOptionValue } });
 
-    await waitFor(() => {
-      expect(select).toHaveDisplayValue(/python \(requests\)/i);
-    });
+    expect(select).toHaveDisplayValue(/python \(requests\)/i);
   });
 });
