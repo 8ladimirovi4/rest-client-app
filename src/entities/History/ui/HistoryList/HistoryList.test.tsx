@@ -1,5 +1,4 @@
 import { describe, it, beforeEach, vi, expect } from 'vitest';
-import { screen } from '@testing-library/react';
 import { renderWithProviders } from 'tests/providers/renderWithProviders';
 import { mockFirebase } from 'tests/moks/firebaseMocks';
 import { useRouter } from 'next/navigation';
@@ -23,7 +22,7 @@ describe('HistoryList entity', () => {
       headers: [{ key: '', value: '' }],
       variables: [{ key: '', value: '' }],
       id: '1',
-      browserUrl: 'http://localhost:3000',
+      browserUrl: '',
     },
   };
 
@@ -41,7 +40,6 @@ describe('HistoryList entity', () => {
     const { getByText } = renderWithProviders(<HistoryList />, {
       preloadedState,
     });
-    screen.debug();
     expect(getByText('RESTful client')).toBeInTheDocument();
   });
 });

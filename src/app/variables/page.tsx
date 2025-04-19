@@ -2,7 +2,7 @@ import dynamic from 'next/dynamic';
 import { Spinner } from 'shared/ui/Spinner/Spinner.tsx';
 
 const VariablesList = dynamic(
-  () => import('entities/Variables/VariablesList'),
+  () => import('entities/Variables/VariablesList/VariablesList'),
   {
     loading: () => <Spinner />,
   }
