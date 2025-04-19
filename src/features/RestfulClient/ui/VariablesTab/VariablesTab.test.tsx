@@ -7,8 +7,8 @@ import { mockRouter } from 'tests/moks/mockRouter';
 import { RootState } from 'app/providers/StoreProvider/config/store';
 import { useDispatch } from 'react-redux';
 import { ApiRequestState } from 'shared/model/types';
+import { VariablesTab } from './VariablesTab';
 import { apiRequestActions } from 'shared/model/apiRequest.slice';
-import { QueryTab } from './QueryTab';
 
 vi.mock('react-redux', async () => {
   const actual = await vi.importActual('react-redux');
@@ -26,7 +26,7 @@ vi.mock('next/navigation', async () => {
   };
 });
 
-describe('QueryTab feature', () => {
+describe('VariablesTab feature', () => {
   const mockState = {
     user: {},
     alert: {},
@@ -52,29 +52,36 @@ describe('QueryTab feature', () => {
     vi.mocked(useDispatch).mockReturnValue(dispatch);
     vi.mocked(useRouter).mockReturnValue(mockRouter);
   });
-  it('should render QueryTab component correctly', () => {
-    const { getByText } = renderWithProviders(<QueryTab />, { preloadedState });
-    expect(getByText('+')).toBeInTheDocument();
+  it('should render VariablesTab component correctly', () => {
+    const { getByText, getByPlaceholderText } = renderWithProviders(
+      <VariablesTab />,
+      { preloadedState }
+    );
+    expect(getByText('Add')).toBeInTheDocument();
+    expect(getByPlaceholderText('Key')).toBeInTheDocument();
+    expect(getByPlaceholderText('Value')).toBeInTheDocument();
   });
-  it('adds a new query when the add button is clicked', async () => {
-    const { getByText } = renderWithProviders(<QueryTab />, {
+  it('should add a new variable when the "Add" button is clicked', () => {
+    const { getByText } = renderWithProviders(<VariablesTab />, {
       preloadedState,
     });
-
-    const addButton = getByText(/add/i);
+    const addButton = getByText('Add');
     fireEvent.click(addButton);
 
     expect(dispatch).toHaveBeenCalledWith(
-      apiRequestActions.setQuery({
-        query: [
-          { key: '', value: '' },
-          { key: '', value: '' },
-        ],
+      expect.objectContaining({
+        type: 'apiRequest/setVariables',
+        payload: expect.objectContaining({
+          variables: [
+            { key: '', value: '' },
+            { key: '', value: '' },
+          ],
+        }),
       })
     );
   });
-  it('updates query key and value when input fields are changed', async () => {
-    const { getByPlaceholderText } = renderWithProviders(<QueryTab />, {
+  it('updates variables key and value when input fields are changed', async () => {
+    const { getByPlaceholderText } = renderWithProviders(<VariablesTab />, {
       preloadedState,
     });
 
@@ -83,26 +90,28 @@ describe('QueryTab feature', () => {
 
     fireEvent.change(keyInput, { target: { value: 'new-key' } });
     expect(dispatch).toHaveBeenCalledWith(
-      apiRequestActions.setQuery({
-        query: [{ key: 'new-key', value: '' }],
+      apiRequestActions.setVariables({
+        variables: [{ key: 'new-key', value: '' }],
       })
     );
 
     fireEvent.change(valueInput, { target: { value: 'new-value' } });
     expect(dispatch).toHaveBeenCalledWith(
-      apiRequestActions.setQuery({
-        query: [{ key: '', value: 'new-value' }],
+      apiRequestActions.setVariables({
+        variables: [{ key: '', value: 'new-value' }],
       })
     );
   });
-  it('removes a query when the remove button is clicked', async () => {
-    const { getByText } = renderWithProviders(<QueryTab />, { preloadedState });
+  it('removes a variables when the remove button is clicked', async () => {
+    const { getByText } = renderWithProviders(<VariablesTab />, {
+      preloadedState,
+    });
 
     const removeButton = getByText(/remove/i);
     fireEvent.click(removeButton);
     expect(dispatch).toHaveBeenCalledWith(
-      apiRequestActions.setQuery({
-        query: [{ key: '', value: '' }],
+      apiRequestActions.setVariables({
+        variables: [{ key: '', value: '' }],
       })
     );
   });

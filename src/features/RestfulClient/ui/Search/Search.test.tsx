@@ -8,7 +8,7 @@ import { RootState } from 'app/providers/StoreProvider/config/store';
 import { useDispatch } from 'react-redux';
 import { ApiRequestState } from 'shared/model/types';
 import { apiRequestActions } from 'shared/model/apiRequest.slice';
-import { QueryTab } from './QueryTab';
+import { Search } from './Search';
 
 vi.mock('react-redux', async () => {
   const actual = await vi.importActual('react-redux');
@@ -26,7 +26,7 @@ vi.mock('next/navigation', async () => {
   };
 });
 
-describe('QueryTab feature', () => {
+describe('Search feature', () => {
   const mockState = {
     user: {},
     alert: {},
@@ -53,57 +53,38 @@ describe('QueryTab feature', () => {
     vi.mocked(useRouter).mockReturnValue(mockRouter);
   });
   it('should render QueryTab component correctly', () => {
-    const { getByText } = renderWithProviders(<QueryTab />, { preloadedState });
-    expect(getByText('+')).toBeInTheDocument();
+    const { getByText, getByPlaceholderText } = renderWithProviders(
+      <Search />,
+      { preloadedState }
+    );
+    expect(getByText('SEND')).toBeInTheDocument();
+    expect(getByPlaceholderText('Enter URL')).toBeInTheDocument();
   });
-  it('adds a new query when the add button is clicked', async () => {
-    const { getByText } = renderWithProviders(<QueryTab />, {
-      preloadedState,
-    });
-
-    const addButton = getByText(/add/i);
-    fireEvent.click(addButton);
+  it('should dispatch setMethod action when HTTP method is selected', async () => {
+    const { getByRole } = renderWithProviders(<Search />, { preloadedState });
+    const select = getByRole('combobox');
+    fireEvent.change(select, { target: { value: 'POST' } });
 
     expect(dispatch).toHaveBeenCalledWith(
-      apiRequestActions.setQuery({
-        query: [
-          { key: '', value: '' },
-          { key: '', value: '' },
-        ],
-      })
+      apiRequestActions.setMethod({ method: 'POST' })
     );
   });
-  it('updates query key and value when input fields are changed', async () => {
-    const { getByPlaceholderText } = renderWithProviders(<QueryTab />, {
-      preloadedState,
-    });
+  it('should dispatch setBrowserUrl action when URL is entered', async () => {
+    const { getByRole } = renderWithProviders(<Search />, { preloadedState });
+    const input = getByRole('textbox');
+    fireEvent.change(input, { target: { value: 'http://new-url.com' } });
 
-    const keyInput = getByPlaceholderText('Key');
-    const valueInput = getByPlaceholderText('Value');
-
-    fireEvent.change(keyInput, { target: { value: 'new-key' } });
     expect(dispatch).toHaveBeenCalledWith(
-      apiRequestActions.setQuery({
-        query: [{ key: 'new-key', value: '' }],
-      })
-    );
-
-    fireEvent.change(valueInput, { target: { value: 'new-value' } });
-    expect(dispatch).toHaveBeenCalledWith(
-      apiRequestActions.setQuery({
-        query: [{ key: '', value: 'new-value' }],
-      })
+      apiRequestActions.setBrowserUrl({ browserUrl: 'http://new-url.com' })
     );
   });
-  it('removes a query when the remove button is clicked', async () => {
-    const { getByText } = renderWithProviders(<QueryTab />, { preloadedState });
+  it('should dispatch setApiId action when Send button is clicked', async () => {
+    const { getByText } = renderWithProviders(<Search />, { preloadedState });
+    const button = getByText('SEND');
+    fireEvent.click(button);
 
-    const removeButton = getByText(/remove/i);
-    fireEvent.click(removeButton);
     expect(dispatch).toHaveBeenCalledWith(
-      apiRequestActions.setQuery({
-        query: [{ key: '', value: '' }],
-      })
+      apiRequestActions.setApiId({ id: expect.any(String) })
     );
   });
 });

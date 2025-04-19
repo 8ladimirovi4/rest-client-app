@@ -10,7 +10,7 @@ import { v4 } from 'uuid';
 import { encodeUrl } from 'shared/utils/help';
 import { useTranslation } from 'react-i18next';
 
-const Search = () => {
+export const Search = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { browserUrl, method, body, headers, variables } = useSelector(
@@ -60,7 +60,13 @@ const Search = () => {
         />
       </div>
       <div className={styles['restful-wrapper_search-container_input']}>
-        <Input id="1" type="text" value={browserUrl} onChange={handleSetLink} />
+        <Input
+          id="1"
+          type="text"
+          value={browserUrl}
+          onChange={handleSetLink}
+          placeholder={t('Placeholders.EnterUrl')}
+        />
       </div>
       <div className={styles['restful-wrapper_search-container_button']}>
         <Button
@@ -73,4 +79,4 @@ const Search = () => {
   );
 };
 
-export default Search;
+Search.displayName = 'Search';

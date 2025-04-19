@@ -1,5 +1,5 @@
 import { describe, it, beforeEach, vi, expect } from 'vitest';
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 import { renderWithProviders } from 'tests/providers/renderWithProviders';
 import { mockFirebase } from 'tests/moks/firebaseMocks';
 import { useRouter } from 'next/navigation';
@@ -8,7 +8,7 @@ import { RootState } from 'app/providers/StoreProvider/config/store';
 import { useDispatch } from 'react-redux';
 import { ApiRequestState } from 'shared/model/types';
 import { apiRequestActions } from 'shared/model/apiRequest.slice';
-import { QueryTab } from './QueryTab';
+import { HeadersTab } from './HeadersTab';
 
 vi.mock('react-redux', async () => {
   const actual = await vi.importActual('react-redux');
@@ -26,7 +26,7 @@ vi.mock('next/navigation', async () => {
   };
 });
 
-describe('QueryTab feature', () => {
+describe('HeadersTab feature', () => {
   const mockState = {
     user: {},
     alert: {},
@@ -52,12 +52,17 @@ describe('QueryTab feature', () => {
     vi.mocked(useDispatch).mockReturnValue(dispatch);
     vi.mocked(useRouter).mockReturnValue(mockRouter);
   });
-  it('should render QueryTab component correctly', () => {
-    const { getByText } = renderWithProviders(<QueryTab />, { preloadedState });
+  it('renders existing headers and add button', () => {
+    const { getByText, getByPlaceholderText } = renderWithProviders(
+      <HeadersTab />,
+      { preloadedState }
+    );
     expect(getByText('+')).toBeInTheDocument();
+    expect(getByPlaceholderText('Key')).toBeInTheDocument();
+    expect(getByPlaceholderText('Value')).toBeInTheDocument();
   });
-  it('adds a new query when the add button is clicked', async () => {
-    const { getByText } = renderWithProviders(<QueryTab />, {
+  it('adds a new header when the add button is clicked', async () => {
+    const { getByText } = renderWithProviders(<HeadersTab />, {
       preloadedState,
     });
 
@@ -65,16 +70,16 @@ describe('QueryTab feature', () => {
     fireEvent.click(addButton);
 
     expect(dispatch).toHaveBeenCalledWith(
-      apiRequestActions.setQuery({
-        query: [
+      apiRequestActions.setHeaders({
+        headers: [
           { key: '', value: '' },
           { key: '', value: '' },
         ],
       })
     );
   });
-  it('updates query key and value when input fields are changed', async () => {
-    const { getByPlaceholderText } = renderWithProviders(<QueryTab />, {
+  it('updates header key and value when input fields are changed', async () => {
+    const { getByPlaceholderText } = renderWithProviders(<HeadersTab />, {
       preloadedState,
     });
 
@@ -83,26 +88,26 @@ describe('QueryTab feature', () => {
 
     fireEvent.change(keyInput, { target: { value: 'new-key' } });
     expect(dispatch).toHaveBeenCalledWith(
-      apiRequestActions.setQuery({
-        query: [{ key: 'new-key', value: '' }],
+      apiRequestActions.setHeaders({
+        headers: [{ key: 'new-key', value: '' }],
       })
     );
 
     fireEvent.change(valueInput, { target: { value: 'new-value' } });
     expect(dispatch).toHaveBeenCalledWith(
-      apiRequestActions.setQuery({
-        query: [{ key: '', value: 'new-value' }],
+      apiRequestActions.setHeaders({
+        headers: [{ key: '', value: 'new-value' }],
       })
     );
   });
-  it('removes a query when the remove button is clicked', async () => {
-    const { getByText } = renderWithProviders(<QueryTab />, { preloadedState });
+  it('removes a header when the remove button is clicked', async () => {
+    renderWithProviders(<HeadersTab />, { preloadedState });
 
-    const removeButton = getByText(/remove/i);
+    const removeButton = screen.getByText(/remove/i);
     fireEvent.click(removeButton);
     expect(dispatch).toHaveBeenCalledWith(
-      apiRequestActions.setQuery({
-        query: [{ key: '', value: '' }],
+      apiRequestActions.setHeaders({
+        headers: [{ key: '', value: '' }],
       })
     );
   });
