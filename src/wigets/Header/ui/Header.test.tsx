@@ -1,10 +1,8 @@
-import { mockFirebase } from 'tests/moks/firebaseMocks';
 import { describe, it, beforeEach, expect, vi } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
-import { I18nextProvider } from 'react-i18next';
-import i18n from 'i18next';
+import { screen, fireEvent } from '@testing-library/react';
 import { useSelector } from 'react-redux';
-import { GlobalLayout } from 'shared/index';
+import { Header } from './Header';
+import { renderWithProviders } from 'tests/providers/renderWithProviders';
 
 vi.mock('features/LogoutUser', () => ({
   Logout: () => <div data-testid="logout" />,
@@ -30,7 +28,6 @@ vi.mock('react-redux', async () => {
 
 describe('Header widget', () => {
   beforeEach(() => {
-    mockFirebase();
     vi.clearAllMocks();
   });
   it('renders with user not logged in (AuthLinks shown)', () => {
@@ -43,13 +40,7 @@ describe('Header widget', () => {
       })
     );
 
-    const { getByText } = render(
-      <I18nextProvider i18n={i18n}>
-        <GlobalLayout>
-          <header></header>
-        </GlobalLayout>
-      </I18nextProvider>
-    );
+    const { getByText } = renderWithProviders(<Header />);
     expect(getByText('RESTful API')).toBeInTheDocument();
     expect(screen.getByTestId('auth-links')).toBeInTheDocument();
   });
@@ -63,53 +54,26 @@ describe('Header widget', () => {
       })
     );
 
-    const { getByText } = render(
-      <I18nextProvider i18n={i18n}>
-        <GlobalLayout>
-          <header></header>
-        </GlobalLayout>
-      </I18nextProvider>
-    );
-
+    const { getByText } = renderWithProviders(<Header />);
     expect(getByText('RESTful API')).toBeInTheDocument();
     expect(screen.getByText('Main page')).toBeInTheDocument();
     expect(screen.getByTestId('logout')).toBeInTheDocument();
   });
   it('renders theme and language switcher', () => {
-    render(
-      <I18nextProvider i18n={i18n}>
-        <GlobalLayout>
-          <header></header>
-        </GlobalLayout>
-      </I18nextProvider>
-    );
-
-    expect(screen.getByTestId('theme-switcher')).toBeInTheDocument();
-    expect(screen.getByTestId('lang-switcher')).toBeInTheDocument();
+    const { getByTestId } = renderWithProviders(<Header />);
+    expect(getByTestId('theme-switcher')).toBeInTheDocument();
+    expect(getByTestId('lang-switcher')).toBeInTheDocument();
   });
   it('adds scrolled class when page is scrolled', async () => {
-    render(
-      <I18nextProvider i18n={i18n}>
-        <GlobalLayout>
-          <header></header>
-        </GlobalLayout>
-      </I18nextProvider>
-    );
+    const { getByTestId } = renderWithProviders(<Header />);
     fireEvent.scroll(window, { target: { scrollY: 1000 } });
 
-    const headerElement = screen.getByTestId('qatype-app-header');
+    const headerElement = getByTestId('qatype-app-header');
     expect(headerElement.className).toMatch(/scrolled/);
   });
   it('removes scrolled class when page is not scrolled', async () => {
-    render(
-      <I18nextProvider i18n={i18n}>
-        <GlobalLayout>
-          <header></header>
-        </GlobalLayout>
-      </I18nextProvider>
-    );
-
-    const headerElement = screen.getByTestId('qatype-app-header');
+    const { getByTestId } = renderWithProviders(<Header />);
+    const headerElement = getByTestId('qatype-app-header');
     expect(headerElement.className).not.toMatch(/scrolled/);
   });
 });
