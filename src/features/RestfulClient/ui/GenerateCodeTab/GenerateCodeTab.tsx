@@ -80,11 +80,6 @@ export const GenerateCodeTab = () => {
         options={cGlangOptions}
       />
       {codegenError && <p style={{ color: 'red' }}>{codegenError}</p>}
-      {/* <pre
-        className={classNames(styles['restful-wrapper_tabview-container_code'])}
-      >
-        {codeSnippet}
-      </pre> */}
       <div
         className={classNames(styles['restful-wrapper_tabview-container_code'])}
       >

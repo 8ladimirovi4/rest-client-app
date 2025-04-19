@@ -132,7 +132,6 @@ const RestfulClient = () => {
           />
         </div>
         <div className={styles['restful-wrapper__spacer']} />
-        {/* {error && <p style={{ color: 'red', marginTop: 10 }}>{error}</p>} */}
         {error && <Flayout title={error} onClick={handleHideFlayout} />}
         {loading && <Spinner />}
         {servData && (
