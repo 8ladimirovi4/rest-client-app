@@ -8,14 +8,6 @@ import { GenerateCodeTab } from './GenerateCodeTab';
 import * as codegen from 'postman-code-generators';
 import * as sdk from 'postman-collection';
 
-vi.mock('next/navigation', async () => {
-  const actual = await vi.importActual('next/navigation');
-  return {
-    ...actual,
-    useRouter: vi.fn(),
-  };
-});
-
 vi.mock('@monaco-editor/react', () => ({
   default: ({
     value,
