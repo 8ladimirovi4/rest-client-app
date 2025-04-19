@@ -56,7 +56,7 @@ describe('QueryTab feature', () => {
     const { getByText } = renderWithProviders(<QueryTab />, { preloadedState });
     expect(getByText('+')).toBeInTheDocument();
   });
-  it('adds a new header when the add button is clicked', async () => {
+  it('adds a new query when the add button is clicked', async () => {
     const { getByText } = renderWithProviders(<QueryTab />, {
       preloadedState,
     });
@@ -73,7 +73,7 @@ describe('QueryTab feature', () => {
       })
     );
   });
-  it('updates header key and value when input fields are changed', async () => {
+  it('updates query key and value when input fields are changed', async () => {
     const { getByPlaceholderText } = renderWithProviders(<QueryTab />, {
       preloadedState,
     });
@@ -95,7 +95,7 @@ describe('QueryTab feature', () => {
       })
     );
   });
-  it('removes a header when the remove button is clicked', async () => {
+  it('removes a query when the remove button is clicked', async () => {
     const { getByText } = renderWithProviders(<QueryTab />, { preloadedState });
 
     const removeButton = getByText(/remove/i);
