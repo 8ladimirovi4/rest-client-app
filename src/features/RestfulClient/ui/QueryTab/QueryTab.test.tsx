@@ -1,8 +1,5 @@
-import { describe, it} from 'vitest';
+import { describe, it } from 'vitest';
 
 describe('QueryTab feature', () => {
-  
-  it('renders', () => {
-   
-  });
+  it('renders', () => {});
 });
