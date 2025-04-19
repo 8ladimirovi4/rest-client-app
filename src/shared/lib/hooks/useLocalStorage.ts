@@ -15,7 +15,6 @@ export function useLocalStorage<T>({
 }: UseLocalStorageArgs<T>): [T, SetValue<T>] {
   const isClient = typeof window !== 'undefined';
 
-
   const [value, setValue] = useState<T>(() => {
     if (isClient) {
       try {
