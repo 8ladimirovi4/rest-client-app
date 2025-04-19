@@ -14,7 +14,7 @@ export const PrivateNav = () => {
   const currentUrl = new URL(window.location.href);
 
   return (
-    <div className="flex">
+    <div data-testid={'private-nav'} className="flex">
       <Link
         href={buildUrl(currentUrl, method, browserUrl)}
         className="text-gray-200 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-lg px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800  whitespace-nowrap"
