@@ -26,22 +26,6 @@ vi.mock('next/navigation', async () => {
   };
 });
 
-vi.mock('@monaco-editor/react', () => ({
-  default: ({
-    value,
-    onChange,
-  }: {
-    value: string;
-    onChange: (str: string) => void;
-  }) => (
-    <textarea
-      data-testid="monaco-editor"
-      value={value}
-      onChange={(evt) => onChange(evt.target.value)}
-    />
-  ),
-}));
-
 describe('HeadersTab feature', () => {
   const mockState = {
     user: {},
