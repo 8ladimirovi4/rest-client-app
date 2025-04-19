@@ -1,10 +1,10 @@
 'use client';
 import React, { useState } from 'react';
-import { VariableProps } from './types';
+import { VariableProps } from '../types';
 import { Input } from 'shared/ui/Input/Input';
 import { useTranslation } from 'react-i18next';
 
-const Variable = ({
+export const Variable = ({
   variable,
   updateVariable,
   removeVariable,
@@ -69,4 +69,4 @@ const Variable = ({
   );
 };
 
-export default Variable;
+Variable.displayName = 'Variable';

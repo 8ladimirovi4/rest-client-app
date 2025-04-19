@@ -36,7 +36,8 @@
   },
   "Placeholders": {
     "Key": "Key",
-    "Value": "Value"
+    "Value": "Value",
+    "EnterUrl": "Enter URL"
   },
   "EmptyState": {
     "NoRequests": "You haven't executed any requests yet.",

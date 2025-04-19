@@ -1,6 +1,5 @@
 import '@testing-library/jest-dom/vitest';
 import { vi } from 'vitest';
-import mockRouter from 'next-router-mock';
 import { afterEach } from 'vitest';
 import { cleanup } from '@testing-library/react';
 
@@ -14,17 +13,17 @@ console.error = (...params) => {
 
 vi.mock('*.module.css', () => ({}));
 
-vi.mock('next/router', async (importOriginalModule) => {
-  const actual = (await importOriginalModule()) as Record<string, unknown>;
-  return {
-    ...actual,
-    useRouter: () => mockRouter,
-  };
-});
-
 Object.defineProperty(window, 'scrollTo', {
   value: vi.fn(),
   writable: true,
+});
+
+vi.mock('next/navigation', async () => {
+  const actual = await vi.importActual('next/navigation');
+  return {
+    ...actual,
+    useRouter: vi.fn(),
+  };
 });
 
 afterEach(() => {

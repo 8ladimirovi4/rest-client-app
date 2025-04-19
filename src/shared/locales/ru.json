@@ -36,7 +36,8 @@
   },
   "Placeholders": {
     "Key": "Ключ",
-    "Value": "Значение"
+    "Value": "Значение",
+    "EnterUrl": "Введите URL"
   },
   "EmptyState": {
     "NoRequests": "Вы ещё не выполнили ни одного запроса.",
