@@ -30,14 +30,12 @@ vi.mock('@monaco-editor/react', () => ({
   default: ({
     value,
     onChange,
-    'data-testid': testId,
   }: {
     value: string;
     onChange: (str: string) => void;
-    'data-testid': string;
   }) => (
     <textarea
-      data-testid={testId}
+      data-testid="monaco-editor"
       value={value}
       onChange={(evt) => onChange(evt.target.value)}
     />
@@ -85,7 +83,7 @@ describe('BodyTab feature', () => {
       preloadedState,
     });
 
-    const editor = getByTestId('qatype-monaco-editor');
+    const editor = getByTestId('monaco-editor');
     fireEvent.change(editor, { target: { value: 'new body' } });
 
     expect(dispatch).toHaveBeenCalledWith(
