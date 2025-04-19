@@ -84,7 +84,7 @@ export default function CreateUser() {
 
   return (
     <AuthGuards requireAuth={false}>
-      <div className={styles.container}>
+      <div data-testid={'register'} className={styles.container}>
         <h3 className={styles.title}>{t('Sign up')}</h3>
         <form className={styles.form} onSubmit={handleSubmit(handleSubmitForm)}>
           <Controller
@@ -151,6 +151,7 @@ export default function CreateUser() {
             <Spinner className="mr-auto ml-0" />
           ) : (
             <Button
+              dataTestid={'register-button'}
               title={t('Sign up')}
               type="submit"
               disabled={!isValid}

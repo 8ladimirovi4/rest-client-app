@@ -9,5 +9,6 @@ export interface ButtonProps {
   type?: 'button' | 'submit' | 'reset';
   width?: number;
   height?: number;
+  dataTestid?: string;
 }
 export type Color = 'blue' | 'red' | 'gray';

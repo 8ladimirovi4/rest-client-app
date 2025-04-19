@@ -1,6 +1,6 @@
 import { ChangeEvent } from 'react';
 
-interface Option {
+export interface Option {
   id?: string;
   value?: string;
   label?: string;

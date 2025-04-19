@@ -1,6 +1,6 @@
 'use client';
 import { useTranslation } from 'react-i18next';
-import { TabProps } from '../types';
+import { TabProps } from '../../types';
 
 export const Tab = ({ label, activeTab, setActiveTab }: TabProps) => {
   const { t } = useTranslation();

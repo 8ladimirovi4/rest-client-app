@@ -5,7 +5,7 @@ import { apiRequestActions } from 'shared/model/apiRequest.slice';
 import { RootState } from 'app/providers/StoreProvider/config/store';
 import { useTranslation } from 'react-i18next';
 import Editor from '@monaco-editor/react';
-import styles from './styles.module.css';
+import styles from '../styles.module.css';
 
 export const BodyTab = () => {
   const { t } = useTranslation();

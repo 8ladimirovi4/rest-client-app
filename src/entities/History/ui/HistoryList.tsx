@@ -9,11 +9,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, Spinner } from 'shared/index';
 import Link from 'next/link';
 import { buildUrl } from 'shared/utils/help';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { apiRequestActions } from 'shared/model/apiRequest.slice';
 import { useTranslation } from 'react-i18next';
 
 const HistoryList = () => {
+  const [currentUrl, setCurrentUrl] = useState<URL | null>(null);
   const { t } = useTranslation();
   const { isAuthChecked } = useSelector((store: RootState) => store.user);
   const { method, browserUrl } = useSelector(
@@ -28,9 +29,10 @@ const HistoryList = () => {
   const dispatch = useDispatch();
 
   const { setBrowserUrl, setHistoryState } = apiRequestActions;
-  const currentUrl =
-    typeof window !== 'undefined' ? new URL(window.location.href) : null;
 
+  useEffect(() => {
+    setCurrentUrl(new URL(window.location.href));
+  }, []);
   const handleClearHistoryItem = (id: string): void => {
     setStoragedHistory((prev) => prev.filter((item) => item.id !== id));
     dispatch(setHistoryState({}));

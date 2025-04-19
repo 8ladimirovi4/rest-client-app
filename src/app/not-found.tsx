@@ -13,6 +13,7 @@ const NotFound = () => {
       <div className={styles['not-found-wrapper_button']}></div>
       <div>
         <Button
+          dataTestid={'go-back-button'}
           title={'Go back'}
           onClick={() => {
             router.back();
