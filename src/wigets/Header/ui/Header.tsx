@@ -36,6 +36,7 @@ export const Header = () => {
 
   return (
     <header
+      data-testid="qatype-app-header"
       className={`${styles['app-header']} ${isScrolled ? styles['scrolled'] : ''}`}
     >
       <nav className=" border-gray-200 px-4 lg:px-6 py-2.5">

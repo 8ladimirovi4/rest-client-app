@@ -23,6 +23,7 @@ import Editor from '@monaco-editor/react';
 import { useTranslation } from 'react-i18next';
 
 const RestfulClient = () => {
+  const [dateNow] = useState<Date>(new Date());
   const { t } = useTranslation();
   const { isAuthChecked } = useSelector((store: RootState) => store.user);
   const [servResponse, setServResponse] = useState<ApiResponse<unknown>>({
@@ -43,7 +44,6 @@ const RestfulClient = () => {
 
   const { browserUrl, method, query, body, headers, variables, id } = apiData;
   const { setApiStatus } = apiRequestActions;
-  const dateNow = new Date();
   const resComplite = (res: ApiResponse): void => {
     setServResponse(res);
     dispatch(setApiStatus({ status: res.status }));

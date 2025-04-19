@@ -1,6 +1,8 @@
-import '@testing-library/jest-dom';
+import '@testing-library/jest-dom/vitest';
 import { vi } from 'vitest';
 import mockRouter from 'next-router-mock';
+import { afterEach } from 'vitest';
+import { cleanup } from '@testing-library/react';
 
 const originalConsoleError = console.error;
 const jsDomCssError = 'Error: Could not parse CSS stylesheet';
@@ -23,4 +25,8 @@ vi.mock('next/router', async (importOriginalModule) => {
 Object.defineProperty(window, 'scrollTo', {
   value: vi.fn(),
   writable: true,
+});
+
+afterEach(() => {
+  cleanup();
 });

@@ -84,78 +84,80 @@ export default function CreateUser() {
 
   return (
     <AuthGuards requireAuth={false}>
-      <div className={styles.container}>
+      <div data-testid={'register'} className={styles.container}>
         <h3 className={styles.title}>{t('Sign up')}</h3>
-        {loading ? (
-          <Spinner />
-        ) : (
-          <form
-            className={styles.form}
-            onSubmit={handleSubmit(handleSubmitForm)}
-          >
-            <Controller
-              name="name"
-              control={control}
-              render={({ field }) => (
-                <Input
-                  {...field}
-                  error={errors.name?.message}
-                  placeholder={t('First name')}
-                  label={t('First name')}
-                  type={'text'}
-                  id={'name'}
-                />
-              )}
-            />
-            <Controller
-              name="email"
-              control={control}
-              render={({ field }) => (
-                <Input
-                  {...field}
-                  error={errors.email?.message}
-                  placeholder={t('Email')}
-                  label={t('Email')}
-                  type={'text'}
-                  id={'email'}
-                />
-              )}
-            />
-            <Controller
-              name="password"
-              control={control}
-              render={({ field }) => (
-                <Input
-                  {...field}
-                  error={errors.password?.message}
-                  placeholder={t('Password')}
-                  label={t('Password')}
-                  type={'password'}
-                  id={'password'}
-                />
-              )}
-            />
-            <Controller
-              name="confirmPassword"
-              control={control}
-              render={({ field }) => (
-                <Input
-                  {...field}
-                  error={errors.confirmPassword?.message}
-                  placeholder={t('Confirm password')}
-                  label={t('Confirm password')}
-                  type={'password'}
-                  id={'confirmPassword'}
-                />
-              )}
-            />
+        <form className={styles.form} onSubmit={handleSubmit(handleSubmitForm)}>
+          <Controller
+            name="name"
+            control={control}
+            render={({ field }) => (
+              <Input
+                {...field}
+                error={errors.name?.message}
+                placeholder={t('First name')}
+                label={t('First name')}
+                type={'text'}
+                id={'name'}
+                disabled={loading}
+              />
+            )}
+          />
+          <Controller
+            name="email"
+            control={control}
+            render={({ field }) => (
+              <Input
+                {...field}
+                error={errors.email?.message}
+                placeholder={t('Email')}
+                label={t('Email')}
+                type={'text'}
+                id={'email'}
+                disabled={loading}
+              />
+            )}
+          />
+          <Controller
+            name="password"
+            control={control}
+            render={({ field }) => (
+              <Input
+                {...field}
+                error={errors.password?.message}
+                placeholder={t('Password')}
+                label={t('Password')}
+                type={'password'}
+                id={'password'}
+                disabled={loading}
+              />
+            )}
+          />
+          <Controller
+            name="confirmPassword"
+            control={control}
+            render={({ field }) => (
+              <Input
+                {...field}
+                error={errors.confirmPassword?.message}
+                placeholder={t('Confirm password')}
+                label={t('Confirm password')}
+                type={'password'}
+                id={'confirmPassword'}
+                disabled={loading}
+              />
+            )}
+          />
+          {loading ? (
+            <Spinner className="mr-auto ml-0" />
+          ) : (
             <Button
+              dataTestid={'register-button'}
               title={t('Sign up')}
               type="submit"
               disabled={!isValid}
             ></Button>
-          </form>
-        )}
+          )}
+        </form>
         {error && <p className={styles['error-message']}>{error}</p>}
       </div>
     </AuthGuards>
