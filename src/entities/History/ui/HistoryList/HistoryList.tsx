@@ -57,9 +57,9 @@ const HistoryList = () => {
           <>
             <div className={styles['history-item-wrapper__button-container']}>
               <Button
+                color="primary"
                 title={t('Buttons.ClearAll')}
                 onClick={handleClearHistory}
-                color="red"
               />
             </div>
             {[...storagedHistory].reverse().map((history) => (

@@ -70,6 +70,7 @@ export const Search = () => {
       </div>
       <div className={styles['restful-wrapper_search-container_button']}>
         <Button
+          color="primary"
           title={t('Buttons.Send')}
           height={50}
           onClick={handleSendRequest}
