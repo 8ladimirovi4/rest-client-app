@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { TabView } from '../TabView/TabView';
 import styles from '../styles.module.css';
 import { Search } from '../Search/Search';
@@ -19,8 +19,11 @@ import { apiRequestActions } from 'shared/model/apiRequest.slice';
 import { ApiResponse } from 'shared/api/types';
 import { HeadersType, QueryParam } from '../../types';
 import { GenerateCodeTab } from '../GenerateCodeTab/GenerateCodeTab';
-import Editor from '@monaco-editor/react';
+import Editor, { OnMount } from '@monaco-editor/react';
 import { useTranslation } from 'react-i18next';
+import { useTheme } from 'shared/lib/hooks/useTheme.ts';
+import { THEME } from 'shared/const/theme.ts';
+import { backgrounds } from 'shared/styles/styles.ts';
 
 const RestfulClient = () => {
   const [dateNow] = useState<Date>(new Date());
@@ -100,6 +103,41 @@ const RestfulClient = () => {
     fetchData();
   }, [id]);
 
+  const { theme } = useTheme();
+
+  const handleEditorDidMount: OnMount = useCallback(
+    (_, monaco) => {
+      monaco.editor.defineTheme('custom-dark', {
+        base: 'vs-dark',
+        inherit: true,
+        rules: [],
+        colors: {
+          'editor.background': '#0f172a',
+        },
+      });
+
+      monaco.editor.defineTheme('custom-light', {
+        base: 'vs',
+        inherit: true,
+        rules: [],
+        colors: {
+          'editor.background': '#f8fafc',
+        },
+      });
+
+      const th = theme === THEME.DARK ? 'custom-dark' : 'custom-light';
+      monaco.editor.setTheme(th);
+    },
+    [theme]
+  );
+
+  useEffect(() => {
+    const th = theme === THEME.DARK ? 'custom-dark' : 'custom-light';
+    import('monaco-editor').then((monaco) => {
+      monaco.editor.setTheme(th);
+    });
+  }, [theme]);
+
   if (!isAuthChecked) return null;
   return (
     <AuthGuards requireAuth={true}>
@@ -139,13 +177,17 @@ const RestfulClient = () => {
             {`${t('EmptyState.ResponseStatus')} ${servResponse && servResponse.status}`}
           </h1>
         )}
-        <div className={styles['restful-wrapper_tabview-container_response']}>
+        <div
+          className={`${styles['restful-wrapper_tabview-container_response']} ${backgrounds}`}
+        >
           {servData && (
             <Editor
               height="300px"
               defaultLanguage={'json'}
               defaultValue=""
               value={JSON.stringify(servData, null, 2)}
+              onMount={handleEditorDidMount}
+              theme={theme === THEME.DARK ? 'custom-dark' : 'custom-light'}
               options={{
                 fontSize: 14,
                 minimap: { enabled: false },

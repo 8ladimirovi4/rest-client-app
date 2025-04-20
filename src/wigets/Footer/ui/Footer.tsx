@@ -2,8 +2,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import styles from './styles.module.css';
-import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
+import { backgrounds } from 'shared/styles/styles.ts';
 
 export const Footer = () => {
   const [open, setOpen] = useState(false);
@@ -24,12 +24,7 @@ export const Footer = () => {
   });
 
   return (
-    <footer
-      className={classNames(
-        styles['app-footer'],
-        'bg-white  shadow-sm dark:bg-gray-900 m-0'
-      )}
-    >
+    <footer className={`${styles['app-footer']} ${backgrounds}`}>
       <div className="w-full max-w-screen-xl mx-auto p-4 md:py-8">
         <div className="sm:flex sm:items-center sm:justify-between">
           <div ref={ref} className={styles['git-hub']}>

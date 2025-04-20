@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { TabViewProps } from '../../types';
 import { Tab } from '../Tab/Tab';
+import { backgrounds } from 'shared/styles/styles.ts';
 
 export const TabView = ({ tabs }: TabViewProps) => {
   const [activeTab, setActiveTab] = useState(tabs[0].label); // по умолчанию активен первый таб
@@ -28,7 +29,7 @@ export const TabView = ({ tabs }: TabViewProps) => {
           return (
             <div
               key={tab.label}
-              className={`p-4 rounded-lg bg-gray-50 dark:bg-gray-800 ${activeTab !== tab.label ? 'hidden' : ''}`}
+              className={`p-4 rounded-lg ${backgrounds} ${activeTab !== tab.label ? 'hidden' : ''}`}
               id={`styled-${tab.label}`}
               role="tabpanel"
               aria-labelledby={`${tab.label}-tab`}
