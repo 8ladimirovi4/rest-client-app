@@ -46,7 +46,7 @@ describe('QueryTab feature', () => {
   });
   it('should render QueryTab component correctly', () => {
     const { getByText } = renderWithProviders(<QueryTab />, { preloadedState });
-    expect(getByText('+')).toBeInTheDocument();
+    expect(getByText('Add')).toBeInTheDocument();
   });
   it('adds a new query when the add button is clicked', async () => {
     const { getByText } = renderWithProviders(<QueryTab />, {

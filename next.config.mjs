@@ -4,6 +4,9 @@ const nextConfig = {
   distDir: '.next',
   // output: 'export', needs to deploy on Netlify
   trailingSlash: true,
+  optimizeDeps: {
+    include: ['monaco-editor'],
+  },
 };
 
 export default nextConfig;

@@ -54,9 +54,10 @@ export const VariablesTab: React.FC = () => {
     <div className={styles['restful-wrapper_tabview-container__tab-wrapper']}>
       <div className={styles['restful-wrapper_tabview-container_query-button']}>
         <Button
+          color="primary"
           title={
             <>
-              <span className="mr-2">+</span>
+              <img src="/icon/add.svg" alt="Check Icon" className="h-6 w-6" />
               <span>{t('Buttons.Add')}</span>
             </>
           }
@@ -85,8 +86,17 @@ export const VariablesTab: React.FC = () => {
             placeholder={t('Placeholders.Value')}
           />
           <Button
-            color="red"
-            title={t('Buttons.Remove')}
+            color="primary"
+            title={
+              <>
+                <img
+                  src="/icon/delete.svg"
+                  alt="Check Icon"
+                  className="h-6 w-6"
+                />
+                <span>{t('Buttons.Remove')}</span>
+              </>
+            }
             onClick={() => removeVariable(idx)}
           />
         </div>

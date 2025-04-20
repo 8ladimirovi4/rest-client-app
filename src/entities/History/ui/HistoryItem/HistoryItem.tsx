@@ -75,13 +75,26 @@ export const HistoryItem = ({
           </p>
         </div>
         <div className="flex-shrink-0 flex items-center gap-2">
-          <Button title={t('Buttons.Go')} onClick={handleHistoryAction} />
           <Button
-            title={t('Buttons.Remove')}
+            color="primary"
+            title={t('Buttons.Go')}
+            onClick={handleHistoryAction}
+          />
+          <Button
+            color="primary"
+            title={
+              <>
+                <img
+                  src="/icon/delete.svg"
+                  alt="Check Icon"
+                  className="h-6 w-6"
+                />
+                <span>{t('Buttons.Remove')}</span>
+              </>
+            }
             onClick={() => {
               handleClearHistoryItem(id);
             }}
-            color="red"
           />
         </div>
       </div>

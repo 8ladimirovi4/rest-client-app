@@ -30,6 +30,10 @@ export default defineConfig({
       shared: path.resolve(__dirname, 'src/shared'),
       wigets: path.resolve(__dirname, 'src/wigets'),
       app: path.resolve(__dirname, 'src/app'),
+      'monaco-editor': path.resolve(
+        __dirname,
+        'src/tests/moks/monaco-editor.ts'
+      ),
     },
   },
 });
