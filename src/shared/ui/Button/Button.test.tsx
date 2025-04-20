@@ -15,8 +15,8 @@ describe('Button component', () => {
     const btn = getByRole('button');
     expect(btn).toBeInTheDocument();
     expect(btn).toHaveTextContent('button');
-    expect(btn).toHaveStyle({ width: '100px', height: '40px' });
-    expect(btn.className).toContain('bg-blue-700');
+    expect(btn).toHaveStyle({ height: '40px' });
+    expect(btn.className).toContain('bg-gray-700');
     expect(btn).not.toBeDisabled();
   });
   it('renders with custom title and dimensions', () => {
@@ -28,15 +28,15 @@ describe('Button component', () => {
     });
 
     expect(btn).toHaveTextContent('Test');
-    expect(btn).toHaveStyle({ width: '200px', height: '50px' });
+    expect(btn).toHaveStyle({ height: '50px' });
   });
-  it('applies correct class for red color', () => {
-    const { getByRole } = render(<Button color="red" />);
+  it('applies correct class for gray color', () => {
+    const { getByRole } = render(<Button color="primary" />);
     const btn = getByRole('button');
-    expect(btn.className).toContain('bg-red-700');
+    expect(btn.className).toContain('bg-gray-700');
   });
   it('applies gray style when disabled', () => {
-    const { getByRole } = render(<Button color="blue" disabled />);
+    const { getByRole } = render(<Button color="secondary" disabled />);
     const btn = getByRole('button');
     expect(btn).toHaveClass('bg-gray-500');
     expect(btn).toBeDisabled();

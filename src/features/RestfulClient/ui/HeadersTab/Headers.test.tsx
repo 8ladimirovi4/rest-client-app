@@ -49,7 +49,7 @@ describe('HeadersTab feature', () => {
       <HeadersTab />,
       { preloadedState }
     );
-    expect(getByText('+')).toBeInTheDocument();
+    expect(getByText('Add')).toBeInTheDocument();
     expect(getByPlaceholderText('Key')).toBeInTheDocument();
     expect(getByPlaceholderText('Value')).toBeInTheDocument();
   });

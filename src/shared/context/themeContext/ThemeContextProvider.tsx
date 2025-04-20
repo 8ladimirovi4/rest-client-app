@@ -1,21 +1,26 @@
 'use client';
 import { useState, useEffect, PropsWithChildren } from 'react';
 import { ThemeContext } from './ThemeContext';
-import { useLocalStorage } from 'shared/lib/hooks/useLocalStorage';
 import { THEME } from 'shared/const/theme';
 
 const ThemeContextProvider = ({ children }: PropsWithChildren) => {
-  const [userTheme, setUserTheme] = useLocalStorage({
-    key: 'theme',
-    defaultValue: THEME.DARK,
-  });
-  const [theme, setTheme] = useState<THEME>(userTheme);
+  const [theme, setTheme] = useState<THEME | null>(null);
 
   useEffect(() => {
-    setUserTheme(theme);
-    document.body.className = theme;
-  }, [theme, setUserTheme]);
+    const storedTheme = localStorage.getItem('theme') as THEME | null;
+    const actualTheme = storedTheme ?? THEME.DARK;
+    setTheme(actualTheme);
+    document.body.className = actualTheme;
+  }, []);
 
+  useEffect(() => {
+    if (theme) {
+      localStorage.setItem('theme', theme);
+      document.body.className = theme;
+    }
+  }, [theme]);
+
+  if (!theme) return null;
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>
       {children}

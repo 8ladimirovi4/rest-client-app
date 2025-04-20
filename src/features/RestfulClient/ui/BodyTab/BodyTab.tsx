@@ -6,6 +6,7 @@ import { RootState } from 'app/providers/StoreProvider/config/store';
 import { useTranslation } from 'react-i18next';
 import Editor from '@monaco-editor/react';
 import styles from '../styles.module.css';
+import { Button } from 'shared/ui/Button/Button.tsx';
 
 export const BodyTab = () => {
   const { t } = useTranslation();
@@ -26,18 +27,16 @@ export const BodyTab = () => {
       <div
         className={styles['restful-wrapper_tabview-container_format-buttons']}
       >
-        <button
-          className={`${styles['restful-wrapper_tabview-container_button']} ${format === 'json' ? styles['restful-wrapper_tabview-container_active'] : ''}`}
+        <Button
+          color={`${format === 'json' ? 'primary' : 'secondary'}`}
           onClick={() => setFormat('json')}
-        >
-          {`🧩 ${t('Buttons.Json')}`}
-        </button>
-        <button
-          className={`${styles['restful-wrapper_tabview-container_button']} ${format === 'plaintext' ? styles['restful-wrapper_tabview-container_active'] : ''}`}
+          title={`🧩 ${t('Buttons.Json')}`}
+        ></Button>
+        <Button
+          color={`${format === 'plaintext' ? 'primary' : 'secondary'}`}
           onClick={() => setFormat('plaintext')}
-        >
-          {`📝 ${t('Buttons.Text')}`}
-        </button>
+          title={`📝 ${t('Buttons.Text')}`}
+        ></Button>
       </div>
       <Editor
         height="150px"

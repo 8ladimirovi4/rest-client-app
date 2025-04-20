@@ -88,23 +88,10 @@
 
 .restful-wrapper_tabview-container_button {
   padding: 6px 12px;
-  border: 2px solid #1d4ed8;
-  background-color: white;
-  color: #1d4ed8;
   border-radius: 6px;
   cursor: pointer;
   transition: 0.2s ease;
   font-weight: 500;
-}
-
-.restful-wrapper_tabview-container_button:hover {
-  background-color: #1d4ed8;
-  color: white;
-}
-
-.restful-wrapper_tabview-container_active {
-  background-color: #1d4ed8;
-  color: white;
 }
 
 .error {

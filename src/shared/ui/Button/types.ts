@@ -11,4 +11,4 @@ export interface ButtonProps {
   height?: number;
   dataTestid?: string;
 }
-export type Color = 'blue' | 'red' | 'gray';
+export type Color = 'secondary' | 'primary' | 'gray';

@@ -107,26 +107,28 @@ const RestfulClient = () => {
 
   const handleEditorDidMount: OnMount = useCallback(
     (_, monaco) => {
-      monaco.editor.defineTheme('custom-dark', {
-        base: 'vs-dark',
-        inherit: true,
-        rules: [],
-        colors: {
-          'editor.background': '#0f172a',
-        },
-      });
+      if (monaco) {
+        monaco.editor.defineTheme('custom-dark', {
+          base: 'vs-dark',
+          inherit: true,
+          rules: [],
+          colors: {
+            'editor.background': '#0f172a',
+          },
+        });
 
-      monaco.editor.defineTheme('custom-light', {
-        base: 'vs',
-        inherit: true,
-        rules: [],
-        colors: {
-          'editor.background': '#f8fafc',
-        },
-      });
+        monaco.editor.defineTheme('custom-light', {
+          base: 'vs',
+          inherit: true,
+          rules: [],
+          colors: {
+            'editor.background': '#f8fafc',
+          },
+        });
 
-      const th = theme === THEME.DARK ? 'custom-dark' : 'custom-light';
-      monaco.editor.setTheme(th);
+        const th = theme === THEME.DARK ? 'custom-dark' : 'custom-light';
+        monaco.editor.setTheme(th);
+      }
     },
     [theme]
   );
@@ -173,7 +175,7 @@ const RestfulClient = () => {
         {error && <Flayout title={error} onClick={handleHideFlayout} />}
         {loading && <Spinner />}
         {servData && (
-          <h1 className="text-lg">
+          <h1 className="text-lg text-gray-700 dark:text-gray-300">
             {`${t('EmptyState.ResponseStatus')} ${servResponse && servResponse.status}`}
           </h1>
         )}
