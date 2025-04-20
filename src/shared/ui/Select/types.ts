@@ -1,0 +1,20 @@
+import { ChangeEvent } from 'react';
+
+export interface Option {
+  id?: string;
+  value?: string;
+  label?: string;
+}
+
+export interface SelectProps {
+  id: string;
+  disabled?: boolean;
+  name?: string;
+  label?: string;
+  value?: string;
+  onChange?: (event: ChangeEvent<HTMLSelectElement>) => void;
+  options: Option[];
+  width?: number;
+  height?: number;
+  textSize?: string;
+}
