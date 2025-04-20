@@ -1,5 +1,4 @@
 import { describe, it, beforeEach, vi, expect } from 'vitest';
-import { screen } from '@testing-library/react';
 import { renderWithProviders } from 'tests/providers/renderWithProviders';
 import { mockFirebase } from 'tests/moks/firebaseMocks';
 import { useRouter } from 'next/navigation';
@@ -41,7 +40,6 @@ describe('VariablesList entity', () => {
     const { getByText } = renderWithProviders(<VariablesList />, {
       preloadedState,
     });
-    screen.debug();
     expect(getByText('Add')).toBeInTheDocument();
     expect(getByText('Clear All')).toBeInTheDocument();
   });
