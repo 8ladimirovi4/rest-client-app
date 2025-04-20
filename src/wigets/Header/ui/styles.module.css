@@ -1,5 +1,5 @@
 .app-header {
-  flex: 0 0 80px;
+  height: 80px;
   align-content: center;
   position: sticky;
   top: 0;
@@ -10,8 +10,7 @@
 }
 
 .scrolled {
-  flex: 0 0 60px;
-  transition: all 0.3s ease-in-out;
+  height: 60px;
 }
 .app-header_rs-logo {
   margin-right: 10px;
