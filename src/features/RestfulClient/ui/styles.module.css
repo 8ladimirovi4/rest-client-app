@@ -50,7 +50,6 @@
   min-height: 300px;
 }
 .restful-wrapper_tabview-container_code {
-  background: #f4f4f4;
   padding: 10px;
   margin-top: 10px;
   border-radius: 10px;
@@ -60,14 +59,12 @@
   max-height: 200px;
 }
 .restful-wrapper_tabview-container_body {
-  background: #f4f4f4;
   padding: 10px;
   margin-top: 10px;
   border-radius: 10px;
   width: 80vw;
 }
 .restful-wrapper_tabview-container_response {
-  background: #f4f4f4;
   padding: 10px;
   margin-top: 10px;
   border-radius: 10px;

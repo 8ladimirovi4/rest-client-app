@@ -10,6 +10,7 @@ import { AuthLinks } from 'shared/ui/AuthLinks/AuthLinks.tsx';
 import { LangSwitcher } from 'wigets/LangSwitcher';
 import { useTranslation } from 'react-i18next';
 import { ThemeSwitcher } from 'wigets/ThemeSwitcher';
+import { backgrounds, linkStyles } from 'shared/styles/styles.ts';
 
 export const Header = () => {
   const { t } = useTranslation();
@@ -37,7 +38,7 @@ export const Header = () => {
   return (
     <header
       data-testid="qatype-app-header"
-      className={`${styles['app-header']} ${isScrolled ? styles['scrolled'] : ''}`}
+      className={`${styles['app-header']} ${isScrolled ? styles['scrolled'] : ''} ${backgrounds}`}
     >
       <nav className=" border-gray-200 px-4 lg:px-6 py-2.5">
         <div className="flex justify-between items-center mx-auto max-w-screen-xl">
@@ -56,10 +57,7 @@ export const Header = () => {
           <div className="flex items-center lg:order-2">
             {isAuthChecked && isUserLoggedIn ? (
               <>
-                <Link
-                  href={'/'}
-                  className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-lg px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800  whitespace-nowrap"
-                >
+                <Link href={'/'} className={linkStyles}>
                   {t('Main page')}
                 </Link>
                 <Logout />
