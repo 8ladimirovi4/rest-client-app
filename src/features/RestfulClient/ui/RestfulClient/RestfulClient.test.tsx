@@ -14,6 +14,46 @@ vi.mock('shared/lib/hooks/useLocalStorage', () => ({
   useLocalStorage: () => [[], setAndStoreValue],
 }));
 
+vi.mock('monaco-editor', () => {
+  return {
+    editor: {
+      defineTheme: vi.fn(),
+      setTheme: vi.fn(),
+      create: vi.fn().mockReturnValue({
+        dispose: vi.fn(),
+        getModel: vi.fn().mockReturnValue({ dispose: vi.fn() }),
+      }),
+    },
+  };
+});
+
+vi.mock('@monaco-editor/react', () => {
+  return {
+    __esModule: true,
+    default: ({
+      onMount,
+    }: {
+      onMount?: (
+        editor: unknown,
+        monaco: { editor: { defineTheme: () => void; setTheme: () => void } }
+      ) => void;
+    }) => {
+      if (onMount) {
+        onMount(
+          {},
+          {
+            editor: {
+              defineTheme: vi.fn(),
+              setTheme: vi.fn(),
+            },
+          }
+        );
+      }
+      return <div data-testid="mock-monaco-editor" />;
+    },
+  };
+});
+
 import RestfulClient from '../RestfulClient/RestfulClient';
 describe('RestfulClient feature', () => {
   const mockState = {

@@ -66,9 +66,10 @@ const VariablesList = () => {
       <div className={styles['var-list-wrapper']}>
         <div className={styles['var-list-wrapper__button']}>
           <Button
+            color="primary"
             title={
               <>
-                <span className="mr-2">+</span>
+                <img src="/icon/add.svg" alt="Check Icon" className="h-6 w-6" />
                 <span>{t('Buttons.Add')}</span>
               </>
             }
@@ -76,7 +77,7 @@ const VariablesList = () => {
           />
           <Button
             title={t('Buttons.ClearAll')}
-            color="red"
+            color="primary"
             onClick={removeVariables}
           />
         </div>

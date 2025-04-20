@@ -56,13 +56,13 @@ export const Home = () => {
       </div>
       <ul className={`${textClass} pl-5 pr-5`}>
         <li className="text-xl mb-5">{t('Home.Our app.App')}</li>
-        <li>{t('Home.Our app.1')}</li>
-        <li>{t('Home.Our app.2')}</li>
-        <li>{t('Home.Our app.3')}</li>
-        <li>{t('Home.Our app.4')}</li>
-        <li>{t('Home.Our app.5')}</li>
-        <li>{t('Home.Our app.6')}</li>
-        <li>{t('Home.Our app.7')}</li>
+        <li className="text-lg">{t('Home.Our app.1')}</li>
+        <li className="text-lg">{t('Home.Our app.2')}</li>
+        <li className="text-lg">{t('Home.Our app.3')}</li>
+        <li className="text-lg">{t('Home.Our app.4')}</li>
+        <li className="text-lg">{t('Home.Our app.5')}</li>
+        <li className="text-lg">{t('Home.Our app.6')}</li>
+        <li className="text-lg">{t('Home.Our app.7')}</li>
       </ul>
       <p className={`${textClass} p-5 text-lg`}>{t('Home.School info')}</p>
     </div>
