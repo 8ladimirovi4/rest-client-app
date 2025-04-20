@@ -1,0 +1,21 @@
+.select-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  height: fit-content;
+}
+
+.container_label {
+  font-size: 16px;
+  color: #6f6f6f;
+}
+.select-wrapper_select {
+  height: fit-content;
+}
+.select-wrapper_select::placeholder {
+  color: '#6f6f6f';
+}
+.select-wrapper_select:hover {
+  border: 2px solid rgb(29 78 216);
+}

@@ -1,0 +1,19 @@
+.app-header {
+  height: 80px;
+  align-content: center;
+  position: sticky;
+  top: 0;
+  min-width: 500px;
+  border-bottom: 2px solid lightgray;
+  transition: all 0.3s ease-in-out;
+  z-index: 10000;
+}
+
+.scrolled {
+  height: 60px;
+}
+.app-header_rs-logo {
+  margin-right: 10px;
+  width: 30px;
+  height: 30px;
+}
