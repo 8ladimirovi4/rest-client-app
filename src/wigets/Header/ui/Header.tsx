@@ -21,18 +21,17 @@ export const Header = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 30) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
+      const currentScroll = window.scrollY;
+
+      setIsScrolled((prev) => {
+        if (!prev && currentScroll > 40) return true;
+        if (prev && currentScroll < 20) return false;
+        return prev;
+      });
     };
 
     window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (

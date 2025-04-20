@@ -79,11 +79,11 @@ Deployed via Netlify
   npm install
 ```
 
-3. Ask team to produce the .env.local file with settings and place it in the project root. 
+3. Ask team to produce the .env.local file with settings and place it in the project root.
 
-- Place firebase keys to .env.local. 
+- Place firebase keys to .env.local.
 
-- You can find test keys in .env.example file. 
+- You can find test keys in .env.example file.
 
 4. Start project
 
