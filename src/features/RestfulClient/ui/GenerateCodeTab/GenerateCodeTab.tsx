@@ -7,8 +7,8 @@ import styles from '../styles.module.css';
 import { replaceVariables } from 'shared/utils/help';
 import { cGlangOptions } from 'shared/constants/codeGenerator';
 import { Select } from 'shared/index';
-import classNames from 'classnames';
 import Editor from '@monaco-editor/react';
+import { backgrounds } from 'shared/styles/styles.ts';
 
 export const GenerateCodeTab = () => {
   const [codeSnippet, setCodeSnippet] = useState<string>('');
@@ -81,7 +81,7 @@ export const GenerateCodeTab = () => {
       />
       {codegenError && <p style={{ color: 'red' }}>{codegenError}</p>}
       <div
-        className={classNames(styles['restful-wrapper_tabview-container_code'])}
+        className={`${styles['restful-wrapper_tabview-container_code']} ${backgrounds}`}
       >
         <Editor
           height="300px"
