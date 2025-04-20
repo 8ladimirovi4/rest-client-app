@@ -20,8 +20,6 @@
   "Copyright": "All Rights Reserved.",
   "Main page": "Main page",
   "Sign out": "Sign Out",
-  "Welcome": "Welcome",
-  "Welcome back": "Welcome Back",
   "Restful": "Rest client",
   "History": "History",
   "Buttons": {
@@ -36,7 +34,8 @@
   },
   "Placeholders": {
     "Key": "Key",
-    "Value": "Value"
+    "Value": "Value",
+    "EnterUrl": "Enter URL"
   },
   "EmptyState": {
     "NoRequests": "You haven't executed any requests yet.",
@@ -58,5 +57,24 @@
     "Query": "Query",
     "Variables": "Variables",
     "Code": "Code generator"
+  },
+  "Home": {
+    "Welcome": "Welcome",
+    "Welcome back": "Welcome Back",
+    "About us": "We are a team of developers who created a lightweight and user-friendly application for working with REST APIs. Our goal is to make the process of testing requests simple, clear, and efficient!",
+    "Our team": "Our team",
+    "Aleksandr": "Aleksandr",
+    "Vladimir": "Vladimir",
+    "Our app": {
+      "App": "Key features:",
+      "1": "- Choose HTTP methods and send requests to any URL;",
+      "2": "- Edit request bodies with formatting and base64 encoding support;",
+      "3": "- Add headers and variables to your requests;",
+      "4": "- View server responses along with HTTP status codes;",
+      "5": "- Access your request history to easily restore and reuse past queries;",
+      "6": "- Simple registration via Firebase;",
+      "7": "- Multilingual interface: English and Russian."
+    },
+    "School info": "This project was developed during our studies at Rolling Scopes School - a community-driven educational initiative that has been helping both beginners and experienced developers grow and gain hands-on skills since 2013."
   }
 }

@@ -13,13 +13,16 @@ export function useLocalStorage<T>({
   key,
   defaultValue,
 }: UseLocalStorageArgs<T>): [T, SetValue<T>] {
+  const isClient = typeof window !== 'undefined';
+
   const [value, setValue] = useState<T>(() => {
-    if (typeof window === 'undefined') return defaultValue;
-    try {
-      const rawValue = window.localStorage.getItem(key);
-      if (rawValue) return JSON.parse(rawValue);
-    } catch (e) {
-      console.log('Error while getting value from localStorage', e);
+    if (isClient) {
+      try {
+        const rawValue = window.localStorage.getItem(key);
+        if (rawValue) return JSON.parse(rawValue);
+      } catch (e) {
+        console.log('Error while getting value from localStorage', e);
+      }
     }
     return defaultValue;
   });

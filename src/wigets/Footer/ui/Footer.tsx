@@ -34,6 +34,7 @@ export const Footer = () => {
         <div className="sm:flex sm:items-center sm:justify-between">
           <div ref={ref} className={styles['git-hub']}>
             <Image
+              data-testid="qatype-git-hub-logo"
               onClick={() => setOpen(!open)}
               src="/logos/git.png"
               className={styles['app-footer_logo']}

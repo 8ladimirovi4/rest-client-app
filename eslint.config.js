@@ -67,6 +67,7 @@ export default [
       '@typescript-eslint/no-dynamic-delete': 'error',
       'prettier/prettier': 'error',
       'react-hooks/exhaustive-deps': 'off',
+      '@next/next/no-img-element': 'off',
     },
     settings: {
       react: {

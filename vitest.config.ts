@@ -14,11 +14,11 @@ export default defineConfig({
         '**/node_modules/**',
         '**/*.test.tsx',
         '**/*.spec.tsx',
-        'src/__tests__/setup.ts',
+        'src/tests/setup.ts',
         'src/app/layout.tsx',
       ],
     },
-    setupFiles: ['./src/__tests__/setup.ts'],
+    setupFiles: ['./src/tests/setup.ts'],
   },
   resolve: {
     alias: {

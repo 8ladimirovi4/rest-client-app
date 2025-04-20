@@ -1,7 +1,7 @@
 'use client';
 import { Button, Input } from 'shared/index';
 import React from 'react';
-import styles from './styles.module.css';
+import styles from '../styles.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { apiRequestActions } from 'shared/model/apiRequest.slice';
 import { RootState } from 'app/providers/StoreProvider/config/store';
@@ -46,32 +46,33 @@ export const HeadersTab = () => {
           onClick={addHeader}
         />
       </div>
-      {headers.map((header, idx) => (
-        <div
-          key={idx}
-          className={styles['restful-wrapper_tabview-container_query']}
-        >
-          <Input
-            id={idx.toString()}
-            type="text"
-            value={header.key}
-            onChange={(e) => updateHeader(idx, e.target.value, header.value)}
-            placeholder={t('Placeholders.Key')}
-          />
-          <Input
-            id={(idx + 1).toString()}
-            type="text"
-            value={header.value}
-            onChange={(e) => updateHeader(idx, header.key, e.target.value)}
-            placeholder={t('Placeholders.Value')}
-          />
-          <Button
-            color="red"
-            title={t('Buttons.Remove')}
-            onClick={() => removeHeader(idx)}
-          />
-        </div>
-      ))}
+      {headers &&
+        headers.map((header, idx) => (
+          <div
+            key={idx}
+            className={styles['restful-wrapper_tabview-container_query']}
+          >
+            <Input
+              id={idx.toString()}
+              type="text"
+              value={header.key}
+              onChange={(e) => updateHeader(idx, e.target.value, header.value)}
+              placeholder={t('Placeholders.Key')}
+            />
+            <Input
+              id={(idx + 1).toString()}
+              type="text"
+              value={header.value}
+              onChange={(e) => updateHeader(idx, header.key, e.target.value)}
+              placeholder={t('Placeholders.Value')}
+            />
+            <Button
+              color="red"
+              title={t('Buttons.Remove')}
+              onClick={() => removeHeader(idx)}
+            />
+          </div>
+        ))}
     </div>
   );
 };

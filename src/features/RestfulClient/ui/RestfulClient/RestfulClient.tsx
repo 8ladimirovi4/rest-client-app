@@ -1,9 +1,9 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { TabView } from './TabView';
-import styles from './styles.module.css';
-import Search from './Search';
-import { QueryTab } from './QueryTab';
+import { TabView } from '../TabView/TabView';
+import styles from '../styles.module.css';
+import { Search } from '../Search/Search';
+import { QueryTab } from '../QueryTab/QueryTab';
 import { useLocalStorage } from 'shared/lib/hooks/useLocalStorage';
 import { apiRequest } from 'shared/api/apiRequest';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,18 +11,19 @@ import { RootState } from 'app/providers/StoreProvider/config/store';
 import { ApiRequestState } from 'shared/model/types';
 import { Flayout, Spinner } from 'shared/index';
 import { AuthGuards } from 'shared/lib/AuthGuard/AuthGuards.tsx';
-import { BodyTab } from './BodyTab';
-import { HeadersTab } from './HeadersTab';
-import { VariablesTab } from './VariablesTab';
+import { BodyTab } from '../BodyTab/BodyTab';
+import { HeadersTab } from '../HeadersTab/HeadersTab';
+import { VariablesTab } from '../VariablesTab/VariablesTab';
 import { formatDateToString, replaceVariables } from 'shared/utils/help';
 import { apiRequestActions } from 'shared/model/apiRequest.slice';
 import { ApiResponse } from 'shared/api/types';
-import { HeadersType, QueryParam } from '../types';
-import { GenerateCodeTab } from './GenerateCodeTab';
+import { HeadersType, QueryParam } from '../../types';
+import { GenerateCodeTab } from '../GenerateCodeTab/GenerateCodeTab';
 import Editor from '@monaco-editor/react';
 import { useTranslation } from 'react-i18next';
 
 const RestfulClient = () => {
+  const [dateNow] = useState<Date>(new Date());
   const { t } = useTranslation();
   const { isAuthChecked } = useSelector((store: RootState) => store.user);
   const [servResponse, setServResponse] = useState<ApiResponse<unknown>>({
@@ -43,7 +44,6 @@ const RestfulClient = () => {
 
   const { browserUrl, method, query, body, headers, variables, id } = apiData;
   const { setApiStatus } = apiRequestActions;
-  const dateNow = new Date();
   const resComplite = (res: ApiResponse): void => {
     setServResponse(res);
     dispatch(setApiStatus({ status: res.status }));
@@ -132,7 +132,6 @@ const RestfulClient = () => {
           />
         </div>
         <div className={styles['restful-wrapper__spacer']} />
-        {/* {error && <p style={{ color: 'red', marginTop: 10 }}>{error}</p>} */}
         {error && <Flayout title={error} onClick={handleHideFlayout} />}
         {loading && <Spinner />}
         {servData && (
